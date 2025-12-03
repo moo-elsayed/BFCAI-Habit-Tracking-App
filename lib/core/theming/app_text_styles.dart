@@ -1,24 +1,36 @@
-import 'package:google_fonts/google_fonts.dart';
-import 'package:habit_tracking_app/core/theming/app_colors.dart';
-import 'package:habit_tracking_app/core/theming/font_weight_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-abstract class AppTextStyles {
-  static TextStyle font16WhiteHeeboRegular = GoogleFonts.heebo(
-    fontSize: 16,
-    color: AppColors.color21243D,
-    fontWeight: FontWeightHelper.regular,
-  );
+class AppTextStyles {
+  AppTextStyles._();
 
-  static TextStyle font20WhiteHeeboMedium = GoogleFonts.heebo(
-    fontSize: 20,
-    color: AppColors.white,
-    fontWeight: FontWeightHelper.medium,
-  );
+  static TextStyle font24Bold(BuildContext context) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 24.sp,
+        color: AppColors.textPrimary(context),
+        fontWeight: .w700,
+      );
 
-  static TextStyle font32color21243DHeeboBold = GoogleFonts.heebo(
-    fontSize: 32,
-    color: AppColors.color21243D,
-    fontWeight: FontWeightHelper.bold,
-  );
+  static TextStyle font14Regular(BuildContext context) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 14.sp,
+        color: AppColors.textPrimary(context),
+        fontWeight: .w400,
+      );
+
+  static TextStyle font12Grey(BuildContext context) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 12.sp,
+        color: AppColors.textSecondary(context),
+        fontWeight: .w500,
+      );
+
+  static TextStyle font14CustomColor(Color color) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 14.sp,
+        color: color,
+        fontWeight: .w400,
+      );
 }

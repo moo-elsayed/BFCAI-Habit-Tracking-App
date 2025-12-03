@@ -1,10 +1,27 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'app_palette.dart';
 
-abstract class AppColors {
-  static const black = Color(0xff000000);
-  static const white = Color(0xffFFFFFF);
-  static const green = Color(0xff00FF00);
-  static const colorE0F4FA = Color(0xffE0F4FA);
-  static const colorFF6464 = Color(0xffFF6464);
-  static const color21243D = Color(0xff21243D);
+class AppColors {
+  AppColors._();
+
+  static Color background(BuildContext context) =>
+      _isDark(context) ? AppPalette.blackRussian : AppPalette.offWhite;
+
+  static Color surface(BuildContext context) =>
+      _isDark(context) ? AppPalette.navyDark : AppPalette.white;
+
+  static Color textPrimary(BuildContext context) =>
+      _isDark(context) ? AppPalette.white : AppPalette.blackRussian;
+
+  static Color textSecondary(BuildContext context) =>
+      _isDark(context) ? AppPalette.greyLight : AppPalette.greyDark;
+
+  static Color primary(BuildContext context) => AppPalette.blueMain;
+
+  static Color success(BuildContext context) => AppPalette.greenSuccess;
+
+  static Color error(BuildContext context) => AppPalette.redError;
+
+  static bool _isDark(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark;
 }
