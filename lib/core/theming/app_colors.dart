@@ -10,6 +10,10 @@ class AppColors {
   static Color surface(BuildContext context) =>
       _isDark(context) ? AppPalette.navyDark : AppPalette.white;
 
+  // 💡 دي الحاجة الجديدة المهمة للـ Habit Card
+  static Color habitCardColor(BuildContext context) =>
+      _isDark(context) ? AppPalette.navyCard : AppPalette.white;
+
   static Color textPrimary(BuildContext context) =>
       _isDark(context) ? AppPalette.white : AppPalette.blackRussian;
 
