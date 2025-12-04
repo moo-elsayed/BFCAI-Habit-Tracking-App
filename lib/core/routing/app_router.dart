@@ -1,4 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:habit_tracking_app/core/routing/routes.dart';
+
+import '../../features/onboarding/presentation/views/onboarding_view.dart';
+import '../../features/splash/presentation/views/animated_splash_view.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -6,12 +10,12 @@ class AppRouter {
     final arguments = settings.arguments;
 
     switch (settings.name) {
-      // case Routes.splashView:
-      //   return CupertinoPageRoute(
-      //     builder: (context) => const AnimatedSplashView(),
-      //   );
-      // case Routes.onboardingView:
-      //   return CupertinoPageRoute(builder: (context) => const OnboardingView());
+      case Routes.splashView:
+        return CupertinoPageRoute(
+          builder: (context) => const AnimatedSplashView(),
+        );
+      case Routes.onboardingView:
+        return CupertinoPageRoute(builder: (context) => const OnboardingView());
       // case Routes.loginView:
       //   final args = arguments as LoginArgs?;
       //   return CupertinoPageRoute(

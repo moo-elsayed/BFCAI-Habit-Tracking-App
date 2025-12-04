@@ -1,14 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_tracking_app/core/routing/app_router.dart';
+import 'package:habit_tracking_app/habit_tracker.dart';
+import 'package:habit_tracking_app/simple_bloc_observer.dart';
+import 'core/helpers/di.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Scaffold());
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = SimpleBlocObserver();
+  setupServiceLocator();
+  await Future.wait([EasyLocalization.ensureInitialized(), getIt.allReady()]);
+  runApp(
+    EasyLocalization(
+      supportedLocales: [const Locale('ar'), const Locale('en')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('ar'),
+      saveLocale: true,
+      // startLocale: const Locale('ar'),
+      child: HabitTracker(appRouter: AppRouter()),
+    ),
+  );
 }

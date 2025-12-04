@@ -12,6 +12,10 @@ class AppPalette {
   static const greyLight = Color(0xff949D9E);
   static const greyDark = Color(0xff4E5556);
 
-  static const greenSuccess = Color(0xff1B5E37);
+  // 💡 عدلت الأخضر لدرجة أفتح
+  static const greenSuccess = Color(0xff27AE60);
   static const redError = Color(0xffff0000);
+
+  // 💡 ضفت لون للكارد في الدارك مود (اختياري بس هينفعك)
+  static const navyCard = Color(0xff1E293B);
 }
