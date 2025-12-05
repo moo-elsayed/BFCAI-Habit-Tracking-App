@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking_app/core/routing/app_router.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
+import 'package:habit_tracking_app/core/theming/app_colors.dart';
 
 class HabitTracker extends StatelessWidget {
   const HabitTracker({super.key, required this.appRouter});
@@ -20,8 +21,11 @@ class HabitTracker extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.background(context)
+        ),
         onGenerateRoute: appRouter.generateRoute,
-        initialRoute: Routes.splashView,
+        initialRoute: Routes.emailVerificationView,
       ),
     );
   }

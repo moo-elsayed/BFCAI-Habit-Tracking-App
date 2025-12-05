@@ -36,9 +36,9 @@ class Validator {
 
   static String? validateConfirmPassword(String? val, String? password) {
     if (val == null || val.isEmpty) {
-      return 'Password cannot be empty';
+      return "password_cannot_be_empty".tr();
     } else if (val != password) {
-      return 'Confirm password must match the password';
+      return 'confirm_password_must_match_the_password'.tr();
     }
     return null;
   }
@@ -46,6 +46,13 @@ class Validator {
   static String? validateName(String? val) {
     if (val == null || val.isEmpty) {
       return "name_cannot_be_empty".tr();
+    }
+    return null;
+  }
+
+  static String? validateUserName(String? val) {
+    if (val == null || val.isEmpty) {
+      return "username_cannot_be_empty".tr();
     }
     return null;
   }
