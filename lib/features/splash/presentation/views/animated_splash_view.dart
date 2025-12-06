@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:habit_tracking_app/core/helpers/di.dart';
-import 'package:habit_tracking_app/core/services/local_storage/local_storage_service.dart';
+import 'package:habit_tracking_app/core/services/local_storage/app_preferences_service.dart';
 import 'package:habit_tracking_app/features/splash/presentation/managers/splash_cubit.dart';
 import 'package:habit_tracking_app/features/splash/presentation/widgets/animated_splash_view_body.dart';
 import 'package:habit_tracking_app/generated/assets.dart';
+import '../../../../core/services/local_storage/auth_storage_service.dart';
 
 class AnimatedSplashView extends StatelessWidget {
   const AnimatedSplashView({super.key});
@@ -17,7 +18,10 @@ class AnimatedSplashView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => SplashCubit(getIt.get<LocalStorageService>()),
+        create: (context) => SplashCubit(
+          getIt.get<AppPreferencesService>(),
+          getIt.get<AuthStorageService>(),
+        )..checkAppStatus(),
         child: AnimatedSplashViewBody(),
       ),
       bottomNavigationBar: FadeInUp(

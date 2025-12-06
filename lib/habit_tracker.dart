@@ -25,7 +25,7 @@ class HabitTracker extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.background(context)
         ),
         onGenerateRoute: appRouter.generateRoute,
-        initialRoute: Routes.emailVerificationView,
+        initialRoute: Routes.splashView,
       ),
     );
   }
