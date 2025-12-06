@@ -1,0 +1,27 @@
+import '../../../../core/helpers/app_logger.dart';
+import '../../../../core/services/local_storage/app_preferences_service.dart';
+import '../../../../core/services/local_storage/auth_storage_service.dart';
+
+class ClearUserSessionUseCase {
+  ClearUserSessionUseCase(
+    this._appPreferencesService,
+    this._authStorageService,
+  );
+
+  final AppPreferencesService _appPreferencesService;
+  final AuthStorageService _authStorageService;
+
+  Future<void> call() async {
+    try {
+      await Future.wait([
+        _appPreferencesService.setLoggedIn(false),
+        _appPreferencesService.deleteUseName(),
+        _appPreferencesService.deleteEmailAddress(),
+        _authStorageService.clearTokens(),
+      ]);
+    } catch (e) {
+      AppLogger.error("error in clear user session", error: e.toString());
+      throw Exception('Failed to clear user session');
+    }
+  }
+}

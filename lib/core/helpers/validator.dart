@@ -19,16 +19,24 @@ class Validator {
       return "password_cannot_be_empty".tr();
     }
 
-    if (!RegExp(r'^[A-Za-z\d]+$').hasMatch(val)) {
-      return "password_must_contain_only_letters_and_numbers".tr();
+    if (val.length < 8) {
+      return "password_must_be_at_least_8_characters_long".tr();
     }
 
-    if (val.length < 6) {
-      return "password_must_be_at_least_6_characters_long".tr();
+    if (!RegExp(r'(?=.*[A-Z])').hasMatch(val)) {
+      return "password_must_contain_uppercase".tr();
     }
 
-    if (!RegExp(r'\d').hasMatch(val)) {
-      return "password_must_contain_at_least_one_number".tr();
+    if (!RegExp(r'(?=.*[a-z])').hasMatch(val)) {
+      return "password_must_contain_lowercase".tr();
+    }
+
+    if (!RegExp(r'(?=.*\d)').hasMatch(val)) {
+      return "password_must_contain_number".tr();
+    }
+
+    if (!RegExp(r'(?=.*[!@#$%^&*(),.?":{}|<>_])').hasMatch(val)) {
+      return "password_must_contain_special_character".tr();
     }
 
     return null;
@@ -36,9 +44,9 @@ class Validator {
 
   static String? validateConfirmPassword(String? val, String? password) {
     if (val == null || val.isEmpty) {
-      return 'Password cannot be empty';
+      return "password_cannot_be_empty".tr();
     } else if (val != password) {
-      return 'Confirm password must match the password';
+      return 'confirm_password_must_match_the_password'.tr();
     }
     return null;
   }
@@ -46,6 +54,13 @@ class Validator {
   static String? validateName(String? val) {
     if (val == null || val.isEmpty) {
       return "name_cannot_be_empty".tr();
+    }
+    return null;
+  }
+
+  static String? validateUserName(String? val) {
+    if (val == null || val.isEmpty) {
+      return "username_cannot_be_empty".tr();
     }
     return null;
   }

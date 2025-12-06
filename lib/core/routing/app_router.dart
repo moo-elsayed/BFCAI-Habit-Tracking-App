@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
-
+import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
+import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
+import '../../features/auth/presentation/views/email_verification_view.dart';
+import '../../features/auth/presentation/views/login_view.dart';
+import '../../features/auth/presentation/views/register_view.dart';
+import '../../features/home/presentation/views/home_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 
@@ -16,13 +21,21 @@ class AppRouter {
         );
       case Routes.onboardingView:
         return CupertinoPageRoute(builder: (context) => const OnboardingView());
-      // case Routes.loginView:
-      //   final args = arguments as LoginArgs?;
-      //   return CupertinoPageRoute(
-      //     builder: (context) => LoginView(loginArgs: args),
-      //   );
-      // case Routes.registerView:
-      //   return CupertinoPageRoute(builder: (context) => const RegisterView());
+      case Routes.loginView:
+        var args = arguments as LoginArgs;
+        return CupertinoPageRoute(
+          builder: (context) => LoginView(loginArgs: args),
+        );
+      case Routes.registerView:
+        return CupertinoPageRoute(builder: (context) => const RegisterView());
+      case Routes.emailVerificationView:
+        var args = arguments as EmailVerificationArgs;
+        return CupertinoPageRoute(
+          builder: (context) =>
+              EmailVerificationView(emailVerificationArgs: args),
+        );
+      case Routes.homeView:
+        return CupertinoPageRoute(builder: (context) => const HomeView());
       // case Routes.forgetPasswordView:
       //   return CupertinoPageRoute(
       //     builder: (context) => const ForgetPasswordView(),
@@ -32,14 +45,14 @@ class AppRouter {
       // case Routes.searchView:
       //   return CupertinoPageRoute(builder: (context) => const SearchView());
       // case Routes.productDetailsView:
-      //   final args = arguments as FruitEntity;
+      //   final view_utils = arguments as FruitEntity;
       //   return CupertinoPageRoute(
-      //     builder: (context) => ProductDetailsView(fruitEntity: args),
+      //     builder: (context) => ProductDetailsView(fruitEntity: view_utils),
       //   );
       // case Routes.checkoutView:
-      //   final args = arguments as List<CartItemEntity>;
+      //   final view_utils = arguments as List<CartItemEntity>;
       //   return CupertinoPageRoute(
-      //     builder: (context) => CheckoutView(cartItems: args),
+      //     builder: (context) => CheckoutView(cartItems: view_utils),
       //   );
       default:
         return null;

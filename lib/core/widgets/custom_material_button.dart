@@ -18,16 +18,16 @@ class CustomMaterialButton extends StatelessWidget {
     this.loadingIndicatorColor,
   });
 
-  final void Function() onPressed;
+  final VoidCallback onPressed;
   final String text;
-  final TextStyle? textStyle;
+  final Color? color;
+  final Color? loadingIndicatorColor;
   final bool maxWidth;
   final bool isLoading;
-  final EdgeInsetsGeometry? padding;
-  final Color? color;
+  final TextStyle? textStyle;
   final BorderSide? side;
+  final EdgeInsetsGeometry? padding;
   final BorderRadiusGeometry? borderRadius;
-  final Color? loadingIndicatorColor;
 
   @override
   Widget build(BuildContext context) {

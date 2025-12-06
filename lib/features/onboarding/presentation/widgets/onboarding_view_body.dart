@@ -2,9 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:habit_tracking_app/core/helpers/app_logger.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../../core/helpers/extensions.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theming/app_text_styles.dart';
 import '../../../../core/widgets/custom_material_button.dart';
 import '../../domain/entities/onboarding_entity.dart';
@@ -73,8 +74,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
           child: BlocListener<OnboardingCubit, OnboardingState>(
             listener: (context, state) {
               if (state is OnboardingNavigateToHome) {
-                // context.pushReplacementNamed(Routes.loginView);
-                AppLogger.debug("navigate to login");
+                context.pushReplacementNamed(Routes.loginView);
               }
             },
             child: ValueListenableBuilder(

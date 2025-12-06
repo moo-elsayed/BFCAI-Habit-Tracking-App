@@ -1,0 +1,15 @@
+class ApiConstants {
+  static const String baseUrl = "https://habitedge.runasp.net/Api/";
+
+  static const String version = "v1";
+
+  // Auth
+  static const String authRoute = "$version/Authentication";
+
+  // Endpoints
+  static const String register = "$authRoute/Register";
+  static const String login = "$authRoute/SignIn";
+  static const String confirmEmail = "$authRoute/Confirm-Email";
+  static const String refreshToken = "$authRoute/refresh-token";
+  static const String revokeToken = "$authRoute/revoke-token";
+}
