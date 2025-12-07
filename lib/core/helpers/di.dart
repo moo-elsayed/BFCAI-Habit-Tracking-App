@@ -64,12 +64,17 @@ void setupServiceLocator() {
     ),
   );
 
-  getIt.registerSingleton<AuthRepo>(
-    AuthRepoImp(AuthRemoteDataSourceImp(getIt.get<AuthService>())),
+  getIt.registerLazySingleton<AuthRepo>(
+    () => AuthRepoImp(
+      AuthRemoteDataSourceImp(
+        getIt.get<AuthService>(),
+        getIt.get<AuthStorageService>(),
+      ),
+    ),
   );
 
-  getIt.registerSingleton<RegisterUseCase>(
-    RegisterUseCase(getIt.get<AuthRepo>()),
+  getIt.registerLazySingleton<RegisterUseCase>(
+    () => RegisterUseCase(getIt.get<AuthRepo>()),
   );
 
   getIt.registerLazySingleton<LoginUseCase>(
@@ -79,8 +84,8 @@ void setupServiceLocator() {
     ),
   );
 
-  getIt.registerSingleton<ConfirmEmailUseCase>(
-    ConfirmEmailUseCase(getIt.get<AuthRepo>()),
+  getIt.registerLazySingleton<ConfirmEmailUseCase>(
+    () => ConfirmEmailUseCase(getIt.get<AuthRepo>()),
   );
 
   getIt.registerLazySingleton<LogoutUseCase>(

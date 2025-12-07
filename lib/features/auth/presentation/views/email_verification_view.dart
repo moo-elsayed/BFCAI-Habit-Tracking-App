@@ -29,6 +29,14 @@ class EmailVerificationView extends StatefulWidget {
 class _EmailVerificationViewState extends State<EmailVerificationView> {
   late TextEditingController _otpController;
 
+  void _confirmEmail(BuildContext context, String value) =>
+      context.read<ConfirmEmailCubit>().confirmEmail(
+        ConfirmEmailInputEntity(
+          email: widget.emailVerificationArgs.email,
+          code: value,
+        ),
+      );
+
   @override
   void initState() {
     super.initState();
@@ -52,86 +60,80 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
           behavior: HitTestBehavior.opaque,
           child: SingleChildScrollView(
             padding: .symmetric(horizontal: 16.w),
-            child: Column(
-              crossAxisAlignment: .center,
-              mainAxisAlignment: .center,
-              children: [
-                Gap(24.h),
-                Text(
-                  "enter_the_code_we_sent_to_the_following_email_address".tr(),
-                  style: AppTextStyles.font14Regular(context),
-                ),
-                Gap(8.h),
-                Text(
-                  widget.emailVerificationArgs.email,
-                  style: AppTextStyles.font12Grey(context),
-                ),
-                Gap(30.h),
-                OtpVerificationField(
-                  controller: _otpController,
-                  onCompleted: (value) {
-                    context.read<ConfirmEmailCubit>().confirmEmail(
-                      ConfirmEmailInputEntity(
-                        email: widget.emailVerificationArgs.email,
-                        code: value,
-                      ),
-                    );
-                  },
-                ),
-                Gap(30.h),
-                BlocConsumer<ConfirmEmailCubit, ConfirmEmailState>(
-                  listener: (context, state) {
-                    if (state is ConfirmEmailSuccess) {
-                      AppToast.showToast(
-                        context: context,
-                        title: "email_verified_successfully".tr(),
-                        type: .success,
-                      );
-                      var loginArgs = LoginArgs(
-                        email: widget.emailVerificationArgs.email,
-                        password: widget.emailVerificationArgs.password,
-                      );
-                      context.pushNamedAndRemoveUntil(
-                        Routes.loginView,
-                        arguments: loginArgs,
-                        predicate: (route) => false,
-                      );
-                    }
-                    if (state is ConfirmEmailFailure) {
-                      AppToast.showToast(
-                        context: context,
-                        title: state.errorMessage,
-                        type: .error,
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    return CustomMaterialButton(
-                      onPressed: () {
-                        if (_otpController.text.length == 6) {
-                          context.read<ConfirmEmailCubit>().confirmEmail(
-                            ConfirmEmailInputEntity(
-                              email: widget.emailVerificationArgs.email,
-                              code: _otpController.text,
-                            ),
+            child: Builder(
+              builder: (context) {
+                return Column(
+                  crossAxisAlignment: .center,
+                  mainAxisAlignment: .center,
+                  children: [
+                    Gap(24.h),
+                    Text(
+                      "enter_the_code_we_sent_to_the_following_email_address".tr(),
+                      style: AppTextStyles.font14Regular(context),
+                    ),
+                    Gap(8.h),
+                    Text(
+                      widget.emailVerificationArgs.email,
+                      style: AppTextStyles.font12Grey(context),
+                    ),
+                    Gap(30.h),
+                    OtpVerificationField(
+                      controller: _otpController,
+                      onCompleted: (value) {
+                        _confirmEmail(context, value);
+                      },
+                    ),
+                    Gap(30.h),
+                    BlocConsumer<ConfirmEmailCubit, ConfirmEmailState>(
+                      listener: (context, state) {
+                        if (state is ConfirmEmailSuccess) {
+                          AppToast.showToast(
+                            context: context,
+                            title: "email_verified_successfully".tr(),
+                            type: .success,
+                          );
+                          var loginArgs = LoginArgs(
+                            email: widget.emailVerificationArgs.email,
+                            password: widget.emailVerificationArgs.password,
+                          );
+                          context.pushNamedAndRemoveUntil(
+                            Routes.loginView,
+                            arguments: loginArgs,
+                            predicate: (route) => false,
+                          );
+                        }
+                        if (state is ConfirmEmailFailure) {
+                          AppToast.showToast(
+                            context: context,
+                            title: state.errorMessage,
+                            type: .error,
                           );
                         }
                       },
-                      maxWidth: true,
-                      text: "check_the_code".tr(),
-                      isLoading: state is ConfirmEmailLoading,
-                      textStyle: AppTextStyles.font16WhiteSemiBold(context),
-                    );
-                  },
-                ),
-                // Gap(24.h),
-                // Text(
-                //   "resend_code".tr(),
-                //   style: AppTextStyles.font14CustomColor(
-                //     AppColors.primary(context),
-                //   ),
-                // ),
-              ],
+                      builder: (context, state) {
+                        return CustomMaterialButton(
+                          onPressed: () {
+                            if (_otpController.text.length == 6) {
+                              _confirmEmail(context, _otpController.text);
+                            }
+                          },
+                          maxWidth: true,
+                          text: "check_the_code".tr(),
+                          isLoading: state is ConfirmEmailLoading,
+                          textStyle: AppTextStyles.font16WhiteSemiBold(context),
+                        );
+                      },
+                    ),
+                    // Gap(24.h),
+                    // Text(
+                    //   "resend_code".tr(),
+                    //   style: AppTextStyles.font14CustomColor(
+                    //     AppColors.primary(context),
+                    //   ),
+                    // ),
+                  ],
+                );
+              }
             ),
           ),
         ),

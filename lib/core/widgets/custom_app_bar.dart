@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import '../theming/app_text_styles.dart';
 import 'custom_arrow_bar.dart';
 
@@ -32,7 +31,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : null,
       leadingWidth: showArrowBack ? 52.w : 0,
       title: Text(title, style: AppTextStyles.font18SemiBold(context)),
-      backgroundColor: AppColors.background(context),
       centerTitle: centerTitle,
     );
   }

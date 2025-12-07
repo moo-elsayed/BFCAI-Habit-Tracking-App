@@ -26,10 +26,25 @@ class CustomBottomNavigationItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
-        child: Icon(
-          entity.icon,
-          size: 26.r,
-          color: _getColor(context: context, active: active),
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            Icon(
+              entity.icon,
+              size: 26.r,
+              color: _getColor(context: context, active: active),
+            ),
+            if (active)
+              Container(
+                margin: EdgeInsets.only(top: 4.h),
+                width: 4.w,
+                height: 4.w,
+                decoration: BoxDecoration(
+                  color: AppColors.primary(context),
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
         ),
       ),
     );

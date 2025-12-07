@@ -50,5 +50,17 @@
   "password_must_contain_lowercase": "Password must contain at least one lowercase letter",
   "password_must_contain_number": "Password must contain at least one number",
   "password_must_contain_special_character": "Password must contain at least one special character",
-  "settings": "Settings"
+  "settings": "Settings",
+  "dark_mode": "Dark Mode",
+  "light_mode": "Light Mode",
+  "language": "Language",
+  "log_out": "Log Out",
+  "log_out_confirmation": "Do you want to log out?",
+  "logged_out_successfully": "Logged out successfully",
+  "ok": "OK",
+  "cancel": "Cancel",
+  "confirm_language_change": "Confirm Language Change",
+  "app_will_restart": "App will restart",
+  "select_language": "Select Language",
+  "language_changed_successfully": "Language changed successfully"
 }

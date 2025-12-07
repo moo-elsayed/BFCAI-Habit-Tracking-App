@@ -11,5 +11,5 @@ abstract class AuthService {
 
   Future<ApiResponse<String>> confirmEmail(ConfirmEmailInputEntity input);
 
-  Future<ApiResponse<String>> logout();
+  Future<ApiResponse<String>> logout(String token);
 }
