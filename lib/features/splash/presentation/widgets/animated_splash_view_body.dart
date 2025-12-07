@@ -3,7 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:habit_tracking_app/features/home/presentation/views/home_view.dart';
+import 'package:habit_tracking_app/features/app_section/presentation/views/app_section.dart';
 import 'package:habit_tracking_app/generated/assets.dart';
 import '../../../auth/presentation/views/login_view.dart';
 import '../../../onboarding/presentation/views/onboarding_view.dart';
@@ -34,7 +34,7 @@ class _AnimatedSplashViewBodyState extends State<AnimatedSplashViewBody> {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is SplashNavigateToHome) {
-          navigate(const HomeView());
+          navigate(const AppSection());
         } else if (state is SplashNavigateToLogin) {
           navigate(const LoginView());
         } else if (state is SplashNavigateToOnboarding) {

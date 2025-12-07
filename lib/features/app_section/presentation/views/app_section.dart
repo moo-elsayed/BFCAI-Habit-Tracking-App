@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
+import 'package:habit_tracking_app/core/routing/routes.dart';
+import 'package:habit_tracking_app/features/app_section/presentation/widgets/custom_bottom_navigation_bar.dart';
+import 'package:habit_tracking_app/features/home/presentation/views/home.dart';
+import 'package:habit_tracking_app/features/settings/presentation/views/settings.dart';
+
+class AppSection extends StatefulWidget {
+  const AppSection({super.key});
+
+  @override
+  State<AppSection> createState() => _AppSectionState();
+}
+
+class _AppSectionState extends State<AppSection> {
+  final List<Widget> _pages = [Home(), Settings()];
+  late ValueNotifier _selectedIndex;
+
+  void _onItemTapped(int index) {
+    if (index == 1) {
+      context.pushNamed(Routes.habitView);
+    } else {
+      _selectedIndex.value = index == 2 ? 1 : 0;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = ValueNotifier(0);
+  }
+
+  @override
+  void dispose() {
+    _selectedIndex.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      body: SafeArea(
+        child: ValueListenableBuilder(
+          valueListenable: _selectedIndex,
+          builder: (context, value, child) =>
+              IndexedStack(index: value, children: _pages),
+        ),
+      ),
+      bottomNavigationBar: ValueListenableBuilder(
+        valueListenable: _selectedIndex,
+        builder: (context, value, child) => CustomBottomNavigationBar(
+          onItemTapped: _onItemTapped,
+          selectedIndex: value == 0 ? 0 : 2,
+        ),
+      ),
+    );
+  }
+}

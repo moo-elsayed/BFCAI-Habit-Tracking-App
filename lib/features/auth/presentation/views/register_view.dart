@@ -8,7 +8,7 @@ import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:habit_tracking_app/features/auth/presentation/managers/register_cubit/register_cubit.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
-import 'package:habit_tracking_app/features/auth/presentation/widgets/custom_auth_app_bar.dart';
+import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import '../../../../../core/helpers/extensions.dart';
 import '../../../../../core/helpers/validator.dart';
 import '../../../../../core/theming/app_text_styles.dart';
@@ -45,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
     return BlocProvider(
       create: (context) => RegisterCubit(getIt.get<RegisterUseCase>()),
       child: Scaffold(
-        appBar: CustomAuthAppBar(
+        appBar: CustomAppBar(
           title: "new_account".tr(),
           showArrowBack: true,
           onTap: () => context.pop(),

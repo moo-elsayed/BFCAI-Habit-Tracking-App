@@ -7,7 +7,7 @@ import 'package:habit_tracking_app/core/helpers/di.dart';
 import 'package:habit_tracking_app/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:habit_tracking_app/features/auth/presentation/managers/login_cubit/login_cubit.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
-import 'package:habit_tracking_app/features/auth/presentation/widgets/custom_auth_app_bar.dart';
+import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import '../../../../../core/helpers/extensions.dart';
 import '../../../../../core/helpers/validator.dart';
 import '../../../../../core/routing/routes.dart';
@@ -67,7 +67,7 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
       create: (context) => LoginCubit(getIt.get<LoginUseCase>()),
       child: Scaffold(
-        appBar: CustomAuthAppBar(title: "login".tr(), centerTitle: true),
+        appBar: CustomAppBar(title: "login".tr(), centerTitle: true),
         body: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           behavior: HitTestBehavior.opaque,
@@ -107,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                               title: "welcome".tr(),
                               type: .success,
                             );
-                            context.pushReplacementNamed(Routes.homeView);
+                            context.pushReplacementNamed(Routes.appSection);
                           }
                           if (state is LoginFailure) {
                             AppToast.showToast(

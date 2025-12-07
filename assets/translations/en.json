@@ -49,5 +49,6 @@
   "password_must_contain_uppercase": "Password must contain at least one uppercase letter",
   "password_must_contain_lowercase": "Password must contain at least one lowercase letter",
   "password_must_contain_number": "Password must contain at least one number",
-  "password_must_contain_special_character": "Password must contain at least one special character"
+  "password_must_contain_special_character": "Password must contain at least one special character",
+  "settings": "Settings"
 }
