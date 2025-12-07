@@ -49,5 +49,6 @@
   "password_must_contain_uppercase": "يجب أن تحتوي على حرف كبير واحد على الأقل",
   "password_must_contain_lowercase": "يجب أن تحتوي على حرف صغير واحد على الأقل",
   "password_must_contain_number": "يجب أن تحتوي على رقم واحد على الأقل",
-  "password_must_contain_special_character": "يجب أن تحتوي على رمز خاص (!@#$)"
+  "password_must_contain_special_character": "يجب أن تحتوي على رمز خاص (!@#$)",
+  "settings": "إعدادات"
 }

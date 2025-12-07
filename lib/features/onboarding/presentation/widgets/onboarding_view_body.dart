@@ -21,9 +21,8 @@ class OnboardingViewBody extends StatefulWidget {
 
 class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   late PageController _pageController;
-  late ValueNotifier<int> _currentIndexNotifier = ValueNotifier(0);
+  late ValueNotifier<int> _currentIndexNotifier;
   List<OnboardingEntity> slides = onboardingSlides;
-  ValueNotifier<bool> showSkip = ValueNotifier(true);
 
   String _getButtonText(int index) =>
       index == slides.length - 1 ? "get_started".tr() : "next".tr();

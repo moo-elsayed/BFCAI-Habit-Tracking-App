@@ -14,8 +14,7 @@ import 'package:habit_tracking_app/features/auth/presentation/managers/confirm_e
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/widgets/otp_verification_field.dart';
-import 'package:habit_tracking_app/features/auth/presentation/widgets/custom_auth_app_bar.dart';
-
+import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/app_toasts.dart';
 
 class EmailVerificationView extends StatefulWidget {
@@ -47,7 +46,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
     return BlocProvider(
       create: (context) => ConfirmEmailCubit(getIt.get<ConfirmEmailUseCase>()),
       child: Scaffold(
-        appBar: CustomAuthAppBar(title: "email_verification".tr()),
+        appBar: CustomAppBar(title: "email_verification".tr()),
         body: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           behavior: HitTestBehavior.opaque,

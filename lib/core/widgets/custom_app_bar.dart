@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
-import '../../../../core/theming/app_text_styles.dart';
-import '../../../../core/widgets/custom_arrow_bar.dart';
+import '../theming/app_text_styles.dart';
+import 'custom_arrow_bar.dart';
 
-class CustomAuthAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAuthAppBar({
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
     super.key,
     required this.title,
     this.showArrowBack = false,

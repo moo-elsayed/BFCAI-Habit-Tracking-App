@@ -4,5 +4,7 @@ class Routes {
   static const loginView = '/loginView';
   static const emailVerificationView = '/emailVerificationView';
   static const registerView = '/registerView';
-  static const homeView = '/homeView';
+  static const appSection = '/appSection';
+  static const home = '/home';
+  static const habitView = '/habitView';
 }

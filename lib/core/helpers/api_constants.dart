@@ -12,4 +12,14 @@ class ApiConstants {
   static const String confirmEmail = "$authRoute/Confirm-Email";
   static const String refreshToken = "$authRoute/refresh-token";
   static const String revokeToken = "$authRoute/revoke-token";
+
+  // Habit
+  static const String habitRoute = "$version/Habit";
+
+  // Endpoints
+  static const String createHabit = "$habitRoute/Create";
+  static const String getHabits = "$habitRoute/List";
+  static const String editHabit = "$habitRoute/Edit";
+  static const String deleteHabit = "$habitRoute/Delete";
+
 }

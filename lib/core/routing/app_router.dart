@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
+import 'package:habit_tracking_app/features/habit/presentation/views/habit_view.dart';
+import '../../features/app_section/presentation/views/app_section.dart';
 import '../../features/auth/presentation/views/email_verification_view.dart';
 import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/views/register_view.dart';
-import '../../features/home/presentation/views/home_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 
@@ -22,7 +23,7 @@ class AppRouter {
       case Routes.onboardingView:
         return CupertinoPageRoute(builder: (context) => const OnboardingView());
       case Routes.loginView:
-        var args = arguments as LoginArgs;
+        var args = arguments as LoginArgs?;
         return CupertinoPageRoute(
           builder: (context) => LoginView(loginArgs: args),
         );
@@ -34,14 +35,16 @@ class AppRouter {
           builder: (context) =>
               EmailVerificationView(emailVerificationArgs: args),
         );
-      case Routes.homeView:
-        return CupertinoPageRoute(builder: (context) => const HomeView());
+      case Routes.appSection:
+        return CupertinoPageRoute(builder: (context) => const AppSection());
+      case Routes.habitView:
+        return CupertinoPageRoute(builder: (context) => const HabitView());
+      // case Routes.home:
+      //   return CupertinoPageRoute(builder: (context) => const Home());
       // case Routes.forgetPasswordView:
       //   return CupertinoPageRoute(
       //     builder: (context) => const ForgetPasswordView(),
       //   );
-      // case Routes.appSection:
-      //   return CupertinoPageRoute(builder: (context) => const AppSection());
       // case Routes.searchView:
       //   return CupertinoPageRoute(builder: (context) => const SearchView());
       // case Routes.productDetailsView:
