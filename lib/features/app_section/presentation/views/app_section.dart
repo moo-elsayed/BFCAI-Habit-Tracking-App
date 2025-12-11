@@ -20,7 +20,8 @@ class _AppSectionState extends State<AppSection> {
   final List<Widget> _pages = [
     Home(),
     BlocProvider(
-      create: (context) => SettingsCubit(getIt.get<AppPreferencesService>())..getUserInfo(),
+      create: (context) =>
+          SettingsCubit(getIt.get<AppPreferencesService>())..getUserInfo(),
       child: Settings(),
     ),
   ];
@@ -28,7 +29,7 @@ class _AppSectionState extends State<AppSection> {
 
   void _onItemTapped(int index) {
     if (index == 1) {
-      context.pushNamed(Routes.habitView);
+      context.pushNamed(Routes.addOrEditHabitView);
     } else {
       _selectedIndex.value = index == 2 ? 1 : 0;
     }

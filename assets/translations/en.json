@@ -62,5 +62,21 @@
   "confirm_language_change": "Confirm Language Change",
   "app_will_restart": "App will restart",
   "select_language": "Select Language",
-  "language_changed_successfully": "Language changed successfully"
+  "language_changed_successfully": "Language changed successfully",
+  "add_habit": "Add Habit",
+  "edit_habit": "Edit Habit",
+  "habit_name": "Habit Name",
+  "color": "Color",
+  "icon": "Icon",
+  "save": "Save",
+  "pick_a_color!": "Pick a color!",
+  "pick_an_icon!": "Pick an icon!",
+  "set_goal": "Set Goal",
+  "repeat": "Repeat",
+  "task": "Task",
+  "count": "Count",
+  "times": "times",
+  "change": "Change",
+  "set_daily_goal": "Set Daily Goal",
+  "times_per_day": "times per day"
 }
