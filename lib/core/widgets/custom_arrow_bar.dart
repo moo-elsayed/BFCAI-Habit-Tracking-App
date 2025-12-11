@@ -24,7 +24,11 @@ class CustomArrowBack extends StatelessWidget {
         ),
         child: Transform.rotate(
           angle: isArabic(context) ? 0 : pi,
-          child: SvgPicture.asset(Assets.iconsArrowBack, fit: BoxFit.scaleDown),
+          child: SvgPicture.asset(
+            Assets.iconsArrowBack,
+            fit: BoxFit.scaleDown,
+            colorFilter: .mode(AppColors.textSecondary(context), .srcIn),
+          ),
         ),
       ),
     );

@@ -53,8 +53,11 @@ class ApiAuthService implements AuthService {
   }
 
   @override
-  Future<ApiResponse<String>> logout() async {
-    final response = await _dio.post(ApiConstants.revokeToken);
+  Future<ApiResponse<String>> logout(String token) async {
+    final response = await _dio.post(
+      ApiConstants.revokeToken,
+      queryParameters: {"token": token},
+    );
 
     return ApiResponse.fromJson(response.data, (json) => json as String);
   }

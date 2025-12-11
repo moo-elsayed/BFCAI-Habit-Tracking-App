@@ -20,4 +20,8 @@ abstract class AppPreferencesService {
   String getEmailAddress();
 
   Future<void> deleteEmailAddress();
+
+  Future<void> setDarkMode(bool isDark);
+
+  bool? getDarkMode();
 }

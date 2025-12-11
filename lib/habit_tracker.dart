@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking_app/core/routing/app_router.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
-import 'package:habit_tracking_app/core/theming/app_colors.dart';
+import 'package:habit_tracking_app/core/theming/managers/theme_cubit/theme_cubit.dart';
+import 'core/theming/app_theme.dart';
 
 class HabitTracker extends StatelessWidget {
   const HabitTracker({super.key, required this.appRouter});
@@ -16,16 +18,24 @@ class HabitTracker extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MaterialApp(
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.background(context)
-        ),
-        onGenerateRoute: appRouter.generateRoute,
-        initialRoute: Routes.splashView,
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, state) {
+          ThemeMode currentMode = ThemeMode.system;
+          if (state is ThemeChanged) {
+            currentMode = state.themeMode;
+          }
+          return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            debugShowCheckedModeBanner: false,
+            themeMode: currentMode,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            onGenerateRoute: appRouter.generateRoute,
+            initialRoute: Routes.splashView,
+          );
+        },
       ),
     );
   }

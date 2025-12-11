@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_tracking_app/core/helpers/di.dart';
 import 'package:habit_tracking_app/core/helpers/extensions.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
+import 'package:habit_tracking_app/core/services/local_storage/app_preferences_service.dart';
 import 'package:habit_tracking_app/features/app_section/presentation/widgets/custom_bottom_navigation_bar.dart';
 import 'package:habit_tracking_app/features/home/presentation/views/home.dart';
+import 'package:habit_tracking_app/features/settings/presentation/managers/settings_cubit/settings_cubit.dart';
 import 'package:habit_tracking_app/features/settings/presentation/views/settings.dart';
 
 class AppSection extends StatefulWidget {
@@ -13,7 +17,13 @@ class AppSection extends StatefulWidget {
 }
 
 class _AppSectionState extends State<AppSection> {
-  final List<Widget> _pages = [Home(), Settings()];
+  final List<Widget> _pages = [
+    Home(),
+    BlocProvider(
+      create: (context) => SettingsCubit(getIt.get<AppPreferencesService>())..getUserInfo(),
+      child: Settings(),
+    ),
+  ];
   late ValueNotifier _selectedIndex;
 
   void _onItemTapped(int index) {
