@@ -20,7 +20,7 @@ class HabitTracker extends StatelessWidget {
       splitScreenMode: true,
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-          ThemeMode currentMode = ThemeMode.light;
+          ThemeMode currentMode = ThemeMode.system;
           if (state is ThemeChanged) {
             currentMode = state.themeMode;
           }

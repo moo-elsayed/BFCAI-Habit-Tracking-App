@@ -23,5 +23,5 @@ abstract class AppPreferencesService {
 
   Future<void> setDarkMode(bool isDark);
 
-  bool getDarkMode();
+  bool? getDarkMode();
 }

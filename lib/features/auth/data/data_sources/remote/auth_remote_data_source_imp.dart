@@ -60,7 +60,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   @override
   Future<NetworkResponse<String>> logout() async {
     try {
-      var token = await _authStorageService.getAccessToken();
+      var token = await _authStorageService.getRefreshToken();
       if (token == null) {
         return _handleAuthError(Exception("token is null"), "logout");
       } else {

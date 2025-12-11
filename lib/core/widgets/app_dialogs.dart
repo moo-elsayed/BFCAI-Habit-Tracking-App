@@ -21,7 +21,7 @@ abstract class AppDialogs {
             child: Container(
               padding: .symmetric(vertical: 24.h, horizontal: 24.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).dialogTheme.backgroundColor,
                 borderRadius: .circular(16.r),
                 boxShadow: [
                   BoxShadow(

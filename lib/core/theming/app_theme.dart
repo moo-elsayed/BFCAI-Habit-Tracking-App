@@ -23,6 +23,7 @@ class AppTheme {
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
+        systemOverlayStyle: .dark,
       ),
       // 1. تظبيط الـ BottomSheet
       bottomSheetTheme: const BottomSheetThemeData(
@@ -65,6 +66,7 @@ class AppTheme {
         backgroundColor: Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
+        systemOverlayStyle: .light,
       ),
       // 1. تظبيط الـ BottomSheet (استخدمنا navyCard)
       bottomSheetTheme: const BottomSheetThemeData(

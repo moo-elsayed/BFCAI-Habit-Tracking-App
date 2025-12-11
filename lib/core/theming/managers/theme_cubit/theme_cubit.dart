@@ -9,8 +9,16 @@ class ThemeCubit extends Cubit<ThemeState> {
   final AppPreferencesService _appPreferencesService;
 
   void getCurrentTheme() {
-    final bool isDark = _appPreferencesService.getDarkMode();
-    emit(ThemeChanged(isDark ? ThemeMode.dark : ThemeMode.light));
+    final bool? isDark = _appPreferencesService.getDarkMode();
+    emit(
+      ThemeChanged(
+        isDark == null
+            ? ThemeMode.system
+            : isDark
+            ? ThemeMode.dark
+            : ThemeMode.light,
+      ),
+    );
   }
 
   Future<void> changeTheme(bool isDark) async {

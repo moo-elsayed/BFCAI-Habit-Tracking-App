@@ -52,5 +52,5 @@ class SharedPreferencesManager implements AppPreferencesService {
       await _prefs.setBool(_keyDarkMode, isDark);
 
   @override
-  bool getDarkMode() => _prefs.getBool(_keyDarkMode) ?? false;
+  bool? getDarkMode() => _prefs.getBool(_keyDarkMode);
 }

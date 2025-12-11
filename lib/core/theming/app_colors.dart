@@ -13,7 +13,6 @@ class AppColors {
   static Color modalBackground(BuildContext context) =>
       _isDark(context) ? AppPalette.navyCard : AppPalette.white;
 
-  // 💡 دي الحاجة الجديدة المهمة للـ Habit Card
   static Color habitCardColor(BuildContext context) =>
       _isDark(context) ? AppPalette.navyCard : AppPalette.white;
 
