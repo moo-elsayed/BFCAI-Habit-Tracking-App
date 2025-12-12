@@ -29,7 +29,7 @@ class _AppSectionState extends State<AppSection> {
 
   void _onItemTapped(int index) {
     if (index == 1) {
-      context.pushNamed(Routes.addOrEditHabitView);
+      context.pushNamed(Routes.habitEditorView);
     } else {
       _selectedIndex.value = index == 2 ? 1 : 0;
     }

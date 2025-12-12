@@ -7,5 +7,5 @@ class Routes {
   static const appSection = '/appSection';
   static const home = '/home';
   static const habitDetailsView = '/habitDetailsView';
-  static const addOrEditHabitView = '/addOrEditHabitView';
+  static const habitEditorView = '/habitEditorView';
 }

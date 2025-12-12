@@ -26,8 +26,8 @@ class ServerFailure extends Failure {
 
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-          statusCode: dioException.response?.statusCode,
-          response: dioException.response?.data,
+          dioException.response?.statusCode,
+          dioException.response?.data,
         );
 
       case DioExceptionType.cancel:
@@ -44,20 +44,21 @@ class ServerFailure extends Failure {
     }
   }
 
-  factory ServerFailure.fromResponse({
-    required int? statusCode,
-    required dynamic response,
-  }) {
+  factory ServerFailure.fromResponse(int? statusCode, dynamic response) {
     if (response == null) {
       return ServerFailure(errorMessage: 'unknown_error'.tr());
     }
-
-    final String? serverMessage = response['message'];
-
-    if (serverMessage != null && serverMessage.isNotEmpty) {
-      return ServerFailure(errorMessage: serverMessage);
+    if (response is Map<String, dynamic>) {
+      if (response['message'] != null &&
+          response['message'].toString().isNotEmpty) {
+        return ServerFailure(errorMessage: response['message']);
+      }
+      if (response['errors'] != null) {
+        return ServerFailure(errorMessage: response['errors'].toString());
+      }
+    } else if (response is String) {
+      if (response.isNotEmpty) return ServerFailure(errorMessage: response);
     }
-
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(errorMessage: 'unauthorized_error'.tr());
     } else if (statusCode == 404) {

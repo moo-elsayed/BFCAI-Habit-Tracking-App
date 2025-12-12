@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_text_styles.dart';
 
-class CustomHabitItem extends StatelessWidget {
-  const CustomHabitItem({
+class CustomizeHabitItem extends StatelessWidget {
+  const CustomizeHabitItem({
     super.key,
     required this.title,
     this.onTap,
@@ -37,7 +37,12 @@ class CustomHabitItem extends StatelessWidget {
               ),
               child: child,
             ),
-            Text(title, style: AppTextStyles.font18SemiBold(context)),
+            Text(
+              title,
+              style: AppTextStyles.font16PrimarySemiBold(
+                context,
+              ).copyWith(color: AppColors.textPrimary(context)),
+            ),
           ],
         ),
       ),

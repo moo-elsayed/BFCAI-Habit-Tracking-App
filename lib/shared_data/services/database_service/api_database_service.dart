@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:habit_tracking_app/core/services/database_service/database_service.dart';
+import 'package:habit_tracking_app/shared_data/models/api_response/api_response.dart';
 
 class ApiDatabaseService implements DatabaseService {
   ApiDatabaseService(this._dio);
@@ -7,10 +8,13 @@ class ApiDatabaseService implements DatabaseService {
   final Dio _dio;
 
   @override
-  Future<void> addData({
+  Future<ApiResponse<String>> addData({
     required String path,
     required Map<String, dynamic> data,
-  }) async => await _dio.post(path, data: data);
+  }) async {
+    final response = await _dio.post(path, data: data);
+    return ApiResponse.fromJson(response.data, (json) => json as String);
+  }
 
   @override
   Future<void> deleteData({required String path, String? id}) async =>

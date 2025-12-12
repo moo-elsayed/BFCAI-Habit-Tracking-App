@@ -1,3 +1,5 @@
+import 'package:habit_tracking_app/shared_data/models/api_response/api_response.dart';
+
 abstract class DatabaseService {
   Future<Map<String, dynamic>> getData({
     required String path,
@@ -6,7 +8,7 @@ abstract class DatabaseService {
 
   Future<List<Map<String, dynamic>>> getAllData(String path);
 
-  Future<void> addData({
+  Future<ApiResponse<String>> addData({
     required String path,
     required Map<String, dynamic> data,
   });

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 extension Navigation on BuildContext {
@@ -24,4 +25,9 @@ extension Navigation on BuildContext {
   }
 
   void pop<T extends Object?>([T? result]) => Navigator.of(this).pop(result);
+}
+
+extension TimeFormatter on DateTime {
+  String formattedTime(BuildContext context) =>
+      DateFormat.jm(context.locale.toString()).format(this);
 }

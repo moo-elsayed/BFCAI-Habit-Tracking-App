@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
-import 'package:habit_tracking_app/features/habit/presentation/views/add_or_edit_habit_view.dart';
+import 'package:habit_tracking_app/features/habit/domain/entities/habit_entity.dart';
+import 'package:habit_tracking_app/features/habit/presentation/views/habit_editor_view.dart';
 import 'package:habit_tracking_app/features/habit/presentation/views/habit_details_view.dart';
 import '../../features/app_section/presentation/views/app_section.dart';
 import '../../features/auth/presentation/views/email_verification_view.dart';
@@ -39,9 +40,14 @@ class AppRouter {
       case Routes.appSection:
         return CupertinoPageRoute(builder: (context) => const AppSection());
       case Routes.habitDetailsView:
-        return CupertinoPageRoute(builder: (context) => const HabitDetailsView());
-      case Routes.addOrEditHabitView:
-        return CupertinoPageRoute(builder: (context) => const AddOrEditHabitView());
+        return CupertinoPageRoute(
+          builder: (context) => const HabitDetailsView(),
+        );
+      case Routes.habitEditorView:
+        var args = arguments as HabitEntity?;
+        return CupertinoPageRoute(
+          builder: (context) => HabitEditorView(habit: args),
+        );
       // case Routes.home:
       //   return CupertinoPageRoute(builder: (context) => const Home());
       // case Routes.forgetPasswordView:

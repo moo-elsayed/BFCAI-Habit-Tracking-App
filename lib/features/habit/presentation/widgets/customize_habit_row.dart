@@ -9,7 +9,7 @@ import '../../../../core/helpers/extensions.dart';
 import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_text_styles.dart';
 import '../../../../core/widgets/custom_material_button.dart';
-import 'custom_habit_item.dart';
+import 'customize_habit_item.dart';
 
 class CustomizeHabitRow extends StatelessWidget {
   const CustomizeHabitRow({
@@ -29,7 +29,7 @@ class CustomizeHabitRow extends StatelessWidget {
         Expanded(
           child: ValueListenableBuilder(
             valueListenable: iconNotifier,
-            builder: (context, value, child) => CustomHabitItem(
+            builder: (context, value, child) => CustomizeHabitItem(
               onTap: () => _pickIcon(context),
               title: "icon".tr(),
               child: Icon(value, color: AppColors.textPrimary(context)),
@@ -39,7 +39,7 @@ class CustomizeHabitRow extends StatelessWidget {
         Expanded(
           child: ValueListenableBuilder(
             valueListenable: colorNotifier,
-            builder: (context, value, child) => CustomHabitItem(
+            builder: (context, value, child) => CustomizeHabitItem(
               onTap: () => _selectColorDialog(context, value),
               title: "color".tr(),
               child: DecoratedBox(
@@ -73,6 +73,10 @@ class CustomizeHabitRow extends StatelessWidget {
                       icon.name.replaceAll('_', ' ').toLowerCase(),
                     ) ||
                     icon.name.toLowerCase().contains(search.toLowerCase()),
+            closeChild: Text(
+              "close".tr(),
+              style: AppTextStyles.font16PrimarySemiBold(context),
+            ),
           ),
         );
     if (icon != null) {
@@ -107,6 +111,7 @@ class CustomizeHabitRow extends StatelessWidget {
               context.pop();
             },
             text: "save".tr(),
+            textStyle: AppTextStyles.font16WhiteSemiBold(context),
           ),
         ],
       ),

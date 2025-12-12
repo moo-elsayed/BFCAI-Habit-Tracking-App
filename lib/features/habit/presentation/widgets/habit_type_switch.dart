@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../core/theming/app_colors.dart';
 import '../../../../../../core/theming/app_text_styles.dart';
-
-enum HabitType { task, count }
+import '../../domain/entities/habit_entity.dart';
 
 class HabitTypeSwitch extends StatelessWidget {
   const HabitTypeSwitch({
     super.key,
     required this.colorNotifier,
     required this.selectedType,
+    required this.countNotifier,
   });
 
   final ValueNotifier<HabitType> selectedType;
   final ValueNotifier<Color> colorNotifier;
+  final ValueNotifier<int> countNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class HabitTypeSwitch extends StatelessWidget {
             AnimatedAlign(
               duration: const Duration(milliseconds: 250),
               curve: Curves.decelerate,
-              alignment: selectedType.value == HabitType.task
+              alignment: selectedType.value == .task
                   ? AlignmentDirectional.bottomStart
                   : AlignmentDirectional.bottomEnd,
               child: ValueListenableBuilder(
@@ -83,7 +84,16 @@ class HabitTypeSwitch extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         behavior: .opaque,
-        onTap: () => selectedType.value = type,
+        onTap: () {
+          selectedType.value = type;
+          if (type == .task) {
+            Future.delayed(const Duration(milliseconds: 200), () {
+              countNotifier.value = 1;
+            });
+          } else {
+            countNotifier.value = 3;
+          }
+        },
         child: Center(
           child: AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 200),
