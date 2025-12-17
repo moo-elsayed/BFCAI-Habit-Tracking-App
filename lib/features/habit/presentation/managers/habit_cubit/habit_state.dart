@@ -1,16 +1,27 @@
 part of 'habit_cubit.dart';
 
+enum HabitProcess { add, edit, delete, none }
+
 @immutable
 sealed class HabitState {}
 
 final class HabitInitial extends HabitState {}
 
-final class HabitLoading extends HabitState {}
+final class HabitLoading extends HabitState {
+  HabitLoading(this.process);
 
-final class HabitSuccess extends HabitState {}
+  final HabitProcess process;
+}
+
+final class HabitSuccess extends HabitState {
+  HabitSuccess(this.process);
+
+  final HabitProcess process;
+}
 
 final class HabitFailure extends HabitState {
-  final String message;
+  HabitFailure(this.message, this.process);
 
-  HabitFailure(this.message);
+  final String message;
+  final HabitProcess process;
 }

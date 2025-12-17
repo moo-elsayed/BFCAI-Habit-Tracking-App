@@ -18,8 +18,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   @override
   Future<NetworkResponse<String>> register(RegisterInputEntity input) async {
     try {
-      var apiResponse = await _authService.register(input);
-      return NetworkSuccess(apiResponse.data);
+      var message = await _authService.register(input);
+      return NetworkSuccess(message);
     } on DioException catch (e) {
       return handleError(e, "register");
     } catch (e) {
@@ -32,8 +32,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     LoginInputEntity input,
   ) async {
     try {
-      var apiResponse = await _authService.login(input);
-      return NetworkSuccess(apiResponse.data);
+      var loginResponseEntity = await _authService.login(input);
+      return NetworkSuccess(loginResponseEntity);
     } on DioException catch (e) {
       return handleError(e, "login");
     } catch (e) {
@@ -46,8 +46,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     ConfirmEmailInputEntity input,
   ) async {
     try {
-      var apiResponse = await _authService.confirmEmail(input);
-      return NetworkSuccess(apiResponse.data);
+      var message = await _authService.confirmEmail(input);
+      return NetworkSuccess(message);
     } on DioException catch (e) {
       return handleError(e, "confirmEmail");
     } catch (e) {
@@ -62,8 +62,8 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       if (token == null) {
         return handleError(Exception("token is null"), "logout");
       } else {
-        var apiResponse = await _authService.logout(token);
-        return NetworkSuccess(apiResponse.data);
+        var message = await _authService.logout(token);
+        return NetworkSuccess(message);
       }
     } on DioException catch (e) {
       return handleError(e, "logout");

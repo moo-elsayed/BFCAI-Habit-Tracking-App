@@ -1,4 +1,5 @@
-import '../../domain/entities/habit_schedule_entity.dart';
+
+import '../../core/entities/habit_schedule_entity.dart';
 
 class HabitScheduleModel {
   HabitScheduleModel({required this.dayOfWeek, required this.notificationTime});
@@ -36,21 +37,21 @@ class HabitScheduleModel {
   static int _parseDayStringToInt(String day) {
     switch (day.toLowerCase()) {
       case 'saturday':
-        return 0;
-      case 'sunday':
         return 1;
-      case 'monday':
+      case 'sunday':
         return 2;
-      case 'tuesday':
+      case 'monday':
         return 3;
-      case 'wednesday':
+      case 'tuesday':
         return 4;
-      case 'thursday':
+      case 'wednesday':
         return 5;
-      case 'friday':
+      case 'thursday':
         return 6;
+      case 'friday':
+        return 7;
       default:
-        return 0;
+        return 1;
     }
   }
 }

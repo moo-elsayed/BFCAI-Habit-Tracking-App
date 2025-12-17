@@ -1,4 +1,4 @@
-import '../../domain/entities/habit_entity.dart';
+import '../../core/entities/habit_entity.dart';
 import 'habit_schedule_model.dart';
 
 class HabitModel {
@@ -25,6 +25,7 @@ class HabitModel {
   final List<HabitScheduleModel> habitSchedules;
 
   factory HabitModel.fromEntity(HabitEntity entity) => HabitModel(
+    id: entity.id,
     name: entity.name,
     type: entity.type.value,
     targetValue: entity.targetValue,
@@ -38,6 +39,7 @@ class HabitModel {
   );
 
   factory HabitModel.fromJson(Map<String, dynamic> json) => HabitModel(
+    id: json["id"],
     name: json["name"],
     type: json["type"] is int
         ? json["type"]
@@ -65,6 +67,7 @@ class HabitModel {
   );
 
   Map<String, dynamic> toJson() => {
+    "id": ?id,
     "name": name,
     "type": type,
     "targetValue": targetValue,

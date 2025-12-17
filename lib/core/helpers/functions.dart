@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import '../../shared_data/models/api_response/api_response.dart';
 import 'app_logger.dart';
 import 'failures.dart';
 import 'network_response.dart';
@@ -20,3 +21,11 @@ NetworkFailure<T> handleError<T>(Object e, String functionName) {
   }
   return NetworkFailure(Exception(e.toString()));
 }
+
+void throwDioException(Response<dynamic> response, ApiResponse apiResponse) =>
+    throw DioException(
+      requestOptions: response.requestOptions,
+      response: response,
+      error: apiResponse.message,
+      type: DioExceptionType.badResponse,
+    );

@@ -20,6 +20,13 @@ class ApiResponse<T> {
     this.data,
   });
 
+  bool get isSuccess {
+    if (succeeded != null) {
+      return succeeded!;
+    }
+    return statusCode != null && statusCode! >= 200 && statusCode! < 300;
+  }
+
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,

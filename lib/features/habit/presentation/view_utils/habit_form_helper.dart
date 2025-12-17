@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/habit_entity.dart';
-import '../../domain/entities/habit_schedule_entity.dart';
+import '../../../../core/entities/habit_entity.dart';
+import '../../../../core/entities/habit_schedule_entity.dart';
 
 class HabitFormHelper {
   final HabitEntity? _initialHabit;
@@ -64,13 +64,14 @@ class HabitFormHelper {
 
   HabitEntity get entity {
     return HabitEntity(
+      id: _initialHabit?.id,
       name: nameController.text,
       type: typeNotifier.value,
       targetValue: countNotifier.value,
       isActive: true,
       startDate: _initialHabit?.startDate ?? DateTime.now(),
       color:
-          '#${colorNotifier.value.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}',
+          "0xFF${colorNotifier.value.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}",
       icon: iconNotifier.value.codePoint.toString(),
       habitSchedules: _generateSchedules(),
     );
@@ -78,11 +79,7 @@ class HabitFormHelper {
 
   Color _hexToColor(String code) {
     try {
-      String cleanHex = code.replaceAll("#", "");
-      if (cleanHex.length == 6) {
-        cleanHex = "FF$cleanHex";
-      }
-      return Color(int.parse("0x$cleanHex"));
+      return Color(int.parse(code));
     } catch (e) {
       return Colors.deepPurple;
     }
@@ -92,8 +89,8 @@ class HabitFormHelper {
     List<HabitScheduleEntity> schedules = [];
     List<int> selectedDays = daysNotifier.value;
     List<DateTime> reminders = remindersNotifier.value;
-    for (int i = 0; i < selectedDays.length; i++) {
-      if (selectedDays[i] == 1) {
+    for (int i = 1; i <= selectedDays.length; i++) {
+      if (selectedDays[i - 1] == 1) {
         if (reminders.isNotEmpty) {
           for (var time in reminders) {
             schedules.add(
@@ -116,8 +113,8 @@ class HabitFormHelper {
   List<int> _mapSchedulesToDaysList(List<HabitScheduleEntity> schedules) {
     List<int> days = List.filled(7, 0);
     for (var schedule in schedules) {
-      if (schedule.dayOfWeek >= 0 && schedule.dayOfWeek < 7) {
-        days[schedule.dayOfWeek] = 1;
+      if (schedule.dayOfWeek >= 1 && schedule.dayOfWeek <= 7) {
+        days[schedule.dayOfWeek - 1] = 1;
       }
     }
     return days;

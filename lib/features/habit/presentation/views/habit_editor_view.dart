@@ -12,6 +12,7 @@ import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import 'package:habit_tracking_app/core/widgets/custom_material_button.dart';
 import 'package:habit_tracking_app/core/widgets/text_form_field_helper.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/add_habit_use_case.dart';
+import 'package:habit_tracking_app/features/habit/domain/use_cases/delete_habit_use_case.dart';
 import 'package:habit_tracking_app/features/habit/presentation/managers/habit_cubit/habit_cubit.dart';
 import 'package:habit_tracking_app/features/habit/presentation/view_utils/habit_form_helper.dart';
 import 'package:habit_tracking_app/features/habit/presentation/widgets/change_habit_count_row.dart';
@@ -19,7 +20,8 @@ import 'package:habit_tracking_app/features/habit/presentation/widgets/customize
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_reminders.dart';
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_repeat_days.dart';
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_type_switch.dart';
-import '../../domain/entities/habit_entity.dart';
+import '../../../../core/entities/habit_entity.dart';
+import '../../domain/use_cases/edit_habit_use_case.dart';
 
 class HabitEditorView extends StatefulWidget {
   const HabitEditorView({super.key, this.habit});
@@ -48,7 +50,11 @@ class _HabitEditorViewState extends State<HabitEditorView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HabitCubit(getIt.get<AddHabitUseCase>()),
+      create: (context) => HabitCubit(
+        getIt.get<AddHabitUseCase>(),
+        getIt.get<DeleteHabitUseCase>(),
+        getIt.get<EditHabitUseCase>(),
+      ),
       child: Scaffold(
         appBar: CustomAppBar(
           title: widget.habit == null ? "add_habit".tr() : "edit_habit".tr(),
@@ -109,19 +115,28 @@ class _HabitEditorViewState extends State<HabitEditorView> {
                 BlocConsumer<HabitCubit, HabitState>(
                   listener: (context, state) {
                     if (state is HabitSuccess) {
-                      AppToast.showToast(
-                        context: context,
-                        title: "habit_added_successfully".tr(),
-                        type: .success,
-                      );
-                      context.pop();
+                      HabitProcess process = state.process;
+                      if (process == .add || process == .edit) {
+                        AppToast.showToast(
+                          context: context,
+                          title: process == .add
+                              ? "habit_added_successfully".tr()
+                              : "habit_updated_successfully".tr(),
+                          type: .success,
+                        );
+                        // context.read<HomeCubit>().getAllHabits();
+                        context.pop();
+                      }
                     }
                     if (state is HabitFailure) {
-                      AppToast.showToast(
-                        context: context,
-                        title: state.message,
-                        type: .error,
-                      );
+                      HabitProcess process = state.process;
+                      if (process == .add || process == .edit) {
+                        AppToast.showToast(
+                          context: context,
+                          title: state.message,
+                          type: .error,
+                        );
+                      }
                     }
                   },
                   builder: (context, state) {
@@ -130,6 +145,12 @@ class _HabitEditorViewState extends State<HabitEditorView> {
                       builder: (context, value, child) => CustomMaterialButton(
                         onPressed: () {
                           if (_habitFormHelper.isValid) {
+                            if (widget.habit != null) {
+                              context.read<HabitCubit>().editHabit(
+                                _habitFormHelper.entity,
+                              );
+                              return;
+                            }
                             context.read<HabitCubit>().addHabit(
                               _habitFormHelper.entity,
                             );
@@ -138,7 +159,10 @@ class _HabitEditorViewState extends State<HabitEditorView> {
                         text: "save".tr(),
                         maxWidth: true,
                         color: value,
-                        isLoading: state is HabitLoading,
+                        isLoading:
+                            state is HabitLoading &&
+                            (state.process == HabitProcess.add ||
+                                state.process == HabitProcess.edit),
                         textStyle: AppTextStyles.font16WhiteSemiBold(context),
                       ),
                     );

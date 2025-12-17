@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
-import 'package:habit_tracking_app/features/habit/domain/entities/habit_entity.dart';
 import 'package:habit_tracking_app/features/habit/presentation/views/habit_editor_view.dart';
 import 'package:habit_tracking_app/features/habit/presentation/views/habit_details_view.dart';
 import '../../features/app_section/presentation/views/app_section.dart';
@@ -11,6 +10,7 @@ import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/views/register_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
+import '../entities/habit_entity.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {

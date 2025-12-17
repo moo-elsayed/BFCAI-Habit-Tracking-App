@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/entities/habit_entity.dart';
 import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_text_styles.dart';
-import '../../domain/entities/habit_entity.dart';
 import 'change_habit_count_bottom_sheet.dart';
 
 class ChangeHabitCountRow extends StatelessWidget {

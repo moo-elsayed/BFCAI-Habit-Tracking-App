@@ -11,12 +11,18 @@ import 'package:habit_tracking_app/features/auth/domain/use_cases/logout_use_cas
 import 'package:habit_tracking_app/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:habit_tracking_app/features/habit/data/data_sources/remote/habit_remote_data_source_imp.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/add_habit_use_case.dart';
+import 'package:habit_tracking_app/features/home/data/data_sources/remote/home_remote_data_source_imp.dart';
+import 'package:habit_tracking_app/features/home/data/repo_imp/home_repo_imp.dart';
+import 'package:habit_tracking_app/features/home/domain/repo/home_repo.dart';
 import 'package:habit_tracking_app/shared_data/services/auth_service/api_auth_service.dart';
 import 'package:habit_tracking_app/shared_data/services/database_service/api_database_service.dart';
 import '../../features/auth/domain/use_cases/clear_user_session_use_case.dart';
 import '../../features/auth/domain/use_cases/save_user_session_use_case.dart';
 import '../../features/habit/data/repo_imp/habit_repo_imp.dart';
 import '../../features/habit/domain/repo/habit_repo.dart';
+import '../../features/habit/domain/use_cases/delete_habit_use_case.dart';
+import '../../features/habit/domain/use_cases/edit_habit_use_case.dart';
+import '../../features/home/domain/use_cases/get_all_habits_use_case.dart';
 import '../../shared_data/services/local_storage_service/secure_storage_manager.dart';
 import '../../shared_data/services/local_storage_service/shared_preferences_manager.dart';
 import '../services/auth_service/auth_interceptor.dart';
@@ -124,5 +130,23 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<AddHabitUseCase>(
     () => AddHabitUseCase(getIt.get<HabitRepo>()),
+  );
+
+  getIt.registerLazySingleton<DeleteHabitUseCase>(
+    () => DeleteHabitUseCase(getIt.get<HabitRepo>()),
+  );
+
+  getIt.registerLazySingleton<EditHabitUseCase>(
+    () => EditHabitUseCase(getIt.get<HabitRepo>()),
+  );
+
+  /// Home
+
+  getIt.registerLazySingleton<HomeRepo>(
+    () => HomeRepoImp(HomeRemoteDataSourceImp(getIt.get<DatabaseService>())),
+  );
+
+  getIt.registerLazySingleton<GetAllHabitsUseCase>(
+    () => GetAllHabitsUseCase(getIt.get<HomeRepo>()),
   );
 }
