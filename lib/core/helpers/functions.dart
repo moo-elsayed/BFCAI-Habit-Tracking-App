@@ -36,3 +36,24 @@ void throwDioException(Response<dynamic> response, ApiResponse apiResponse) =>
       error: apiResponse.message,
       type: DioExceptionType.badResponse,
     );
+
+int parseDayStringToInt(String day) {
+  switch (day.toLowerCase()) {
+    case 'saturday':
+      return 1;
+    case 'sunday':
+      return 2;
+    case 'monday':
+      return 3;
+    case 'tuesday':
+      return 4;
+    case 'wednesday':
+      return 5;
+    case 'thursday':
+      return 6;
+    case 'friday':
+      return 7;
+    default:
+      return 1;
+  }
+}

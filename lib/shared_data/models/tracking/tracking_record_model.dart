@@ -12,8 +12,8 @@ class TrackingRecordModel {
   final int trackingId;
   final String status;
   final int currentValue;
-  final double progressPercentage;
-  final DateTime updatedAt;
+  final num progressPercentage;
+  final String updatedAt;
 
   factory TrackingRecordModel.fromJson(Map<String, dynamic> json) =>
       TrackingRecordModel(

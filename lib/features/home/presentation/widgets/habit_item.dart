@@ -1,31 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:habit_tracking_app/core/entities/habit_entity.dart';
-import 'package:habit_tracking_app/core/helpers/extensions.dart';
-import 'package:habit_tracking_app/core/routing/routes.dart';
+import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.dart';
+import 'package:habit_tracking_app/features/home/presentation/managers/home_cubit/home_cubit.dart';
+import '../../../../core/helpers/extensions.dart';
+import '../../../../core/routing/routes.dart';
 
 class HabitItem extends StatelessWidget {
   const HabitItem({
     super.key,
-    required this.habitEntity,
+    required this.habitTrackingEntity,
     required this.onIncrement,
   });
 
-  final HabitEntity habitEntity;
+  final HabitTrackingEntity habitTrackingEntity;
   final VoidCallback onIncrement;
 
   @override
   Widget build(BuildContext context) {
-    // final isCompleted = habitEntity.currentValue >= habitEntity.targetValue;
-    final isCompleted = false;
+    final isCompleted =
+        habitTrackingEntity.trackingRecordEntity?.progressPercentage == 100;
 
     return GestureDetector(
       onTap: () {
+        var habitEntity = context.read<HomeCubit>().getEquivalentHabit(
+          habitTrackingEntity,
+        );
         context.pushNamed(Routes.habitEditorView, arguments: habitEntity);
       },
       child: Container(
-        margin: .symmetric(vertical: 8.h, horizontal: 16.w),
         padding: .all(16.r),
         decoration: BoxDecoration(
           color: const Color(0xFF1C1C1E),
@@ -47,7 +51,7 @@ class HabitItem extends StatelessWidget {
                 crossAxisAlignment: .start,
                 children: [
                   Text(
-                    habitEntity.name,
+                    habitTrackingEntity.name,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -55,9 +59,9 @@ class HabitItem extends StatelessWidget {
                     ),
                   ),
                   Gap(4.h),
-                  if (habitEntity.type == .count)
+                  if (habitTrackingEntity.type == .count)
                     Text(
-                      "1/${habitEntity.targetValue} times",
+                      "${habitTrackingEntity.trackingRecordEntity?.currentValue}/${habitTrackingEntity.targetValue} times",
                       style: const TextStyle(color: Colors.grey, fontSize: 14),
                     )
                   else
@@ -71,8 +75,7 @@ class HabitItem extends StatelessWidget {
                 ],
               ),
             ),
-
-            if (habitEntity.type == .count)
+            if (habitTrackingEntity.type == .count)
               _buildCountableAction()
             else
               _buildBooleanAction(isCompleted),
@@ -82,10 +85,12 @@ class HabitItem extends StatelessWidget {
     );
   }
 
-  Color _getColor() => Color(int.parse(habitEntity.color));
+  Color _getColor() => Color(int.parse(habitTrackingEntity.color));
 
-  IconData _getIcon() =>
-      IconData(int.parse(habitEntity.icon), fontFamily: 'MaterialIcons');
+  IconData _getIcon() => IconData(
+    int.parse(habitTrackingEntity.icon),
+    fontFamily: 'MaterialIcons',
+  );
 
   Widget _buildCountableAction() {
     return GestureDetector(

@@ -4,11 +4,11 @@ import '../../helpers/enums.dart';
 class HabitTrackingEntity {
   const HabitTrackingEntity({
     this.habitId = 1,
-    this.name = '',
+    this.name = 'habit',
     this.type = .task,
     this.targetValue = 1,
-    this.icon = '',
-    this.color = '',
+    this.icon = '58854',
+    this.color = '0xFFFFFFFF',
     this.isActive = true,
     this.trackingRecordEntity,
   });

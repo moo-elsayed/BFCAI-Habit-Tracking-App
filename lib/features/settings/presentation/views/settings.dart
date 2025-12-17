@@ -18,7 +18,7 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var settingsCubit = context.read<SettingsCubit>();
-    return SingleChildScrollView(
+    return Padding(
       padding: .symmetric(horizontal: 20.w, vertical: 10.h),
       child: Column(
         children: [

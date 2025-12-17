@@ -96,5 +96,7 @@
   "all_reminders_set": "All set",
   "habit_added_successfully": "Habit added successfully",
   "habit_updated_successfully": "Habit updated successfully",
-  "habit_deleted_successfully": "Habit deleted successfully"
+  "habit_deleted_successfully": "Habit deleted successfully",
+  "home": "Home",
+  "session_expired": "Session expired. Please login again."
 }

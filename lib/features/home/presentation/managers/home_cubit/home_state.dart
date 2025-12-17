@@ -1,6 +1,6 @@
 part of 'home_cubit.dart';
 
-enum HomeProcess { getAll, none }
+enum HomeProcess { getHomeHabits, create, edit, none }
 
 @immutable
 sealed class HomeState {}
@@ -14,10 +14,10 @@ final class HomeLoading extends HomeState {
 }
 
 final class HomeSuccess extends HomeState {
-  HomeSuccess(this.process, this.habits);
+  HomeSuccess({required this.process,  this.uiHabits});
 
   final HomeProcess process;
-  final List<HabitEntity> habits;
+  final List<HabitTrackingEntity>? uiHabits;
 }
 
 final class HomeFailure extends HomeState {

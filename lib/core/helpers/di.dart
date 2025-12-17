@@ -14,6 +14,9 @@ import 'package:habit_tracking_app/features/habit/domain/use_cases/add_habit_use
 import 'package:habit_tracking_app/features/home/data/data_sources/remote/home_remote_data_source_imp.dart';
 import 'package:habit_tracking_app/features/home/data/repo_imp/home_repo_imp.dart';
 import 'package:habit_tracking_app/features/home/domain/repo/home_repo.dart';
+import 'package:habit_tracking_app/features/home/domain/use_cases/create_habit_tracking_use_case.dart';
+import 'package:habit_tracking_app/features/home/domain/use_cases/edit_habit_tracking_use_case.dart';
+import 'package:habit_tracking_app/features/home/domain/use_cases/get_tracked_habits_by_date_use_case.dart';
 import 'package:habit_tracking_app/shared_data/services/auth_service/api_auth_service.dart';
 import 'package:habit_tracking_app/shared_data/services/database_service/api_database_service.dart';
 import '../../features/auth/domain/use_cases/clear_user_session_use_case.dart';
@@ -148,5 +151,17 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<GetAllHabitsUseCase>(
     () => GetAllHabitsUseCase(getIt.get<HomeRepo>()),
+  );
+
+  getIt.registerLazySingleton<GetTrackedHabitsByDateUseCase>(
+    () => GetTrackedHabitsByDateUseCase(getIt.get<HomeRepo>()),
+  );
+
+  getIt.registerLazySingleton<CreateHabitTrackingUseCase>(
+    () => CreateHabitTrackingUseCase(getIt.get<HomeRepo>()),
+  );
+
+  getIt.registerLazySingleton<EditHabitTrackingUseCase>(
+    () => EditHabitTrackingUseCase(getIt.get<HomeRepo>()),
   );
 }

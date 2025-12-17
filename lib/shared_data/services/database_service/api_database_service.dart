@@ -75,7 +75,7 @@ class ApiDatabaseService implements DatabaseService {
     required QueryParameters query,
   }) async {
     final response = await _dio.get(
-      "$path/${query.date.toIso8601String.toString().substring(0, 10)}",
+      "$path/${query.date.toString().substring(0, 10)}",
     );
     var apiResponse = ApiResponse.fromJson(
       response.data,

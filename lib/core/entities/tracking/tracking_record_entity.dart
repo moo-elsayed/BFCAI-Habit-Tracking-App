@@ -10,6 +10,6 @@ class TrackingRecordEntity {
   final int? trackingId;
   final String status;
   final int currentValue;
-  final double progressPercentage;
-  final DateTime? updatedAt;
+  final num progressPercentage;
+  final String? updatedAt;
 }
