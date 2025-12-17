@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/entities/habit_entity.dart';
 import '../../../../core/entities/habit_schedule_entity.dart';
+import '../../../../core/helpers/enums.dart';
 
 class HabitFormHelper {
   final HabitEntity? _initialHabit;
@@ -139,7 +142,9 @@ class HabitFormHelper {
             int.parse(timeParts[2].split('.')[0]),
           );
           reminders.add(time);
-        } catch (e) {}
+        } catch (e) {
+          log(e.toString());
+        }
       }
     }
     return reminders;

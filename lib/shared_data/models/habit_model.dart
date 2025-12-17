@@ -1,4 +1,5 @@
 import '../../core/entities/habit_entity.dart';
+import '../../core/helpers/enums.dart';
 import 'habit_schedule_model.dart';
 
 class HabitModel {
@@ -31,7 +32,8 @@ class HabitModel {
     targetValue: entity.targetValue,
     icon: entity.icon,
     color: entity.color,
-    startDate: entity.startDate.toIso8601String(),
+    startDate:
+        entity.startDate?.toIso8601String() ?? DateTime.now().toIso8601String(),
     isActive: entity.isActive,
     habitSchedules: entity.habitSchedules
         .map((e) => HabitScheduleModel.fromEntity(e))

@@ -22,6 +22,13 @@ NetworkFailure<T> handleError<T>(Object e, String functionName) {
   return NetworkFailure(Exception(e.toString()));
 }
 
+T returnResponse<T>(ApiResponse<T> apiResponse, Response<dynamic> response) {
+  if (!apiResponse.isSuccess) {
+    throwDioException(response, apiResponse);
+  }
+  return apiResponse.data as T;
+}
+
 void throwDioException(Response<dynamic> response, ApiResponse apiResponse) =>
     throw DioException(
       requestOptions: response.requestOptions,

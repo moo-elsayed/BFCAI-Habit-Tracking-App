@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:habit_tracking_app/core/services/database_service/database_service.dart';
+import 'package:habit_tracking_app/core/services/database_service/query_parameters.dart';
 import 'package:habit_tracking_app/shared_data/models/api_response/api_response.dart';
-
 import '../../../core/helpers/functions.dart';
 
 class ApiDatabaseService implements DatabaseService {
@@ -19,12 +19,7 @@ class ApiDatabaseService implements DatabaseService {
       response.data,
       (json) => json as String,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    } else {
-      throwDioException(response, apiResponse);
-    }
-    return "";
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
@@ -34,11 +29,7 @@ class ApiDatabaseService implements DatabaseService {
       response.data,
       (json) => json as String,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    }
-    throwDioException(response, apiResponse);
-    return "";
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
@@ -48,11 +39,7 @@ class ApiDatabaseService implements DatabaseService {
       response.data,
       (json) => (json as List).map((e) => e as Map<String, dynamic>).toList(),
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    }
-    throwDioException(response, apiResponse);
-    return [];
+    return returnResponse<List<Map<String, dynamic>>>(apiResponse, response);
   }
 
   @override
@@ -65,28 +52,35 @@ class ApiDatabaseService implements DatabaseService {
       response.data,
       (json) => json as Map<String, dynamic>,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    }
-    throwDioException(response, apiResponse);
-    return {};
+    return returnResponse<Map<String, dynamic>>(apiResponse, response);
   }
 
   @override
   Future<String> updateData({
     required String path,
-    int? id,
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? params,
   }) async {
-    final response = await _dio.put(path, data: data);
+    final response = await _dio.put(path, data: data, queryParameters: params);
     var apiResponse = ApiResponse.fromJson(
       response.data,
       (json) => json as String,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    }
-    throwDioException(response, apiResponse);
-    return "";
+    return returnResponse<String>(apiResponse, response);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> queryData({
+    required String path,
+    required QueryParameters query,
+  }) async {
+    final response = await _dio.get(
+      "$path/${query.date.toIso8601String.toString().substring(0, 10)}",
+    );
+    var apiResponse = ApiResponse.fromJson(
+      response.data,
+      (json) => (json as List).map((e) => e as Map<String, dynamic>).toList(),
+    );
+    return returnResponse<List<Map<String, dynamic>>>(apiResponse, response);
   }
 }

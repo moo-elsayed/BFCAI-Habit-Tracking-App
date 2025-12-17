@@ -27,13 +27,7 @@ class ApiAuthService implements AuthService {
       response.data,
       (json) => json as String,
     );
-
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    } else {
-      throwDioException(response, apiResponse);
-    }
-    return "";
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
@@ -47,13 +41,7 @@ class ApiAuthService implements AuthService {
       (json) =>
           LoginResponseModel.fromJson(json as Map<String, dynamic>).toEntity(),
     );
-
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    } else {
-      throwDioException(response, apiResponse);
-    }
-    return LoginResponseEntity();
+    return returnResponse<LoginResponseEntity>(apiResponse, response);
   }
 
   @override
@@ -66,12 +54,7 @@ class ApiAuthService implements AuthService {
       response.data,
       (json) => json as String,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    } else {
-      throwDioException(response, apiResponse);
-    }
-    return "";
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
@@ -84,11 +67,6 @@ class ApiAuthService implements AuthService {
       response.data,
       (json) => json as String,
     );
-    if (apiResponse.isSuccess) {
-      return apiResponse.data!;
-    } else {
-      throwDioException(response, apiResponse);
-    }
-    return "";
+    return returnResponse<String>(apiResponse, response);
   }
 }
