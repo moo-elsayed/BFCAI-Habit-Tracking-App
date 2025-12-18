@@ -7,17 +7,10 @@ import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/core/theming/managers/theme_cubit/theme_cubit.dart';
 import 'core/theming/app_theme.dart';
 
-class HabitTracker extends StatefulWidget {
+class HabitTracker extends StatelessWidget {
   const HabitTracker({super.key, required this.appRouter});
 
   final AppRouter appRouter;
-
-  @override
-  State<HabitTracker> createState() => _HabitTrackerState();
-}
-
-class _HabitTrackerState extends State<HabitTracker> {
-  ThemeMode currentMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +18,21 @@ class _HabitTrackerState extends State<HabitTracker> {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: BlocConsumer<ThemeCubit, ThemeState>(
-        listener: (context, state) {
-          if (state is ThemeChanged) {
-            currentMode = state.themeMode;
-          }
-        },
+      child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
+          ThemeMode mode = ThemeMode.system;
+          if (state is ThemeChanged) {
+            mode = state.themeMode;
+          }
           return MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             debugShowCheckedModeBanner: false,
-            themeMode: currentMode,
+            themeMode: mode,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            onGenerateRoute: widget.appRouter.generateRoute,
+            onGenerateRoute: appRouter.generateRoute,
             initialRoute: Routes.splashView,
           );
         },

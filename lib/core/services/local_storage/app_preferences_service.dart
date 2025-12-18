@@ -21,7 +21,7 @@ abstract class AppPreferencesService {
 
   Future<void> deleteEmailAddress();
 
-  Future<void> setDarkMode(bool isDark);
+  Future<void> setThemeMode(String themeMode);
 
-  bool? getDarkMode();
+  String? getThemeMode();
 }

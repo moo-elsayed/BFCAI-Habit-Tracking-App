@@ -1,12 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../shared_data/models/api_response/api_response.dart';
+import '../theming/managers/theme_cubit/theme_cubit.dart';
 import 'app_logger.dart';
 import 'failures.dart';
 import 'network_response.dart';
 
 bool isArabic(BuildContext context) => context.locale.languageCode == 'ar';
+
+ThemeMode getCurrentTheme(BuildContext context) {
+  var state = context.watch<ThemeCubit>().state;
+  return state is ThemeChanged ? state.themeMode : ThemeMode.system;
+}
 
 String getErrorMessage(result) =>
     ((result.exception as dynamic).message ?? result.exception.toString())
@@ -56,4 +63,17 @@ int parseDayStringToInt(String day) {
     default:
       return 1;
   }
+}
+
+ThemeMode getThemeMode(String? savedTheme) {
+  ThemeMode themeMode;
+  switch (savedTheme) {
+    case 'light':
+      themeMode = .light;
+    case 'dark':
+      themeMode = .dark;
+    default:
+      themeMode = .system;
+  }
+  return themeMode;
 }

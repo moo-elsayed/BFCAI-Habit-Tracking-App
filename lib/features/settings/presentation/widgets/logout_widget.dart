@@ -2,12 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking_app/features/auth/presentation/managers/logout_cubit/logout_cubit.dart';
 import 'package:habit_tracking_app/features/settings/presentation/widgets/settings_tile.dart';
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/theming/app_colors.dart';
 import '../../../../core/widgets/app_dialogs.dart';
 import '../../../../core/widgets/app_toasts.dart';
 import '../../../../core/widgets/custom_confirmation_dialog.dart';
@@ -44,31 +42,24 @@ class LogoutWidget extends StatelessWidget {
           );
         }
       },
-      child: Container(
-        padding: .all(8.r),
-        decoration: BoxDecoration(
-          color: AppColors.habitCardColor(context),
-          borderRadius: .circular(16.r),
-        ),
-        child: SettingsTile(
-          settingsTileEntity: SettingsTileEntity(
-            title: "log_out".tr(),
-            icon: Icons.logout_rounded,
-            isDestructive: true,
-            onTap: () {
-              showCupertinoDialog(
-                context: context,
-                builder: (_) => CustomConfirmationDialog(
-                  title: "log_out_confirmation".tr(),
-                  textConfirmButton: "ok".tr(),
-                  textCancelButton: "cancel".tr(),
-                  onConfirm: () async {
-                    context.read<LogoutCubit>().logout();
-                  },
-                ),
-              );
-            },
-          ),
+      child: SettingsTile(
+        settingsTileEntity: SettingsTileEntity(
+          title: "log_out".tr(),
+          icon: Icons.logout_rounded,
+          isDestructive: true,
+          onTap: () {
+            showCupertinoDialog(
+              context: context,
+              builder: (_) => CustomConfirmationDialog(
+                title: "log_out_confirmation".tr(),
+                textConfirmButton: "ok".tr(),
+                textCancelButton: "cancel".tr(),
+                onConfirm: () async {
+                  context.read<LogoutCubit>().logout();
+                },
+              ),
+            );
+          },
         ),
       ),
     );

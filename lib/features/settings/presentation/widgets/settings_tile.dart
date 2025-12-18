@@ -12,11 +12,14 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: settingsTileEntity.onTap,
-      borderRadius: .circular(12.r),
-      child: Padding(
-        padding: .symmetric(vertical: 12.h, horizontal: 8.w),
+      child: Container(
+        padding: .symmetric(horizontal: 14.w, vertical: 12.h),
+        decoration: BoxDecoration(
+          color: AppColors.habitCardColor(context),
+          borderRadius: .circular(24.r),
+        ),
         child: Row(
           children: [
             Container(

@@ -22,7 +22,7 @@ class AnimatedSplashView extends StatelessWidget {
           getIt.get<AppPreferencesService>(),
           getIt.get<AuthStorageService>(),
         )..checkAppStatus(),
-        child: AnimatedSplashViewBody(),
+        child: const AnimatedSplashViewBody(),
       ),
       bottomNavigationBar: FadeInUp(
         delay: const Duration(milliseconds: 1000),

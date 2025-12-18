@@ -39,13 +39,16 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var langCode = context.locale.toString();
     return Column(
       children: [
-        Gap(10.h),
         ValueListenableBuilder(
           valueListenable: _selectedDateNotifier,
           builder: (context, value, child) => CustomAppBar(
-            title: DateFormat('MMM d').format(_selectedDateNotifier.value),
+            title: DateFormat(
+              langCode == "ar" ? 'd MMM' : 'MMM d',
+              langCode,
+            ).format(_selectedDateNotifier.value),
           ),
         ),
         Gap(16.h),
@@ -80,10 +83,10 @@ class _HomeState extends State<Home> {
             },
             builder: (context, state) {
               if (state is HomeInitial) {
-                return SizedBox.shrink();
+                return const SizedBox.shrink();
               }
               if (state is HomeLoading && state.process == .getHomeHabits) {
-                return HabitsListView(isLoading: true);
+                return const HabitsListView(isLoading: true);
               }
               if (_habits.isEmpty) {
                 return const Center(child: Text("No habits found"));

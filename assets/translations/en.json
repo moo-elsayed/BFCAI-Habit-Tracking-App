@@ -100,5 +100,9 @@
   "home": "Home",
   "session_expired": "Session expired. Please login again.",
   "completed":"Completed",
-  "tap_to_complete": "Tap to complete the habit"
+  "tap_to_complete": "Tap to complete the habit",
+  "theme": "Theme",
+  "system": "System",
+  "light": "Light",
+  "dark": "Dark"
 }

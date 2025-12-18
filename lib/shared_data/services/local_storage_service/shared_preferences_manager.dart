@@ -7,7 +7,7 @@ class SharedPreferencesManager implements AppPreferencesService {
   final String _isLoggedInKey = 'isLoggedIn';
   final String _usernameKey = 'username';
   final String _emailAddressKey = 'emailAddress';
-  static const String _keyDarkMode = 'isDarkMode';
+  final String _keyThemeMode = 'theme_mode_v2';
 
   @override
   Future<void> init() async => _prefs = await SharedPreferences.getInstance();
@@ -48,9 +48,9 @@ class SharedPreferencesManager implements AppPreferencesService {
       await _prefs.remove(_emailAddressKey);
 
   @override
-  Future<void> setDarkMode(bool isDark) async =>
-      await _prefs.setBool(_keyDarkMode, isDark);
+  Future<void> setThemeMode(String themeMode) async =>
+      await _prefs.setString(_keyThemeMode, themeMode);
 
   @override
-  bool? getDarkMode() => _prefs.getBool(_keyDarkMode);
+  String? getThemeMode() => _prefs.getString(_keyThemeMode);
 }

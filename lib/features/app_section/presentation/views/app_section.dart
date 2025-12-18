@@ -30,12 +30,12 @@ class _AppSectionState extends State<AppSection> {
         getIt.get<CreateHabitTrackingUseCase>(),
         getIt.get<EditHabitTrackingUseCase>(),
       ),
-      child: Home(),
+      child: const Home(),
     ),
     BlocProvider(
       create: (context) =>
           SettingsCubit(getIt.get<AppPreferencesService>())..getUserInfo(),
-      child: Settings(),
+      child: const Settings(),
     ),
   ];
   late ValueNotifier _selectedIndex;
