@@ -13,6 +13,7 @@ void main() async {
   Bloc.observer = SimpleBlocObserver();
   setupServiceLocator();
   await Future.wait([EasyLocalization.ensureInitialized(), getIt.allReady()]);
+
   runApp(
     BlocProvider(
       create: (context) =>

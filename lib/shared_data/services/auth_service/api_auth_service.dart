@@ -10,6 +10,7 @@ import 'package:habit_tracking_app/features/auth/domain/entities/input/register_
 import 'package:habit_tracking_app/features/auth/domain/entities/response/login_response_entity.dart';
 import 'package:habit_tracking_app/shared_data/models/api_response/api_response.dart';
 import '../../../core/helpers/api_constants.dart';
+import '../../../core/helpers/functions.dart';
 
 class ApiAuthService implements AuthService {
   ApiAuthService(this._dio);
@@ -17,48 +18,55 @@ class ApiAuthService implements AuthService {
   final Dio _dio;
 
   @override
-  Future<ApiResponse<String>> register(RegisterInputEntity input) async {
+  Future<String> register(RegisterInputEntity input) async {
     final response = await _dio.post(
       ApiConstants.register,
       data: RegisterInputModel.fromEntity(input).toJson(),
     );
-
-    return ApiResponse.fromJson(response.data, (json) => json as String);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+      (json) => json as String,
+    );
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
-  Future<ApiResponse<LoginResponseEntity>> login(LoginInputEntity input) async {
+  Future<LoginResponseEntity> login(LoginInputEntity input) async {
     final response = await _dio.post(
       ApiConstants.login,
       queryParameters: LoginInputModel.fromEntity(input).toJson(),
     );
-
-    return ApiResponse.fromJson(
+    final apiResponse = ApiResponse.fromJson(
       response.data,
       (json) =>
           LoginResponseModel.fromJson(json as Map<String, dynamic>).toEntity(),
     );
+    return returnResponse<LoginResponseEntity>(apiResponse, response);
   }
 
   @override
-  Future<ApiResponse<String>> confirmEmail(
-    ConfirmEmailInputEntity input,
-  ) async {
+  Future<String> confirmEmail(ConfirmEmailInputEntity input) async {
     final response = await _dio.get(
       ApiConstants.confirmEmail,
       queryParameters: ConfirmEmailInputModel.fromEntity(input).toJson(),
     );
-
-    return ApiResponse.fromJson(response.data, (json) => json as String);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+      (json) => json as String,
+    );
+    return returnResponse<String>(apiResponse, response);
   }
 
   @override
-  Future<ApiResponse<String>> logout(String token) async {
+  Future<String> logout(String token) async {
     final response = await _dio.post(
       ApiConstants.revokeToken,
-      queryParameters: {"token": token},
+      data: {"token": token},
     );
-
-    return ApiResponse.fromJson(response.data, (json) => json as String);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+      (json) => json as String,
+    );
+    return returnResponse<String>(apiResponse, response);
   }
 }

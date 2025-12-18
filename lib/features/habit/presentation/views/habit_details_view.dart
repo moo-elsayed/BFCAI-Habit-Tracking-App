@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HabitView extends StatelessWidget {
-  const HabitView({super.key});
+class HabitDetailsView extends StatelessWidget {
+  const HabitDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {

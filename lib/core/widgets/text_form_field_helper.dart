@@ -124,7 +124,7 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
       textDirection: _textDirection,
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
-        fillColor: widget.fillColor ?? AppColors.surface(context),
+        fillColor: widget.fillColor ?? AppColors.habitCardColor(context),
         filled: true,
         hintText: widget.hint,
         hintStyle: widget.hintStyle ?? AppTextStyles.font12Grey(context),
@@ -158,9 +158,7 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
           width: 1,
         ),
         enabledBorder: outlineInputBorder(
-          color:
-              widget.borderColor ??
-              AppColors.textSecondary(context).withValues(alpha: 0.5),
+          color: widget.borderColor ?? Colors.transparent,
           width: 1,
         ),
         disabledBorder: outlineInputBorder(

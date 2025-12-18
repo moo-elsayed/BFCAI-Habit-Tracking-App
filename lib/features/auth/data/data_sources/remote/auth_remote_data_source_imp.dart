@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/core/helpers/network_response.dart';
 import 'package:habit_tracking_app/core/services/auth_service/auth_service.dart';
 import 'package:habit_tracking_app/core/services/local_storage/auth_storage_service.dart';
@@ -7,8 +8,6 @@ import 'package:habit_tracking_app/features/auth/domain/entities/input/confirm_e
 import 'package:habit_tracking_app/features/auth/domain/entities/input/login_input_entity.dart';
 import 'package:habit_tracking_app/features/auth/domain/entities/input/register_input_entity.dart';
 import 'package:habit_tracking_app/features/auth/domain/entities/response/login_response_entity.dart';
-import '../../../../../core/helpers/app_logger.dart';
-import '../../../../../core/helpers/failures.dart';
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   AuthRemoteDataSourceImp(this._authService, this._authStorageService);
@@ -19,13 +18,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   @override
   Future<NetworkResponse<String>> register(RegisterInputEntity input) async {
     try {
-      var apiResponse = await _authService.register(input);
-      return NetworkSuccess(apiResponse.data);
+      var message = await _authService.register(input);
+      return NetworkSuccess(message);
     } on DioException catch (e) {
-      // return NetworkFailure(Exception(ServerFailure.fromDioException(e)));
-      return _handleAuthError(e, "register");
+      return handleError(e, "register");
     } catch (e) {
-      return _handleAuthError(e, "register");
+      return handleError(e, "register");
     }
   }
 
@@ -34,12 +32,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     LoginInputEntity input,
   ) async {
     try {
-      var apiResponse = await _authService.login(input);
-      return NetworkSuccess(apiResponse.data);
+      var loginResponseEntity = await _authService.login(input);
+      return NetworkSuccess(loginResponseEntity);
     } on DioException catch (e) {
-      return _handleAuthError(e, "login");
+      return handleError(e, "login");
     } catch (e) {
-      return _handleAuthError(e, "login");
+      return handleError(e, "login");
     }
   }
 
@@ -48,12 +46,12 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     ConfirmEmailInputEntity input,
   ) async {
     try {
-      var apiResponse = await _authService.confirmEmail(input);
-      return NetworkSuccess(apiResponse.data);
+      var message = await _authService.confirmEmail(input);
+      return NetworkSuccess(message);
     } on DioException catch (e) {
-      return _handleAuthError(e, "confirmEmail");
+      return handleError(e, "confirmEmail");
     } catch (e) {
-      return _handleAuthError(e, "confirmEmail");
+      return handleError(e, "confirmEmail");
     }
   }
 
@@ -62,26 +60,15 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     try {
       var token = await _authStorageService.getRefreshToken();
       if (token == null) {
-        return _handleAuthError(Exception("token is null"), "logout");
+        return handleError(Exception("token is null"), "logout");
       } else {
-        var apiResponse = await _authService.logout(token);
-        return NetworkSuccess(apiResponse.data);
+        var message = await _authService.logout(token);
+        return NetworkSuccess(message);
       }
     } on DioException catch (e) {
-      return _handleAuthError(e, "logout");
+      return handleError(e, "logout");
     } catch (e) {
-      return _handleAuthError(e, "logout");
+      return handleError(e, "logout");
     }
-  }
-
-  // ------------------------------------------------
-  NetworkFailure<T> _handleAuthError<T>(Object e, String functionName) {
-    AppLogger.error("error occurred in $functionName", error: e);
-    if (e is DioException) {
-      return NetworkFailure(
-        Exception(ServerFailure.fromDioException(e).errorMessage),
-      );
-    }
-    return NetworkFailure(Exception(e.toString()));
   }
 }

@@ -30,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : null,
       leadingWidth: showArrowBack ? 52.w : 0,
-      title: Text(title, style: AppTextStyles.font18SemiBold(context)),
+      title: Text(title, style: AppTextStyles.font22Bold(context)),
       centerTitle: centerTitle,
     );
   }

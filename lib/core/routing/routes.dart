@@ -6,5 +6,6 @@ class Routes {
   static const registerView = '/registerView';
   static const appSection = '/appSection';
   static const home = '/home';
-  static const habitView = '/habitView';
+  static const habitDetailsView = '/habitDetailsView';
+  static const habitEditorView = '/habitEditorView';
 }
