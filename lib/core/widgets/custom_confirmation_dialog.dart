@@ -48,7 +48,12 @@ class CustomConfirmationDialog extends StatelessWidget {
                 ),
               ),
             ),
-            Text(title, style: AppTextStyles.font16PrimarySemiBold(context)),
+            Text(
+              title,
+              style: AppTextStyles.font16WhiteSemiBold(
+                context,
+              ).copyWith(color: AppColors.textPrimary(context)),
+            ),
             if (subtitle != null)
               Text(subtitle!, style: AppTextStyles.font14Regular(context)),
             Gap(8.h),

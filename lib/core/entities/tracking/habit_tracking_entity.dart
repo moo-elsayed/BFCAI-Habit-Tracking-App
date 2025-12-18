@@ -7,7 +7,7 @@ class HabitTrackingEntity {
     this.name = 'habit',
     this.type = .task,
     this.targetValue = 1,
-    this.icon = '58854',
+    this.icon = '',
     this.color = '0xFFFFFFFF',
     this.isActive = true,
     this.trackingRecordEntity,

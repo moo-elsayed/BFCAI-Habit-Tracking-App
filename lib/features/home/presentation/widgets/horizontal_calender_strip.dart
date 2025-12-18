@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import 'package:habit_tracking_app/core/theming/app_text_styles.dart';
-
 import '../managers/home_cubit/home_cubit.dart';
 
 class HorizontalCalendarStrip extends StatefulWidget {
@@ -76,7 +75,7 @@ class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
                       style: AppTextStyles.font14CustomColor(
                         isTheSameDay
                             ? AppColors.primary(context)
-                            : Colors.white,
+                            : AppColors.textSecondary(context)
                       ),
                     ),
                     Gap(6.h),
