@@ -82,7 +82,7 @@ class HabitRepeatDays extends StatelessWidget {
                       color: isSelected
                           ? value
                           : AppColors.habitCardColor(context),
-                      borderRadius: .circular(8.r),
+                      borderRadius: .circular(16.r),
                       border: isSelected
                           ? null
                           : Border.all(

@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import '../../../../core/helpers/functions.dart';
 import '../../../../core/theming/app_text_styles.dart';
-import '../../presentation/widgets/custom_bottom_sheet.dart';
-import 'bottom_sheet_selection_item_entity.dart';
+import '../../../../core/widgets/custom_bottom_sheet.dart';
+import '../../../../core/entities/bottom_sheet_selection_item_entity.dart';
 
 class SettingsTileEntity {
   const SettingsTileEntity({

@@ -8,6 +8,7 @@ import '../../features/app_section/presentation/views/app_section.dart';
 import '../../features/auth/presentation/views/email_verification_view.dart';
 import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/views/register_view.dart';
+import '../../features/habit/presentation/args/habit_details_args.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 import '../entities/habit_entity.dart';
@@ -19,55 +20,37 @@ class AppRouter {
 
     switch (settings.name) {
       case Routes.splashView:
-        return CupertinoPageRoute(
-          builder: (context) => const AnimatedSplashView(),
-        );
+        return _navigate(const AnimatedSplashView());
       case Routes.onboardingView:
-        return CupertinoPageRoute(builder: (context) => const OnboardingView());
+        return _navigate(const OnboardingView());
       case Routes.loginView:
         var args = arguments as LoginArgs?;
-        return CupertinoPageRoute(
-          builder: (context) => LoginView(loginArgs: args),
-        );
+        return _navigate(LoginView(loginArgs: args));
       case Routes.registerView:
-        return CupertinoPageRoute(builder: (context) => const RegisterView());
+        return _navigate(const RegisterView());
       case Routes.emailVerificationView:
         var args = arguments as EmailVerificationArgs;
-        return CupertinoPageRoute(
-          builder: (context) =>
-              EmailVerificationView(emailVerificationArgs: args),
-        );
+        return _navigate(EmailVerificationView(emailVerificationArgs: args));
       case Routes.appSection:
-        return CupertinoPageRoute(builder: (context) => const AppSection());
+        return _navigate(const AppSection());
       case Routes.habitDetailsView:
-        return CupertinoPageRoute(
-          builder: (context) => const HabitDetailsView(),
-        );
+        var args = arguments as HabitDetailsArgs;
+        return _navigate(HabitDetailsView(habitDetailsArgs: args));
       case Routes.habitEditorView:
         var args = arguments as HabitEntity?;
-        return CupertinoPageRoute(
-          builder: (context) => HabitEditorView(habit: args),
-        );
-      // case Routes.home:
-      //   return CupertinoPageRoute(builder: (context) => const Home());
-      // case Routes.forgetPasswordView:
-      //   return CupertinoPageRoute(
-      //     builder: (context) => const ForgetPasswordView(),
-      //   );
-      // case Routes.searchView:
-      //   return CupertinoPageRoute(builder: (context) => const SearchView());
-      // case Routes.productDetailsView:
-      //   final view_utils = arguments as FruitEntity;
-      //   return CupertinoPageRoute(
-      //     builder: (context) => ProductDetailsView(fruitEntity: view_utils),
-      //   );
-      // case Routes.checkoutView:
-      //   final view_utils = arguments as List<CartItemEntity>;
-      //   return CupertinoPageRoute(
-      //     builder: (context) => CheckoutView(cartItems: view_utils),
-      //   );
+        return _navigate(HabitEditorView(habit: args));
       default:
         return null;
     }
   }
+
+  PageRouteBuilder<dynamic> _navigate(Widget view) => PageRouteBuilder(
+    pageBuilder: (_, __, ___) => view,
+    transitionsBuilder: (_, animation, __, child) {
+      return FadeTransition(
+        opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+        child: child,
+      );
+    },
+  );
 }

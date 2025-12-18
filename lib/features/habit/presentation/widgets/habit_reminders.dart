@@ -91,7 +91,7 @@ class _HabitRemindersState extends State<HabitReminders> {
                       padding: .symmetric(horizontal: 16.w, vertical: 12.h),
                       decoration: BoxDecoration(
                         color: AppColors.habitCardColor(context),
-                        borderRadius: .circular(8.r),
+                        borderRadius: .circular(24.r),
                       ),
                       child: GestureDetector(
                         behavior: .opaque,

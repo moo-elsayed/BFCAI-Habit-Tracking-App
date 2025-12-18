@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.dart';
+import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import 'package:habit_tracking_app/core/theming/app_text_styles.dart';
+import 'package:habit_tracking_app/features/habit/presentation/args/habit_details_args.dart';
 import 'package:habit_tracking_app/features/home/presentation/managers/home_cubit/home_cubit.dart';
 import '../../../../core/helpers/extensions.dart';
 import '../../../../core/routing/routes.dart';
@@ -29,7 +31,13 @@ class HabitItem extends StatelessWidget {
         var habitEntity = context.read<HomeCubit>().getEquivalentHabit(
           habitTrackingEntity,
         );
-        context.pushNamed(Routes.habitEditorView, arguments: habitEntity);
+        context.pushNamed(
+          Routes.habitDetailsView,
+          arguments: HabitDetailsArgs(
+            habitEntity: habitEntity,
+            habitTrackingEntity: habitTrackingEntity,
+          ),
+        );
       },
       child: Container(
         padding: .symmetric(horizontal: 14.w, vertical: 12.h),
@@ -43,7 +51,7 @@ class HabitItem extends StatelessWidget {
               width: 48.w,
               height: 48.h,
               decoration: BoxDecoration(
-                color: _getColor(),
+                color: getColor(habitTrackingEntity.color),
                 borderRadius: .circular(16),
               ),
               child: habitTrackingEntity.icon.isEmpty
@@ -86,8 +94,6 @@ class HabitItem extends StatelessWidget {
       ),
     );
   }
-
-  Color _getColor() => Color(int.parse(habitTrackingEntity.color));
 
   IconData _getIcon() => IconData(
     int.parse(habitTrackingEntity.icon),

@@ -38,7 +38,7 @@ class CustomMaterialButton extends StatelessWidget {
       minWidth: maxWidth ? double.infinity : null,
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadiusGeometry.circular(16.r),
+        borderRadius: borderRadius ?? .circular(24.r),
         side: side ?? BorderSide.none,
       ),
       padding:

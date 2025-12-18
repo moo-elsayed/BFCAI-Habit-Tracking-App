@@ -25,7 +25,7 @@ class HabitTypeSwitch extends StatelessWidget {
       padding: .all(6.r),
       decoration: BoxDecoration(
         color: AppColors.habitCardColor(context),
-        borderRadius: .circular(8.r),
+        borderRadius: .circular(24.r),
         border: .all(color: Colors.grey.withValues(alpha: 0.1)),
       ),
       child: ValueListenableBuilder(
@@ -46,7 +46,7 @@ class HabitTypeSwitch extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: value,
-                      borderRadius: .circular(6.r),
+                      borderRadius: .circular(24.r),
                       boxShadow: [
                         BoxShadow(
                           color: value.withValues(alpha: 0.3),

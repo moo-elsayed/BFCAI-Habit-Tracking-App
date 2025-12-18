@@ -19,6 +19,8 @@ String getErrorMessage(result) =>
     ((result.exception as dynamic).message ?? result.exception.toString())
         .replaceAll('Exception: ', '');
 
+Color getColor(String color) => Color(int.parse(color));
+
 NetworkFailure<T> handleError<T>(Object e, String functionName) {
   AppLogger.error("error occurred in $functionName", error: e);
   if (e is DioException) {
