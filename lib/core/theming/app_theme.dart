@@ -36,7 +36,7 @@ class AppTheme {
       ),
 
       // 2. تظبيط الـ Dialog
-      dialogTheme: DialogThemeData(
+      dialogTheme: const DialogThemeData(
         backgroundColor: AppPalette.white,
         surfaceTintColor: Colors.transparent, // عشان Material 3 مايغيرش اللون
         elevation: 0,

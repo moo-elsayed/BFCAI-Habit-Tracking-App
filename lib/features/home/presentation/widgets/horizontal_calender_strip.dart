@@ -35,12 +35,14 @@ class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
 
   @override
   Widget build(BuildContext context) {
+    final _ = Theme.of(context);
+    var langCode = context.locale.toString();
     return ValueListenableBuilder(
       valueListenable: widget.selectedDateNotifier,
       builder: (context, value, child) => SizedBox(
         height: 70.h,
         child: ListView.separated(
-          physics: RangeMaintainingScrollPhysics(),
+          physics: const RangeMaintainingScrollPhysics(),
           scrollDirection: .horizontal,
           padding: .symmetric(horizontal: 16.w),
           itemCount: _days.length,
@@ -71,16 +73,16 @@ class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
                   mainAxisAlignment: .center,
                   children: [
                     Text(
-                      DateFormat('E').format(date),
+                      DateFormat('E',langCode).format(date),
                       style: AppTextStyles.font14CustomColor(
                         isTheSameDay
                             ? AppColors.primary(context)
-                            : AppColors.textSecondary(context)
-                      ),
+                            : AppColors.textSecondary(context),
+                      ).copyWith(fontWeight: isTheSameDay ? .w600 : .normal),
                     ),
                     Gap(6.h),
                     Text(
-                      date.day.toString(),
+                      DateFormat('d', langCode).format(date),
                       style: AppTextStyles.font18SemiBold(context),
                     ),
                     Gap(4.h),

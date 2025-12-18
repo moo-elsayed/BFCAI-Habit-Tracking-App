@@ -16,12 +16,12 @@ class HabitsListView extends StatelessWidget {
     return ListView.separated(
       itemCount: habits?.length ?? 3,
       padding: .symmetric(horizontal: 16.w),
-      separatorBuilder: (context, index) => Gap(8.h),
+      separatorBuilder: (context, index) => Gap(12.h),
       itemBuilder: (context, index) {
         return Skeletonizer(
           enabled: isLoading,
           child: HabitItem(
-            habitTrackingEntity: habits?[index] ?? HabitTrackingEntity(),
+            habitTrackingEntity: habits?[index] ?? const HabitTrackingEntity(),
             onIncrement: () {},
           ),
         );

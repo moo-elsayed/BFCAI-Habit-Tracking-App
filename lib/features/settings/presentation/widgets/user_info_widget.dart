@@ -12,10 +12,10 @@ class UserInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: .all(16.r),
+      padding: .symmetric(horizontal: 14.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: AppColors.habitCardColor(context),
-        borderRadius: .circular(16.r),
+        borderRadius: .circular(24.r),
       ),
       child: Row(
         children: [
@@ -34,11 +34,15 @@ class UserInfoWidget extends StatelessWidget {
             children: [
               Text(
                 userInfoEntity.userName,
-                style: AppTextStyles.font16PrimarySemiBold(context),
+                style: AppTextStyles.font16WhiteSemiBold(
+                  context,
+                ).copyWith(color: AppColors.textPrimary(context)),
               ),
               Text(
                 userInfoEntity.email,
-                style: AppTextStyles.font12Grey(context),
+                style: AppTextStyles.font14CustomColor(
+                  AppColors.textSecondary(context),
+                ),
               ),
             ],
           ),

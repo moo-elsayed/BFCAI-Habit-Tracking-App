@@ -17,11 +17,12 @@ class ChangeLanguageBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: .symmetric(vertical: 16.h),
+      padding: .all(16.r),
       decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.only(
-          topLeft: .circular(16.r),
-          topRight: .circular(16.r),
+          topLeft: Radius.circular(20.r),
+          topRight: Radius.circular(20.r),
         ),
       ),
       child: Column(
@@ -39,7 +40,7 @@ class ChangeLanguageBottomSheet extends StatelessWidget {
             title: "العربية",
             langCode: "ar",
           ),
-          CustomDivider(),
+          const CustomDivider(),
           buildListTile(
             context: context,
             isChecked: !isArabic(context),
