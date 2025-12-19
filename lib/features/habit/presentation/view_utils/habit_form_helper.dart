@@ -68,7 +68,7 @@ class HabitFormHelper {
   HabitEntity get entity {
     return HabitEntity(
       id: _initialHabit?.id,
-      name: nameController.text,
+      name: nameController.text.trim(),
       type: typeNotifier.value,
       targetValue: countNotifier.value,
       isActive: true,

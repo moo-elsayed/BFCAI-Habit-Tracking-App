@@ -45,7 +45,7 @@ class CustomizeHabitRow extends StatelessWidget {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: value,
-                  borderRadius: .circular(6.r),
+                  shape: BoxShape.circle,
                 ),
               ),
             ),

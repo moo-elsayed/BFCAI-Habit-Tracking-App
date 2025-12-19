@@ -33,7 +33,7 @@ class CustomizeHabitItem extends StatelessWidget {
               height: 35.h,
               decoration: BoxDecoration(
                 color: AppColors.textSecondary(context).withValues(alpha: 0.2),
-                borderRadius: .circular(6.r),
+                shape: BoxShape.circle,
               ),
               child: child,
             ),

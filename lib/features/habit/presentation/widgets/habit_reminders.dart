@@ -117,7 +117,7 @@ class _HabitRemindersState extends State<HabitReminders> {
                                             ? Colors.grey
                                             : AppColors.primary(context))
                                         .withValues(alpha: 0.2),
-                                borderRadius: BorderRadius.circular(6.r),
+                                shape: BoxShape.circle,
                               ),
                               child: Icon(
                                 Icons.add,

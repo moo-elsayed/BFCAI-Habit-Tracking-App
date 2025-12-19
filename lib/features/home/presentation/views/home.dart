@@ -27,7 +27,9 @@ class _HomeState extends State<Home> {
     super.initState();
     _selectedDateNotifier = ValueNotifier(DateTime.now());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeCubit>().getHomeHabits(_selectedDateNotifier.value);
+      context.read<HomeCubit>().getHomeHabits(
+        date: _selectedDateNotifier.value,
+      );
     });
   }
 

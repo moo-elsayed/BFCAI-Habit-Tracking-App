@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:habit_tracking_app/features/home/domain/use_cases/get_all_habits
 import '../../../../../core/entities/habit_entity.dart';
 import '../../../../../core/helpers/network_response.dart';
 import '../../../domain/use_cases/get_tracked_habits_by_date_use_case.dart';
+import 'package:collection/collection.dart';
 
 part 'home_state.dart';
 
@@ -31,13 +34,17 @@ class HomeCubit extends Cubit<HomeState> {
   List<HabitTrackingEntity> _trackedHabits = [];
   List<HabitTrackingEntity> uiHabitsList = [];
 
-  Future<void> getHomeHabits(DateTime date) async {
+  Future<void> getHomeHabits({
+    required DateTime date,
+    bool getAll = false,
+  }) async {
     emit(HomeLoading(.getHomeHabits));
-    if (_allHabits.isEmpty) {
+    if (_allHabits.isEmpty || getAll) {
       var habitsResult = await _allHabitsUseCase.call();
       switch (habitsResult) {
         case NetworkSuccess<List<HabitEntity>>():
           _allHabits = habitsResult.data!;
+          log(_allHabits.length.toString());
         case NetworkFailure<List<HabitEntity>>():
           emit(HomeFailure(getErrorMessage(habitsResult), .getHomeHabits));
           return;
@@ -100,12 +107,12 @@ class HomeCubit extends Cubit<HomeState> {
       );
 
       if (isScheduledForToday) {
-        try {
-          var trackedHabit = _trackedHabits.firstWhere(
-            (t) => t.habitId == habit.id,
-          );
+        var trackedHabit = _trackedHabits.firstWhereOrNull(
+          (t) => t.habitId == habit.id,
+        );
+        if (trackedHabit != null) {
           uiHabitsList.add(trackedHabit);
-        } catch (e) {
+        } else {
           uiHabitsList.add(
             HabitTrackingEntity(
               habitId: habit.id!,
@@ -119,7 +126,7 @@ class HomeCubit extends Cubit<HomeState> {
                 currentValue: 0,
                 progressPercentage: 0,
                 status: 'Pending',
-                updatedAt: DateTime.now().toIso8601String(),
+                updatedAt: date.toIso8601String(),
               ),
             ),
           );

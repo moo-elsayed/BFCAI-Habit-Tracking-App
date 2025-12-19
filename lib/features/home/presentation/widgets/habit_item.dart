@@ -52,7 +52,7 @@ class HabitItem extends StatelessWidget {
               height: 48.h,
               decoration: BoxDecoration(
                 color: getColor(habitTrackingEntity.color),
-                borderRadius: .circular(16),
+                shape: BoxShape.circle,
               ),
               child: habitTrackingEntity.icon.isEmpty
                   ? null

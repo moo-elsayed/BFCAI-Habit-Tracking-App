@@ -15,8 +15,6 @@ class ReminderItem extends StatelessWidget {
   final DateTime reminderValue;
   final VoidCallback onTap;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(

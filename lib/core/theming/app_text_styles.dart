@@ -18,6 +18,13 @@ class AppTextStyles {
         fontWeight: FontWeight.w700,
       );
 
+  static TextStyle font24Medium(BuildContext context) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 24.sp,
+        color: AppColors.textPrimary(context),
+        fontWeight: FontWeight.w500,
+      );
+
   // for app bar
   static TextStyle font22Bold(BuildContext context) =>
       GoogleFonts.ibmPlexSansArabic(

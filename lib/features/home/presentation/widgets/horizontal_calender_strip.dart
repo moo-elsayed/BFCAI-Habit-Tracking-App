@@ -57,7 +57,7 @@ class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
               onTap: () {
                 if (!isTheSameDay) {
                   widget.selectedDateNotifier.value = date;
-                  context.read<HomeCubit>().getHomeHabits(date);
+                  context.read<HomeCubit>().getHomeHabits(date: date);
                 }
               },
               child: Container(

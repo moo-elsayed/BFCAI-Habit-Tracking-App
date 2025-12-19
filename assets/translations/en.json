@@ -107,5 +107,6 @@
   "dark": "Dark",
   "actions": "Actions",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "in_progress": "In Progress"
 }
