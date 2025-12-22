@@ -16,12 +16,12 @@ class HomeRepoImp implements HomeRepo {
       await _homeRemoteDataSource.getAllHabits();
 
   @override
-  Future<NetworkResponse<List<HabitTrackingEntity>>> getTrackedHabitsByDate(
+  Future<NetworkResponse<List<HabitTrackingEntity>>> getHabitsByDate(
     DateTime date,
-  ) async => await _homeRemoteDataSource.getTrackedHabitsByDate(date);
+  ) async => await _homeRemoteDataSource.getHabitsByDate(date);
 
   @override
-  Future<NetworkResponse<String>> createHabitTracking(
+  Future<NetworkResponse<int>> createHabitTracking(
     CreateHabitTrackingInputEntity input,
   ) async => await _homeRemoteDataSource.createHabitTracking(input);
 

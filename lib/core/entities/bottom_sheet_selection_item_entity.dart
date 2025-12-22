@@ -5,11 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habit_tracking_app/core/entities/habit_entity.dart';
-import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import 'package:habit_tracking_app/generated/assets.dart';
 import 'package:restart_app/restart_app.dart';
-import '../../features/habit/presentation/managers/habit_cubit/habit_cubit.dart';
 import '../helpers/extensions.dart';
 import '../helpers/functions.dart';
 import '../theming/managers/theme_cubit/theme_cubit.dart';
@@ -76,12 +74,14 @@ List<BottomSheetSelectionItemEntity> getLanguageItems(BuildContext context) => [
 List<BottomSheetSelectionItemEntity> getActionItems({
   required BuildContext context,
   required HabitEntity habitEntity,
+  required VoidCallback onEdit,
+  required VoidCallback onDelete,
 }) => [
   BottomSheetSelectionItemEntity(
     title: "edit".tr(),
     onTap: () {
       context.pop();
-      context.pushNamed(Routes.habitEditorView, arguments: habitEntity);
+      onEdit();
     },
     icon: Image.asset(
       Assets.iconsEditIcon,
@@ -93,7 +93,7 @@ List<BottomSheetSelectionItemEntity> getActionItems({
     title: "delete".tr(),
     onTap: () {
       context.pop();
-      context.read<HabitCubit>().deleteHabit(habitEntity.id!);
+      onDelete();
     },
     icon: SvgPicture.asset(
       Assets.iconsTrash,

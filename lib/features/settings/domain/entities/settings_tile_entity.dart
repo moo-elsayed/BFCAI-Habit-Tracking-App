@@ -12,13 +12,13 @@ class SettingsTileEntity {
   const SettingsTileEntity({
     required this.title,
     required this.icon,
-    this.isDestructive = false,
+    this.logout = false,
     this.trailing,
     this.onTap,
   });
 
   final String title;
-  final bool isDestructive;
+  final bool logout;
   final IconData icon;
   final Widget? trailing;
   final VoidCallback? onTap;

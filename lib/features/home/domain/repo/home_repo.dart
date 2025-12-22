@@ -7,11 +7,11 @@ import '../../../../core/entities/tracking/create_habit_tracking_input_entity.da
 abstract class HomeRepo {
   Future<NetworkResponse<List<HabitEntity>>> getAllHabits();
 
-  Future<NetworkResponse<List<HabitTrackingEntity>>> getTrackedHabitsByDate(
+  Future<NetworkResponse<List<HabitTrackingEntity>>> getHabitsByDate(
     DateTime date,
   );
 
-  Future<NetworkResponse<String>> createHabitTracking(
+  Future<NetworkResponse<int>> createHabitTracking(
     CreateHabitTrackingInputEntity input,
   );
 

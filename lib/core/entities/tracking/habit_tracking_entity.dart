@@ -10,7 +10,7 @@ class HabitTrackingEntity {
     this.icon = '',
     this.color = '0xFFFFFFFF',
     this.isActive = true,
-    this.trackingRecordEntity,
+    this.trackingRecordEntity = const TrackingRecordEntity(),
   });
 
   final int habitId;
@@ -20,7 +20,7 @@ class HabitTrackingEntity {
   final String icon;
   final String color;
   final bool isActive;
-  final TrackingRecordEntity? trackingRecordEntity;
+  final TrackingRecordEntity trackingRecordEntity;
 
   HabitTrackingEntity copyWith({
     int? habitId,

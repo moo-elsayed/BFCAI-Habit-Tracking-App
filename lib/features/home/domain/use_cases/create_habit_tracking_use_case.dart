@@ -7,7 +7,7 @@ class CreateHabitTrackingUseCase {
 
   final HomeRepo _homeRepo;
 
-  Future<NetworkResponse<String>> call(
+  Future<NetworkResponse<int>> call(
     CreateHabitTrackingInputEntity input,
   ) async => await _homeRepo.createHabitTracking(input);
 }

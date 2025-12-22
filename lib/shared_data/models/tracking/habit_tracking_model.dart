@@ -27,7 +27,7 @@ class HabitTrackingModel {
       HabitTrackingModel(
         habitId: json["habitId"],
         name: json["habitName"],
-        type: json["habitType"] == 1 ? .task : .count,
+        type: json["habitType"] == "UnCountableHabit" ? .task : .count,
         targetValue: json["habitTargetValue"],
         icon: json["habitIcon"],
         color: json["habitColor"],

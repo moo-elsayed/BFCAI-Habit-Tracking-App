@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking_app/core/theming/app_colors.dart';
 import 'package:habit_tracking_app/core/entities/bottom_sheet_selection_item_entity.dart';
-import '../../../../core/theming/app_text_styles.dart';
+import '../theming/app_text_styles.dart';
 
 class BottomSheetSelectionItem extends StatelessWidget {
   const BottomSheetSelectionItem({super.key, required this.entity});

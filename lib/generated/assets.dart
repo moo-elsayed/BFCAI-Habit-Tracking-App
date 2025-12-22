@@ -12,6 +12,7 @@ class Assets {
   static const String imagesBrandingImage = 'assets/images/branding-image.png';
   static const String imagesSplashIosAndroid11 = 'assets/images/splash_ios_android_11.png';
   static const String imagesSplashIosAndroid12 = 'assets/images/splash_ios_android_12.png';
+  static const String svgsNoResultsFound = 'assets/svgs/no-results-found.svg';
   static const String svgsOnboardingImage1 = 'assets/svgs/onboarding_image1.svg';
   static const String svgsOnboardingImage2 = 'assets/svgs/onboarding_image2.svg';
   static const String svgsOnboardingImage3 = 'assets/svgs/onboarding_image3.svg';

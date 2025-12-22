@@ -7,11 +7,11 @@ import '../../../../../core/helpers/network_response.dart';
 abstract class HomeRemoteDataSource {
   Future<NetworkResponse<List<HabitEntity>>> getAllHabits();
 
-  Future<NetworkResponse<List<HabitTrackingEntity>>> getTrackedHabitsByDate(
+  Future<NetworkResponse<List<HabitTrackingEntity>>> getHabitsByDate(
     DateTime date,
   );
 
-  Future<NetworkResponse<String>> createHabitTracking(
+  Future<NetworkResponse<int>> createHabitTracking(
     CreateHabitTrackingInputEntity input,
   );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
@@ -8,10 +9,15 @@ import '../../features/app_section/presentation/views/app_section.dart';
 import '../../features/auth/presentation/views/email_verification_view.dart';
 import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/views/register_view.dart';
+import '../../features/habit/domain/use_cases/add_habit_use_case.dart';
+import '../../features/habit/domain/use_cases/delete_habit_use_case.dart';
+import '../../features/habit/domain/use_cases/edit_habit_use_case.dart';
 import '../../features/habit/presentation/args/habit_details_args.dart';
+import '../../features/habit/presentation/managers/habit_cubit/habit_cubit.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import '../../features/splash/presentation/views/animated_splash_view.dart';
 import '../entities/habit_entity.dart';
+import '../helpers/di.dart';
 
 class AppRouter {
   Route? generateRoute(RouteSettings settings) {
@@ -35,10 +41,28 @@ class AppRouter {
         return _navigate(const AppSection());
       case Routes.habitDetailsView:
         var args = arguments as HabitDetailsArgs;
-        return _navigate(HabitDetailsView(habitDetailsArgs: args));
+        return _navigate(
+          BlocProvider(
+            create: (context) => HabitCubit(
+              getIt.get<AddHabitUseCase>(),
+              getIt.get<DeleteHabitUseCase>(),
+              getIt.get<EditHabitUseCase>(),
+            ),
+            child: HabitDetailsView(habitDetailsArgs: args),
+          ),
+        );
       case Routes.habitEditorView:
         var args = arguments as HabitEntity?;
-        return _navigate(HabitEditorView(habit: args));
+        return _navigate(
+          BlocProvider(
+            create: (context) => HabitCubit(
+              getIt.get<AddHabitUseCase>(),
+              getIt.get<DeleteHabitUseCase>(),
+              getIt.get<EditHabitUseCase>(),
+            ),
+            child: HabitEditorView(habit: args),
+          ),
+        );
       default:
         return null;
     }

@@ -2,18 +2,18 @@ import 'package:habit_tracking_app/core/entities/tracking/tracking_record_entity
 
 class TrackingRecordModel {
   const TrackingRecordModel({
-    required this.trackingId,
+    this.trackingId,
     required this.status,
     required this.currentValue,
     required this.progressPercentage,
-    required this.updatedAt,
+    this.updatedAt,
   });
 
-  final int trackingId;
+  final int? trackingId;
   final String status;
   final int currentValue;
   final num progressPercentage;
-  final String updatedAt;
+  final String? updatedAt;
 
   factory TrackingRecordModel.fromJson(Map<String, dynamic> json) =>
       TrackingRecordModel(

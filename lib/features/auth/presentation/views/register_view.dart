@@ -54,7 +54,7 @@ class _RegisterViewState extends State<RegisterView> {
           onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           behavior: HitTestBehavior.opaque,
           child: SingleChildScrollView(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 16.w),
+            padding: .symmetric(horizontal: 16.w),
             child: Form(
               key: _registerFormHelper.formKey,
               child: Column(
@@ -91,7 +91,7 @@ class _RegisterViewState extends State<RegisterView> {
                     obscuringCharacter: '●',
                     keyboardType: TextInputType.visiblePassword,
                     onValidate: Validator.validatePassword,
-                    action: TextInputAction.done,
+                    action: TextInputAction.next,
                   ),
                   Gap(16.h),
                   TextFormFieldHelper(

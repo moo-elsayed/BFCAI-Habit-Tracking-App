@@ -67,6 +67,10 @@ int parseDayStringToInt(String day) {
   }
 }
 
+int parseDateTimeToDayInt(int weekday) {
+  return ((weekday + 1) % 7) + 1;
+}
+
 ThemeMode getThemeMode(String? savedTheme) {
   ThemeMode themeMode;
   switch (savedTheme) {

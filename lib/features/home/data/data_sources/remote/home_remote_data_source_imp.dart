@@ -35,7 +35,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
   }
 
   @override
-  Future<NetworkResponse<String>> createHabitTracking(
+  Future<NetworkResponse<int>> createHabitTracking(
     CreateHabitTrackingInputEntity input,
   ) async {
     try {
@@ -44,7 +44,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
         path: ApiConstants.createHabitTracking,
         data: data,
       );
-      return NetworkSuccess(response);
+      return NetworkSuccess(int.parse(response));
     } on DioException catch (e) {
       return handleError(e, "createHabitTracking");
     } catch (e) {
@@ -71,7 +71,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
   }
 
   @override
-  Future<NetworkResponse<List<HabitTrackingEntity>>> getTrackedHabitsByDate(
+  Future<NetworkResponse<List<HabitTrackingEntity>>> getHabitsByDate(
     DateTime date,
   ) async {
     try {

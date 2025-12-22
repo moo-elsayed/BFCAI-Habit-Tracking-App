@@ -43,10 +43,7 @@ class CustomizeHabitRow extends StatelessWidget {
               onTap: () => _selectColorDialog(context, value),
               title: "color".tr(),
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: value,
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: value, shape: BoxShape.circle),
               ),
             ),
           ),
@@ -85,7 +82,7 @@ class CustomizeHabitRow extends StatelessWidget {
   }
 
   Future<void> _selectColorDialog(BuildContext context, Color value) async {
-    late Color myColor;
+    Color myColor = value;
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(

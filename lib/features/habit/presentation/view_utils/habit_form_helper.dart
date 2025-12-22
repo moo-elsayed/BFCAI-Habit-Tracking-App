@@ -92,6 +92,7 @@ class HabitFormHelper {
     List<HabitScheduleEntity> schedules = [];
     List<int> selectedDays = daysNotifier.value;
     List<DateTime> reminders = remindersNotifier.value;
+
     for (int i = 1; i <= selectedDays.length; i++) {
       if (selectedDays[i - 1] == 1) {
         if (reminders.isNotEmpty) {
@@ -105,7 +106,7 @@ class HabitFormHelper {
           }
         } else {
           schedules.add(
-            HabitScheduleEntity(dayOfWeek: i, notificationTime: "08:00:00"),
+            HabitScheduleEntity(dayOfWeek: i, notificationTime: null),
           );
         }
       }
@@ -128,11 +129,12 @@ class HabitFormHelper {
     final List<DateTime> reminders = [];
 
     for (var schedule in schedules) {
-      if (!uniqueTimes.contains(schedule.notificationTime)) {
-        uniqueTimes.add(schedule.notificationTime);
+      if (schedule.notificationTime != null &&
+          !uniqueTimes.contains(schedule.notificationTime)) {
+        uniqueTimes.add(schedule.notificationTime!);
         try {
           final now = DateTime.now();
-          final timeParts = schedule.notificationTime.split(':');
+          final timeParts = schedule.notificationTime!.split(':');
           final time = DateTime(
             now.year,
             now.month,

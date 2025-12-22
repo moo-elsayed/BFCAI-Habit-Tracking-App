@@ -21,85 +21,150 @@ class HorizontalCalendarStrip extends StatefulWidget {
 }
 
 class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
-  late List<DateTime> _days;
+  late PageController _pageController;
+  late DateTime _initialStartDate;
+  int _initialPage = 1000;
+
+  DateTime _getStartDateOfWeek(DateTime date) {
+    while (date.weekday != DateTime.saturday) {
+      date = date.subtract(const Duration(days: 1));
+    }
+    return DateTime(date.year, date.month, date.day);
+  }
+
+  // void _onDateChanged() {
+  //   final selectedDate = widget.selectedDateNotifier.value;
+  //   final startOfSelectedWeek = _getStartDateOfWeek(selectedDate);
+  //
+  //   final differenceInDays = startOfSelectedWeek.difference(_initialStartDate).inDays;
+  //
+  //   final weekDifference = (differenceInDays / 7).round();
+  //
+  //   final targetPage = _initialPage + weekDifference;
+  //
+  //   if (_pageController.hasClients && _pageController.page?.round() != targetPage) {
+  //     _pageController.animateToPage(
+  //       targetPage,
+  //       duration: const Duration(milliseconds: 300),
+  //       curve: Curves.easeInOut,
+  //     );
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _days = List.generate(14, (index) {
-      return DateTime.now()
-          .subtract(const Duration(days: 3))
-          .add(Duration(days: index));
-    });
+    _pageController = PageController(initialPage: _initialPage);
+    _initialStartDate = _getStartDateOfWeek(DateTime.now());
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final _ = Theme.of(context);
     var langCode = context.locale.toString();
-    return ValueListenableBuilder(
-      valueListenable: widget.selectedDateNotifier,
-      builder: (context, value, child) => SizedBox(
-        height: 70.h,
-        child: ListView.separated(
-          physics: const RangeMaintainingScrollPhysics(),
-          scrollDirection: .horizontal,
-          padding: .symmetric(horizontal: 16.w),
-          itemCount: _days.length,
-          separatorBuilder: (context, index) => Gap(12.w),
-          itemBuilder: (context, index) {
-            final date = _days[index];
-            final isTheSameDay = DateUtils.isSameDay(
-              date,
-              widget.selectedDateNotifier.value,
-            );
-            return GestureDetector(
-              onTap: () {
-                if (!isTheSameDay) {
-                  widget.selectedDateNotifier.value = date;
-                  context.read<HomeCubit>().getHomeHabits(date: date);
-                }
-              },
-              child: Container(
-                width: 45.w,
-                decoration: BoxDecoration(
-                  color: isTheSameDay
-                      ? AppColors.surface(context)
-                      : Colors.transparent,
-                  borderRadius: .circular(16.r),
-                  border: isTheSameDay ? null : .all(color: Colors.transparent),
-                ),
-                child: Column(
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        return ValueListenableBuilder(
+          valueListenable: widget.selectedDateNotifier,
+          builder: (context, value, child) => SizedBox(
+            height: 70.h,
+            child: PageView.builder(
+              scrollDirection: .horizontal,
+              controller: _pageController,
+              itemBuilder: (context, index) {
+                final int weekOffset = index - _initialPage;
+                final DateTime weekStartDate = _initialStartDate.add(
+                  Duration(days: weekOffset * 7),
+                );
+                return Row(
                   mainAxisAlignment: .center,
-                  children: [
-                    Text(
-                      DateFormat('E',langCode).format(date),
-                      style: AppTextStyles.font14CustomColor(
-                        isTheSameDay
-                            ? AppColors.primary(context)
-                            : AppColors.textSecondary(context),
-                      ).copyWith(fontWeight: isTheSameDay ? .w600 : .normal),
-                    ),
-                    Gap(6.h),
-                    Text(
-                      DateFormat('d', langCode).format(date),
-                      style: AppTextStyles.font18SemiBold(context),
-                    ),
-                    Gap(4.h),
-                    if (isTheSameDay)
-                      CircleAvatar(
-                        radius: 3.r,
-                        backgroundColor: AppColors.primary(context),
-                      )
-                    else
-                      Gap(6.h),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+                  children: List.generate(7, (dayIndex) {
+                    final date = weekStartDate.add(Duration(days: dayIndex));
+                    final isTheSameDay = DateUtils.isSameDay(
+                      date,
+                      widget.selectedDateNotifier.value,
+                    );
+                    final int habitsCount = context
+                        .read<HomeCubit>()
+                        .getHabitsCountForDay(date.weekday);
+                    return GestureDetector(
+                      onTap: () {
+                        if (!isTheSameDay) {
+                          widget.selectedDateNotifier.value = date;
+                          context.read<HomeCubit>().getHabitsByDate(date);
+                        }
+                      },
+                      child: Container(
+                        width: 50.w,
+                        decoration: BoxDecoration(
+                          color: isTheSameDay
+                              ? AppColors.surface(context)
+                              : Colors.transparent,
+                          borderRadius: .circular(16.r),
+                          border: isTheSameDay
+                              ? null
+                              : .all(color: Colors.transparent),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: .center,
+                          children: [
+                            Text(
+                              DateFormat('E', langCode).format(date),
+                              style: isTheSameDay
+                                  ? AppTextStyles.font14SemiBoldCustomColor(
+                                      AppColors.primary(context),
+                                    )
+                                  : AppTextStyles.font14CustomColor(
+                                      AppColors.textSecondary(context),
+                                    ),
+                            ),
+                            Gap(6.h),
+                            Text(
+                              DateFormat('d', langCode).format(date),
+                              style: AppTextStyles.font18SemiBold(context),
+                            ),
+                            Gap(4.h),
+                            if (habitsCount > 0)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(
+                                  habitsCount > 3 ? 3 : habitsCount,
+                                  (dotIndex) => Container(
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: 1.5.w,
+                                    ),
+                                    width: 5.w,
+                                    height: 5.w,
+                                    decoration: BoxDecoration(
+                                      color: isTheSameDay
+                                          ? AppColors.primary(context)
+                                          : AppColors.textSecondary(
+                                              context,
+                                            ).withValues(alpha: 0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            else
+                              Gap(5.w),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

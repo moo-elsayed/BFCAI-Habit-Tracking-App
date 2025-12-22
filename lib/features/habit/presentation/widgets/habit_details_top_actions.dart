@@ -11,9 +11,15 @@ import '../../../../core/widgets/custom_bottom_sheet.dart';
 import '../../../../generated/assets.dart';
 
 class HabitDetailsTopActions extends StatelessWidget {
-  const HabitDetailsTopActions({super.key, required this.habitEntity});
+  const HabitDetailsTopActions({
+    super.key,
+    required this.habitEntity,
+    required this.onEdit, required this.onDelete,
+  });
 
   final HabitEntity habitEntity;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,8 @@ class HabitDetailsTopActions extends StatelessWidget {
                 items: getActionItems(
                   context: context,
                   habitEntity: habitEntity,
+                  onEdit: onEdit,
+                  onDelete: onDelete,
                 ),
               ),
             );

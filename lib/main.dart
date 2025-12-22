@@ -7,6 +7,11 @@ import 'package:habit_tracking_app/core/theming/managers/theme_cubit/theme_cubit
 import 'package:habit_tracking_app/habit_tracker.dart';
 import 'package:habit_tracking_app/simple_bloc_observer.dart';
 import 'core/helpers/di.dart';
+import 'features/home/domain/use_cases/create_habit_tracking_use_case.dart';
+import 'features/home/domain/use_cases/edit_habit_tracking_use_case.dart';
+import 'features/home/domain/use_cases/get_all_habits_use_case.dart';
+import 'features/home/domain/use_cases/get_habits_by_date_use_case.dart';
+import 'features/home/presentation/managers/home_cubit/home_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +20,21 @@ void main() async {
   await Future.wait([EasyLocalization.ensureInitialized(), getIt.allReady()]);
 
   runApp(
-    BlocProvider(
-      create: (context) =>
-          ThemeCubit(getIt.get<AppPreferencesService>())..getCurrentTheme(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              ThemeCubit(getIt.get<AppPreferencesService>())..getCurrentTheme(),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit(
+            getIt.get<GetAllHabitsUseCase>(),
+            getIt.get<GetHabitsByDateUseCase>(),
+            getIt.get<CreateHabitTrackingUseCase>(),
+            getIt.get<EditHabitTrackingUseCase>(),
+          ),
+        ),
+      ],
       child: EasyLocalization(
         supportedLocales: [const Locale('ar'), const Locale('en')],
         path: 'assets/translations',

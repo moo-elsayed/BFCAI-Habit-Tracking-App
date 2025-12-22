@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +21,7 @@ class HabitTypeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(selectedType.value.toString());
     return Container(
       height: 50.h,
       width: double.infinity,

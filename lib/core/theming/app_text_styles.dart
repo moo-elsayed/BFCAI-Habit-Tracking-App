@@ -121,4 +121,11 @@ class AppTextStyles {
         color: color,
         fontWeight: FontWeight.w400,
       );
+
+  static TextStyle font14SemiBoldCustomColor(Color color) =>
+      GoogleFonts.ibmPlexSansArabic(
+        fontSize: 14.sp,
+        color: color,
+        fontWeight: FontWeight.w600,
+      );
 }

@@ -2,10 +2,10 @@ import '../../core/entities/habit_schedule_entity.dart';
 import '../../core/helpers/functions.dart';
 
 class HabitScheduleModel {
-  HabitScheduleModel({required this.dayOfWeek, required this.notificationTime});
+  HabitScheduleModel({required this.dayOfWeek, this.notificationTime});
 
   final int dayOfWeek;
-  final String notificationTime;
+  final String? notificationTime;
 
   factory HabitScheduleModel.fromEntity(HabitScheduleEntity entity) =>
       HabitScheduleModel(
@@ -29,8 +29,15 @@ class HabitScheduleModel {
 
   Map<String, dynamic> toJson() => {
     "dayOfWeek": dayOfWeek,
-    "notificationTime": notificationTime.length > 8
-        ? notificationTime.substring(0, 8)
-        : notificationTime,
+    "notificationTime": ?_notificationTime,
   };
+
+  String? get _notificationTime {
+    if (notificationTime != null) {
+      return notificationTime!.length > 8
+          ? notificationTime?.substring(0, 8)
+          : notificationTime;
+    }
+    return null;
+  }
 }

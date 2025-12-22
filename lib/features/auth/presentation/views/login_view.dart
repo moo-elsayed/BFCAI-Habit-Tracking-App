@@ -72,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
           onTap: () => FocusManager.instance.primaryFocus!.unfocus(),
           behavior: HitTestBehavior.opaque,
           child: SingleChildScrollView(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 16.w),
+            padding: .symmetric(horizontal: 16.w),
             child: ValueListenableBuilder(
               valueListenable: _notifier,
               builder: (context, value, child) => Form(
