@@ -8,6 +8,7 @@ class SharedPreferencesManager implements AppPreferencesService {
   final String _usernameKey = 'username';
   final String _emailAddressKey = 'emailAddress';
   final String _keyThemeMode = 'theme_mode_v2';
+  final String _keyHabitsScheduled = 'habits_scheduled';
 
   @override
   Future<void> init() async => _prefs = await SharedPreferences.getInstance();
@@ -53,4 +54,15 @@ class SharedPreferencesManager implements AppPreferencesService {
 
   @override
   String? getThemeMode() => _prefs.getString(_keyThemeMode);
+
+  @override
+  Future<void> setHabitsScheduled(bool habitsScheduled) async =>
+      await _prefs.setBool(_keyHabitsScheduled, habitsScheduled);
+
+  @override
+  bool getHabitsScheduled() => _prefs.getBool(_keyHabitsScheduled) ?? false;
+
+  @override
+  Future<void> deleteHabitsScheduled() async =>
+      await _prefs.remove(_keyHabitsScheduled);
 }

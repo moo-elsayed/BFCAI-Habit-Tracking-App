@@ -118,9 +118,7 @@ class _HabitHistoryCalendarState extends State<HabitHistoryCalendar> {
         ),
         calendarStyle: CalendarStyle(
           outsideDaysVisible: true,
-          outsideTextStyle: AppTextStyles.font14Grey(
-            context,
-          ),
+          outsideTextStyle: AppTextStyles.font14Grey(context),
           todayDecoration: BoxDecoration(
             color: widget.baseColor.withValues(alpha: 0.3),
             shape: BoxShape.circle,
@@ -135,32 +133,24 @@ class _HabitHistoryCalendarState extends State<HabitHistoryCalendar> {
             return _buildDayCell(day);
           },
           todayBuilder: (context, day, focusedDay) {
-            return _buildDayCell(day, isToday: true);
+            return _buildDayCell(day);
           },
         ),
       ),
     );
   }
 
-  Widget _buildDayCell(DateTime day, {bool isToday = false}) {
+  Widget _buildDayCell(DateTime day) {
     final historyItem = _getEventForDay(day);
     if (historyItem == null || historyItem.currentValue == 0) {
       return Center(
-        child: Container(
+        child: SizedBox(
           width: 35.w,
           height: 35.h,
-          decoration: isToday
-              ? BoxDecoration(
-                  border: Border.all(color: widget.baseColor, width: 2),
-                  shape: BoxShape.circle,
-                )
-              : null,
           child: Center(
             child: Text(
               '${day.day}',
-              style: isToday
-                  ? AppTextStyles.font14CustomColor(widget.baseColor)
-                  : AppTextStyles.font14Regular(context),
+              style: AppTextStyles.font14Regular(context),
             ),
           ),
         ),

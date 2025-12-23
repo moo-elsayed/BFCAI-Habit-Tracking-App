@@ -10,5 +10,5 @@ class GetHabitHistoryUseCase {
 
   Future<NetworkResponse<List<HabitHistoryEntity>>> call(
     GetHabitHistoryInputEntity input,
-  ) async => _habitRepo.getHabitHistory(input);
+  ) async => await _habitRepo.getHabitHistory(input);
 }

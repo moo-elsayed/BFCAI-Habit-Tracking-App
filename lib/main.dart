@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/routing/app_router.dart';
+import 'package:habit_tracking_app/core/services/local_notification_service/local_notification_service.dart';
 import 'package:habit_tracking_app/core/services/local_storage/app_preferences_service.dart';
 import 'package:habit_tracking_app/core/theming/managers/theme_cubit/theme_cubit.dart';
 import 'package:habit_tracking_app/habit_tracker.dart';
@@ -17,7 +18,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   setupServiceLocator();
-  await Future.wait([EasyLocalization.ensureInitialized(), getIt.allReady()]);
+  await Future.wait([
+    EasyLocalization.ensureInitialized(),
+    LocalNotificationService.init(),
+    getIt.allReady(),
+  ]);
 
   runApp(
     MultiBlocProvider(
@@ -32,6 +37,7 @@ void main() async {
             getIt.get<GetHabitsByDateUseCase>(),
             getIt.get<CreateHabitTrackingUseCase>(),
             getIt.get<EditHabitTrackingUseCase>(),
+            getIt.get<AppPreferencesService>(),
           ),
         ),
       ],

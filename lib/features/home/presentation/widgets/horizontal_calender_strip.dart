@@ -23,7 +23,7 @@ class HorizontalCalendarStrip extends StatefulWidget {
 class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
   late PageController _pageController;
   late DateTime _initialStartDate;
-  int _initialPage = 1000;
+  final int _initialPage = 1000;
 
   DateTime _getStartDateOfWeek(DateTime date) {
     while (date.weekday != DateTime.saturday) {
@@ -31,25 +31,6 @@ class _HorizontalCalendarStripState extends State<HorizontalCalendarStrip> {
     }
     return DateTime(date.year, date.month, date.day);
   }
-
-  // void _onDateChanged() {
-  //   final selectedDate = widget.selectedDateNotifier.value;
-  //   final startOfSelectedWeek = _getStartDateOfWeek(selectedDate);
-  //
-  //   final differenceInDays = startOfSelectedWeek.difference(_initialStartDate).inDays;
-  //
-  //   final weekDifference = (differenceInDays / 7).round();
-  //
-  //   final targetPage = _initialPage + weekDifference;
-  //
-  //   if (_pageController.hasClients && _pageController.page?.round() != targetPage) {
-  //     _pageController.animateToPage(
-  //       targetPage,
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   }
-  // }
 
   @override
   void initState() {

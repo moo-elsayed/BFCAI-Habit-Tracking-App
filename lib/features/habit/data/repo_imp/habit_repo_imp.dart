@@ -12,18 +12,18 @@ class HabitRepoImp implements HabitRepo {
 
   @override
   Future<NetworkResponse<String>> addHabit(HabitEntity input) async =>
-      _habitRemoteDataSource.addHabit(input);
+      await _habitRemoteDataSource.addHabit(input);
 
   @override
   Future<NetworkResponse<String>> deleteHabit(int id) async =>
-      _habitRemoteDataSource.deleteHabit(id);
+      await _habitRemoteDataSource.deleteHabit(id);
 
   @override
   Future<NetworkResponse<String>> editHabit(input) async =>
-      _habitRemoteDataSource.editHabit(input);
+      await _habitRemoteDataSource.editHabit(input);
 
   @override
   Future<NetworkResponse<List<HabitHistoryEntity>>> getHabitHistory(
     GetHabitHistoryInputEntity input,
-  ) async => _habitRemoteDataSource.getHabitHistory(input);
+  ) async => await _habitRemoteDataSource.getHabitHistory(input);
 }

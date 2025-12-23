@@ -1,3 +1,5 @@
+import 'package:habit_tracking_app/core/services/local_notification_service/local_notification_service.dart';
+
 import '../../../../core/helpers/app_logger.dart';
 import '../../../../core/services/local_storage/app_preferences_service.dart';
 import '../../../../core/services/local_storage/auth_storage_service.dart';
@@ -18,6 +20,8 @@ class ClearUserSessionUseCase {
         _appPreferencesService.deleteUseName(),
         _appPreferencesService.deleteEmailAddress(),
         _authStorageService.clearTokens(),
+        _appPreferencesService.deleteHabitsScheduled(),
+        LocalNotificationService.cancelAll(),
       ]);
     } catch (e) {
       AppLogger.error("error in clear user session", error: e.toString());
