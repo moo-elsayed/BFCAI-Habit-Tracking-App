@@ -30,4 +30,7 @@ class ApiConstants {
   static const String getTrackedHabits = "$_habitTrackingRoute/List/ByDate";
   static const String createHabitTracking = "$_habitTrackingRoute/Create";
   static const String editHabitTracking = "$_habitTrackingRoute/Edit";
+
+  /// Habit History
+  static const String getHabitHistory = "$_version/Habit-Stats/Calendar-Stats";
 }

@@ -10,7 +10,7 @@ abstract class DatabaseService {
 
   Future<List<Map<String, dynamic>>> queryData({
     required String path,
-    required QueryParameters query,
+    QueryParameters? query,
   });
 
   Future<String> addData({

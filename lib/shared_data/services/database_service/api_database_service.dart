@@ -72,11 +72,9 @@ class ApiDatabaseService implements DatabaseService {
   @override
   Future<List<Map<String, dynamic>>> queryData({
     required String path,
-    required QueryParameters query,
+    QueryParameters? query,
   }) async {
-    final response = await _dio.get(
-      "$path/${query.date.toString().substring(0, 10)}",
-    );
+    final response = await _dio.get(path, queryParameters: query?.toJson());
     var apiResponse = ApiResponse.fromJson(
       response.data,
       (json) => (json as List).map((e) => e as Map<String, dynamic>).toList(),

@@ -44,6 +44,7 @@ class HabitItem extends StatelessWidget {
           arguments: HabitDetailsArgs(
             habitEntity: habitEntity,
             habitTrackingEntity: habitTrackingEntity,
+            selectedDate: selectedDateNotifier.value,
           ),
         );
         if (myBool != null && myBool) {

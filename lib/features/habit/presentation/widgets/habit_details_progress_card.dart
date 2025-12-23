@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +18,12 @@ class HabitDetailsProgressCard extends StatelessWidget {
     super.key,
     required this.habit,
     required this.onValueUpdated,
+    required this.selectedDate,
   });
 
   final HabitTrackingEntity habit;
   final ValueChanged<HabitTrackingEntity> onValueUpdated;
+  final DateTime selectedDate;
 
   void _updateValue(int newValue, BuildContext context) {
     if (newValue < 0) return;
@@ -44,10 +48,7 @@ class HabitDetailsProgressCard extends StatelessWidget {
         CreateHabitTrackingInputEntity(
           habitId: habit.habitId,
           currentValue: newValue,
-          date: DateTime.parse(
-            habit.trackingRecordEntity.updatedAt ??
-                DateTime.now().toIso8601String(),
-          ),
+          date: selectedDate,
         ),
       );
     }
@@ -103,7 +104,7 @@ class HabitDetailsProgressCard extends StatelessWidget {
           ),
           Gap(10.h),
           Text(
-            "${((current / target) * 100).toInt()}%",
+            "${min(((current / target) * 100).toInt(), 100)}%",
             style: AppTextStyles.font14Grey(context),
           ),
         ],

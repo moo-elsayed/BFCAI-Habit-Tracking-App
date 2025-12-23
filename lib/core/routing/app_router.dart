@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/email_verification_args.dart';
 import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/login_args.dart';
+import 'package:habit_tracking_app/features/habit/domain/use_cases/get_habit_history_use_case.dart';
 import 'package:habit_tracking_app/features/habit/presentation/views/habit_editor_view.dart';
 import 'package:habit_tracking_app/features/habit/presentation/views/habit_details_view.dart';
 import '../../features/app_section/presentation/views/app_section.dart';
@@ -47,6 +48,7 @@ class AppRouter {
               getIt.get<AddHabitUseCase>(),
               getIt.get<DeleteHabitUseCase>(),
               getIt.get<EditHabitUseCase>(),
+              getIt.get<GetHabitHistoryUseCase>(),
             ),
             child: HabitDetailsView(habitDetailsArgs: args),
           ),
@@ -59,6 +61,7 @@ class AppRouter {
               getIt.get<AddHabitUseCase>(),
               getIt.get<DeleteHabitUseCase>(),
               getIt.get<EditHabitUseCase>(),
+              getIt.get<GetHabitHistoryUseCase>(),
             ),
             child: HabitEditorView(habit: args),
           ),

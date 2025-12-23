@@ -11,6 +11,7 @@ import 'package:habit_tracking_app/features/auth/domain/use_cases/logout_use_cas
 import 'package:habit_tracking_app/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:habit_tracking_app/features/habit/data/data_sources/remote/habit_remote_data_source_imp.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/add_habit_use_case.dart';
+import 'package:habit_tracking_app/features/habit/domain/use_cases/get_habit_history_use_case.dart';
 import 'package:habit_tracking_app/features/home/data/data_sources/remote/home_remote_data_source_imp.dart';
 import 'package:habit_tracking_app/features/home/data/repo_imp/home_repo_imp.dart';
 import 'package:habit_tracking_app/features/home/domain/repo/home_repo.dart';
@@ -141,6 +142,10 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<EditHabitUseCase>(
     () => EditHabitUseCase(getIt.get<HabitRepo>()),
+  );
+
+  getIt.registerLazySingleton<GetHabitHistoryUseCase>(
+    () => GetHabitHistoryUseCase(getIt.get<HabitRepo>()),
   );
 
   /// Home

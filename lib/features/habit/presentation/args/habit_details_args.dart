@@ -5,8 +5,10 @@ class HabitDetailsArgs {
   HabitDetailsArgs({
     required this.habitEntity,
     required this.habitTrackingEntity,
+    required this.selectedDate,
   });
 
   final HabitEntity habitEntity;
   final HabitTrackingEntity habitTrackingEntity;
+  final DateTime selectedDate;
 }

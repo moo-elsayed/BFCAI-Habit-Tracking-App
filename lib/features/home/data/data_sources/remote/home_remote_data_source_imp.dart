@@ -6,7 +6,6 @@ import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.
 import 'package:habit_tracking_app/core/helpers/api_constants.dart';
 import 'package:habit_tracking_app/core/helpers/network_response.dart';
 import 'package:habit_tracking_app/core/services/database_service/database_service.dart';
-import 'package:habit_tracking_app/core/services/database_service/query_parameters.dart';
 import 'package:habit_tracking_app/shared_data/models/habit_model.dart';
 import 'package:habit_tracking_app/features/home/data/data_sources/remote/home_remote_data_source.dart';
 import 'package:habit_tracking_app/shared_data/models/tracking/create_habit_tracking_input_model.dart';
@@ -76,8 +75,8 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
   ) async {
     try {
       var response = await _databaseService.queryData(
-        path: ApiConstants.getTrackedHabits,
-        query: QueryParameters(date: date),
+        path:
+            "${ApiConstants.getTrackedHabits}/${date.toIso8601String().split('T').first}",
       );
       var habits = response
           .map((json) => HabitTrackingModel.fromJson(json).toEntity())

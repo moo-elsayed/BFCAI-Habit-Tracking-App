@@ -21,7 +21,7 @@ class CreateHabitTrackingInputModel {
 
   Map<String, dynamic> toJson() => {
     "habitId": id,
-    "date": date.toString().substring(0, 10),
+    "date": date.toIso8601String().split('T').first,
     "currentValue": currentValue,
   };
 }
