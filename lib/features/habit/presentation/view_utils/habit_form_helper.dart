@@ -28,27 +28,27 @@ class HabitFormHelper {
 
   void _init() {
     formKey = GlobalKey<FormState>();
-    nameController = TextEditingController(text: _initialHabit?.name ?? '');
-    typeNotifier = ValueNotifier(_initialHabit?.type ?? HabitType.task);
-    colorNotifier = ValueNotifier(
+    nameController = .new(text: _initialHabit?.name ?? '');
+    typeNotifier = .new(_initialHabit?.type ?? HabitType.task);
+    colorNotifier = .new(
       _initialHabit != null
           ? _hexToColor(_initialHabit.color)
           : Colors.deepPurple,
     );
-    iconNotifier = ValueNotifier(
+    iconNotifier = .new(
       IconData(
         int.tryParse(_initialHabit?.icon ?? '') ??
             Icons.sports_basketball.codePoint,
         fontFamily: 'MaterialIcons',
       ),
     );
-    countNotifier = ValueNotifier(_initialHabit?.targetValue ?? 1);
-    daysNotifier = ValueNotifier(
+    countNotifier = .new(_initialHabit?.targetValue ?? 1);
+    daysNotifier = .new(
       _initialHabit != null
           ? _mapSchedulesToDaysList(_initialHabit.habitSchedules)
           : List.generate(7, (index) => 1),
     );
-    remindersNotifier = ValueNotifier(
+    remindersNotifier = .new(
       _initialHabit != null
           ? _mapSchedulesToReminders(_initialHabit.habitSchedules)
           : [],

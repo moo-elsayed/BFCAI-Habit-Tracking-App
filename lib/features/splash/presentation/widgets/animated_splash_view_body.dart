@@ -15,12 +15,15 @@ class AnimatedSplashViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
-        if (state is SplashNavigateToHome) {
-          context.pushReplacementNamed(Routes.appSection);
-        } else if (state is SplashNavigateToLogin) {
-          context.pushReplacementNamed(Routes.loginView);
-        } else if (state is SplashNavigateToOnboarding) {
-          context.pushReplacementNamed(Routes.onboardingView);
+        if (state is SplashSuccess) {
+          switch (state.process) {
+            case .navigateToOnboarding:
+              context.pushReplacementNamed(Routes.onboardingView);
+            case .navigateToLogin:
+              context.pushReplacementNamed(Routes.loginView);
+            case .navigateToAppSection:
+              context.pushReplacementNamed(Routes.appSection);
+          }
         }
       },
       child: SizedBox(

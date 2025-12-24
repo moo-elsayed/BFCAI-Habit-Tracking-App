@@ -4,11 +4,11 @@ import 'package:habit_tracking_app/features/auth/domain/entities/input/register_
 class RegisterFormHelper {
   RegisterFormHelper()
     : formKey = GlobalKey<FormState>(),
-      fullNameController = TextEditingController(),
-      usernameController = TextEditingController(),
-      emailController = TextEditingController(),
-      passwordController = TextEditingController(),
-      confirmPasswordController = TextEditingController();
+      fullNameController = .new(),
+      usernameController = .new(),
+      emailController = .new(),
+      passwordController = .new(),
+      confirmPasswordController = .new();
 
   late GlobalKey<FormState> formKey;
   late TextEditingController fullNameController;

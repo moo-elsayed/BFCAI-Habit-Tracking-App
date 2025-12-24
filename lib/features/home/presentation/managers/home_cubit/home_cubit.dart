@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/entities/tracking/create_habit_tracking_input_entity.dart';
 import 'package:habit_tracking_app/core/entities/tracking/edit_habit_tracking_input_entity.dart';
 import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.dart';
+import 'package:habit_tracking_app/core/helpers/app_logger.dart';
 import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/core/services/local_storage/app_preferences_service.dart';
 import 'package:habit_tracking_app/features/home/domain/use_cases/create_habit_tracking_use_case.dart';
@@ -41,9 +42,8 @@ class HomeCubit extends Cubit<HomeState> {
       case NetworkSuccess<List<HabitEntity>>():
         await _checkAndScheduleNotifications(result.data!);
         _allHabits = result.data!;
-        log(_allHabits.length.toString());
       case NetworkFailure<List<HabitEntity>>():
-        log(getErrorMessage(result));
+        AppLogger.error(getErrorMessage(result));
     }
   }
 
@@ -123,12 +123,16 @@ class HomeCubit extends Cubit<HomeState> {
   HabitEntity getEquivalentHabit(HabitTrackingEntity habit) =>
       _allHabits.firstWhere((h) => h.id == habit.habitId);
 
-  int getHabitsCountForDay(int weekday) {
-    return _allHabits.where((habit) {
-      return habit.habitSchedules.any(
+  List<Color> getHabitsColorsForDay(int weekday) {
+    List<Color> colors = [];
+    for (var habit in _allHabits) {
+      if (habit.habitSchedules.any(
         (schedule) => schedule.dayOfWeek == parseDateTimeToDayInt(weekday),
-      );
-    }).length;
+      )) {
+        colors.add(getColor(habit.color));
+      }
+    }
+    return colors;
   }
 
   Future<void> _checkAndScheduleNotifications(List<HabitEntity> habits) async {

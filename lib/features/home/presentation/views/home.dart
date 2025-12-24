@@ -12,7 +12,7 @@ import 'package:habit_tracking_app/features/home/presentation/widgets/habits_lis
 import '../../../../core/entities/tracking/habit_tracking_entity.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/no_results_found_widget.dart';
-import '../widgets/horizontal_calender_strip.dart';
+import '../widgets/horizontal_calendar_strip.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
                 if (state.process == .create) {
                   context.pop();
                 }
-                if (state.message == "Unauthorized error") {
+                if (state.message == "unauthorized_error".tr()) {
                   AppToast.showToast(
                     context: context,
                     title: "session_expired".tr(),

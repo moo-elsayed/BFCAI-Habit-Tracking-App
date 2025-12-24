@@ -40,7 +40,7 @@ class _EmailVerificationViewState extends State<EmailVerificationView> {
   @override
   void initState() {
     super.initState();
-    _otpController = TextEditingController();
+    _otpController = .new();
   }
 
   @override

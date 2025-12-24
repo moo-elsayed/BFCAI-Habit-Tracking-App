@@ -7,7 +7,6 @@ import 'package:gap/gap.dart';
 import 'package:habit_tracking_app/core/helpers/enums.dart';
 import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/features/habit/domain/entities/get_habit_history_input_entity.dart';
-import 'package:habit_tracking_app/features/habit/presentation/args/habit_details_args.dart';
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_details_progress_card.dart';
 import 'package:habit_tracking_app/features/home/presentation/managers/home_cubit/home_cubit.dart';
 import '../../../../core/entities/habit_entity.dart';
@@ -19,6 +18,7 @@ import '../../../../core/theming/app_text_styles.dart';
 import '../../../../core/widgets/app_toasts.dart';
 import '../../../../core/widgets/custom_confirmation_dialog.dart';
 import '../managers/habit_cubit/habit_cubit.dart';
+import '../view_utils/args/habit_details_args.dart';
 import '../widgets/habit_details_top_actions.dart';
 import '../widgets/habit_history_calendar.dart';
 
@@ -78,10 +78,6 @@ class _HabitDetailsViewState extends State<HabitDetailsView> {
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
-        // if (state is HomeSuccess &&
-        //     (state.process == .edit || state.process == .create)) {
-        //   _getHabitHistory();
-        // }
         if (state is HomeSuccess && state.process == .create) {
           final updatedList = state.habits;
           if (updatedList != null) {
@@ -113,7 +109,7 @@ class _HabitDetailsViewState extends State<HabitDetailsView> {
                 context.pop(true);
               }
               if (state is HabitFailure) {
-                if (state.message == "Unauthorized error") {
+                if (state.message == "unauthorized_error".tr()) {
                   AppToast.showToast(
                     context: context,
                     title: "session_expired".tr(),

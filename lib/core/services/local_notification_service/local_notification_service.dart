@@ -40,7 +40,7 @@ class LocalNotificationService {
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
-          android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+          android: AndroidInitializationSettings('@mipmap/launcher_icon'),
           iOS: DarwinInitializationSettings(
             requestAlertPermission: true,
             requestBadgePermission: true,

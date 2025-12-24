@@ -59,7 +59,12 @@ void setupServiceLocator() {
     ),
   );
 
-  dio.interceptors.add(AuthInterceptor(dio, getIt<AuthStorageService>()));
+  /// Auth Interceptor
+  getIt.registerLazySingleton<AuthInterceptor>(
+    () => AuthInterceptor(dio, getIt.get<AuthStorageService>()),
+  );
+
+  dio.interceptors.add(getIt<AuthInterceptor>());
 
   dio.interceptors.add(
     LogInterceptor(
@@ -72,11 +77,6 @@ void setupServiceLocator() {
 
   /// Database Service
   getIt.registerSingleton<DatabaseService>(ApiDatabaseService(dio));
-
-  /// Auth Interceptor
-  getIt.registerLazySingleton<AuthInterceptor>(
-    () => AuthInterceptor(dio, getIt.get<SecureStorageManager>()),
-  );
 
   /// Auth
   getIt.registerSingleton<AuthService>(ApiAuthService(dio));
