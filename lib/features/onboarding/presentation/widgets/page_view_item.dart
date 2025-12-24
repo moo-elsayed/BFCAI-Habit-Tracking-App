@@ -5,10 +5,9 @@ import '../../../../core/theming/app_text_styles.dart';
 import '../../domain/entities/onboarding_entity.dart';
 
 class PageViewItem extends StatelessWidget {
-  const PageViewItem({super.key, required this.slide, required this.showSkip});
+  const PageViewItem({super.key, required this.slide});
 
   final OnboardingEntity slide;
-  final bool showSkip;
 
   @override
   Widget build(BuildContext context) {

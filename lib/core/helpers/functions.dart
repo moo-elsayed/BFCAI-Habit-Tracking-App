@@ -19,6 +19,8 @@ String getErrorMessage(result) =>
     ((result.exception as dynamic).message ?? result.exception.toString())
         .replaceAll('Exception: ', '');
 
+Color getColor(String color) => Color(int.parse(color));
+
 NetworkFailure<T> handleError<T>(Object e, String functionName) {
   AppLogger.error("error occurred in $functionName", error: e);
   if (e is DioException) {
@@ -63,6 +65,31 @@ int parseDayStringToInt(String day) {
     default:
       return 1;
   }
+}
+
+int parseDayStringToIntForNotifications(String day) {
+  switch (day.toLowerCase()) {
+    case 'monday':
+      return DateTime.monday;
+    case 'tuesday':
+      return DateTime.tuesday;
+    case 'wednesday':
+      return DateTime.wednesday;
+    case 'thursday':
+      return DateTime.thursday;
+    case 'friday':
+      return DateTime.friday;
+    case 'saturday':
+      return DateTime.saturday;
+    case 'sunday':
+      return DateTime.sunday;
+    default:
+      return DateTime.monday;
+  }
+}
+
+int parseDateTimeToDayInt(int weekday) {
+  return ((weekday + 1) % 7) + 1;
 }
 
 ThemeMode getThemeMode(String? savedTheme) {

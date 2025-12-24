@@ -188,7 +188,7 @@ class _TextFormFieldHelperState extends State<TextFormFieldHelper> {
     required double width,
   }) {
     return OutlineInputBorder(
-      borderRadius: widget.borderRadius ?? .circular(8.r),
+      borderRadius: widget.borderRadius ?? .circular(24.r),
       borderSide: BorderSide(color: color, width: width),
     );
   }

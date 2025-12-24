@@ -104,5 +104,12 @@
   "theme": "السمة",
   "system": "النظام",
   "light": "فاتح",
-  "dark": "داكن"
+  "dark": "داكن",
+  "actions": "إجراءات",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "in_progress": "قيد التنفيذ",
+  "no_habits_found": "لم يتم العثور على عادات",
+  "confirm_habit_deletion": "هل أنت متأكد أنك تريد حذف هذه العادة؟",
+  "today": "اليوم"
 }

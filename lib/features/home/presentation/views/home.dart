@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
+import 'package:habit_tracking_app/core/widgets/app_dialogs.dart';
 import 'package:habit_tracking_app/core/widgets/app_toasts.dart';
 import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import 'package:habit_tracking_app/features/home/presentation/managers/home_cubit/home_cubit.dart';
 import 'package:habit_tracking_app/features/home/presentation/widgets/habits_list_view.dart';
 import '../../../../core/entities/tracking/habit_tracking_entity.dart';
 import '../../../../core/routing/routes.dart';
-import '../widgets/horizontal_calender_strip.dart';
+import '../../../../core/widgets/no_results_found_widget.dart';
+import '../widgets/horizontal_calendar_strip.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,12 +25,21 @@ class _HomeState extends State<Home> {
   late ValueNotifier<DateTime> _selectedDateNotifier;
   List<HabitTrackingEntity> _habits = [];
 
+  String _getTitle(String langCode) =>
+      DateUtils.isSameDay(_selectedDateNotifier.value, DateTime.now())
+      ? "today".tr()
+      : DateFormat(
+          langCode == "ar" ? 'd MMM' : 'MMM d',
+          langCode,
+        ).format(_selectedDateNotifier.value);
+
   @override
   void initState() {
     super.initState();
     _selectedDateNotifier = ValueNotifier(DateTime.now());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeCubit>().getHomeHabits(_selectedDateNotifier.value);
+      context.read<HomeCubit>().getAllHabits();
+      context.read<HomeCubit>().getHabitsByDate(_selectedDateNotifier.value);
     });
   }
 
@@ -44,12 +56,8 @@ class _HomeState extends State<Home> {
       children: [
         ValueListenableBuilder(
           valueListenable: _selectedDateNotifier,
-          builder: (context, value, child) => CustomAppBar(
-            title: DateFormat(
-              langCode == "ar" ? 'd MMM' : 'MMM d',
-              langCode,
-            ).format(_selectedDateNotifier.value),
-          ),
+          builder: (context, value, child) =>
+              CustomAppBar(title: _getTitle(langCode)),
         ),
         Gap(16.h),
         HorizontalCalendarStrip(selectedDateNotifier: _selectedDateNotifier),
@@ -57,11 +65,23 @@ class _HomeState extends State<Home> {
         Expanded(
           child: BlocConsumer<HomeCubit, HomeState>(
             listener: (context, state) {
-              if (state is HomeSuccess && state.process == .getHomeHabits) {
-                _habits = state.uiHabits!;
+              if (state is HomeLoading && state.process == .create) {
+                AppDialogs.showLoadingDialog(context);
+              }
+              if (state is HomeSuccess &&
+                  (state.process == .getHabitsByDate ||
+                      state.process == .create ||
+                      state.process == .edit)) {
+                if (state.process == .create) {
+                  context.pop();
+                }
+                _habits = state.habits!;
               }
               if (state is HomeFailure) {
-                if (state.message == "Unauthorized error") {
+                if (state.process == .create) {
+                  context.pop();
+                }
+                if (state.message == "unauthorized_error".tr()) {
                   AppToast.showToast(
                     context: context,
                     title: "session_expired".tr(),
@@ -85,13 +105,22 @@ class _HomeState extends State<Home> {
               if (state is HomeInitial) {
                 return const SizedBox.shrink();
               }
-              if (state is HomeLoading && state.process == .getHomeHabits) {
-                return const HabitsListView(isLoading: true);
+              if (state is HomeLoading && state.process == .getHabitsByDate) {
+                return HabitsListView(
+                  isLoading: true,
+                  selectedDateNotifier: _selectedDateNotifier,
+                );
               }
               if (_habits.isEmpty) {
-                return const Center(child: Text("No habits found"));
+                return NoResultsFoundWidget(
+                  title: "no_habits_found".tr(),
+                  bottomGap: 100.h,
+                );
               }
-              return HabitsListView(habits: _habits);
+              return HabitsListView(
+                habits: _habits,
+                selectedDateNotifier: _selectedDateNotifier,
+              );
             },
           ),
         ),

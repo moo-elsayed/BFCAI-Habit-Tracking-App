@@ -23,7 +23,7 @@ class CustomizeHabitItem extends StatelessWidget {
         padding: .symmetric(horizontal: 16.w, vertical: 12.h),
         decoration: BoxDecoration(
           color: AppColors.habitCardColor(context),
-          borderRadius: .circular(8.r),
+          borderRadius: .circular(24.r),
         ),
         child: Row(
           spacing: 16.w,
@@ -33,7 +33,7 @@ class CustomizeHabitItem extends StatelessWidget {
               height: 35.h,
               decoration: BoxDecoration(
                 color: AppColors.textSecondary(context).withValues(alpha: 0.2),
-                borderRadius: .circular(6.r),
+                shape: BoxShape.circle,
               ),
               child: child,
             ),

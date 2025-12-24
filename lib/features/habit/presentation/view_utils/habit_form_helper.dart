@@ -28,27 +28,27 @@ class HabitFormHelper {
 
   void _init() {
     formKey = GlobalKey<FormState>();
-    nameController = TextEditingController(text: _initialHabit?.name ?? '');
-    typeNotifier = ValueNotifier(_initialHabit?.type ?? HabitType.task);
-    colorNotifier = ValueNotifier(
+    nameController = .new(text: _initialHabit?.name ?? '');
+    typeNotifier = .new(_initialHabit?.type ?? HabitType.task);
+    colorNotifier = .new(
       _initialHabit != null
           ? _hexToColor(_initialHabit.color)
           : Colors.deepPurple,
     );
-    iconNotifier = ValueNotifier(
+    iconNotifier = .new(
       IconData(
         int.tryParse(_initialHabit?.icon ?? '') ??
             Icons.sports_basketball.codePoint,
         fontFamily: 'MaterialIcons',
       ),
     );
-    countNotifier = ValueNotifier(_initialHabit?.targetValue ?? 1);
-    daysNotifier = ValueNotifier(
+    countNotifier = .new(_initialHabit?.targetValue ?? 1);
+    daysNotifier = .new(
       _initialHabit != null
           ? _mapSchedulesToDaysList(_initialHabit.habitSchedules)
           : List.generate(7, (index) => 1),
     );
-    remindersNotifier = ValueNotifier(
+    remindersNotifier = .new(
       _initialHabit != null
           ? _mapSchedulesToReminders(_initialHabit.habitSchedules)
           : [],
@@ -68,7 +68,7 @@ class HabitFormHelper {
   HabitEntity get entity {
     return HabitEntity(
       id: _initialHabit?.id,
-      name: nameController.text,
+      name: nameController.text.trim(),
       type: typeNotifier.value,
       targetValue: countNotifier.value,
       isActive: true,
@@ -92,6 +92,7 @@ class HabitFormHelper {
     List<HabitScheduleEntity> schedules = [];
     List<int> selectedDays = daysNotifier.value;
     List<DateTime> reminders = remindersNotifier.value;
+
     for (int i = 1; i <= selectedDays.length; i++) {
       if (selectedDays[i - 1] == 1) {
         if (reminders.isNotEmpty) {
@@ -105,7 +106,7 @@ class HabitFormHelper {
           }
         } else {
           schedules.add(
-            HabitScheduleEntity(dayOfWeek: i, notificationTime: "08:00:00"),
+            HabitScheduleEntity(dayOfWeek: i, notificationTime: null),
           );
         }
       }
@@ -128,11 +129,12 @@ class HabitFormHelper {
     final List<DateTime> reminders = [];
 
     for (var schedule in schedules) {
-      if (!uniqueTimes.contains(schedule.notificationTime)) {
-        uniqueTimes.add(schedule.notificationTime);
+      if (schedule.notificationTime != null &&
+          !uniqueTimes.contains(schedule.notificationTime)) {
+        uniqueTimes.add(schedule.notificationTime!);
         try {
           final now = DateTime.now();
-          final timeParts = schedule.notificationTime.split(':');
+          final timeParts = schedule.notificationTime!.split(':');
           final time = DateTime(
             now.year,
             now.month,

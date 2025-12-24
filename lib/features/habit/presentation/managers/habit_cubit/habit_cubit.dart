@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/core/helpers/network_response.dart';
+import 'package:habit_tracking_app/features/habit/domain/entities/get_habit_history_input_entity.dart';
+import 'package:habit_tracking_app/features/habit/domain/entities/habit_history_entity.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/add_habit_use_case.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/delete_habit_use_case.dart';
 import 'package:habit_tracking_app/features/habit/domain/use_cases/edit_habit_use_case.dart';
-
+import 'package:habit_tracking_app/features/habit/domain/use_cases/get_habit_history_use_case.dart';
 import '../../../../../core/entities/habit_entity.dart';
 
 part 'habit_state.dart';
@@ -16,10 +18,12 @@ class HabitCubit extends Cubit<HabitState> {
     this._addHabitUseCase,
     this._deleteHabitUseCase,
     this._editHabitUseCase,
+    this._getHabitHistoryUseCase,
   ) : super(HabitInitial());
   final AddHabitUseCase _addHabitUseCase;
   final DeleteHabitUseCase _deleteHabitUseCase;
   final EditHabitUseCase _editHabitUseCase;
+  final GetHabitHistoryUseCase _getHabitHistoryUseCase;
 
   Future<void> addHabit(HabitEntity input) async {
     emit(HabitLoading(.add));
@@ -51,6 +55,17 @@ class HabitCubit extends Cubit<HabitState> {
         emit(HabitSuccess(.delete));
       case NetworkFailure<String>():
         emit(HabitFailure(getErrorMessage(result).tr(), .delete));
+    }
+  }
+
+  Future<void> getHabitHistory(GetHabitHistoryInputEntity input) async {
+    emit(HabitLoading(.getHabitHistory));
+    var result = await _getHabitHistoryUseCase.call(input);
+    switch (result) {
+      case NetworkSuccess<List<HabitHistoryEntity>>():
+        emit(HabitSuccess(.getHabitHistory, history: result.data));
+      case NetworkFailure<List<HabitHistoryEntity>>():
+        emit(HabitFailure(getErrorMessage(result).tr(), .getHabitHistory));
     }
   }
 }

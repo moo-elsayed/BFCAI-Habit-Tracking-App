@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:habit_tracking_app/features/settings/domain/entities/bottom_sheet_selection_item_entity.dart';
-import '../../../../core/theming/app_text_styles.dart';
-import '../../../../core/widgets/custom_bottom_sheet_top_container.dart';
+import 'package:habit_tracking_app/core/entities/bottom_sheet_selection_item_entity.dart';
+import '../theming/app_text_styles.dart';
+import 'custom_bottom_sheet_top_container.dart';
 import 'bottom_sheet_selection_item.dart';
 
 class CustomBottomSheet extends StatelessWidget {
@@ -28,10 +28,13 @@ class CustomBottomSheet extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: .min,
-        spacing: 16.h,
+        spacing: 12.h,
         children: [
           const CustomBottomSheetTopContainer(margin: 0),
-          Text(title, style: AppTextStyles.font22Bold(context)),
+          Padding(
+            padding: .only(bottom: 8.h),
+            child: Text(title, style: AppTextStyles.font22Bold(context)),
+          ),
           ...List.generate(
             items.length,
             (index) => BottomSheetSelectionItem(entity: items[index]),

@@ -46,7 +46,7 @@ class LogoutWidget extends StatelessWidget {
         settingsTileEntity: SettingsTileEntity(
           title: "log_out".tr(),
           icon: Icons.logout_rounded,
-          isDestructive: true,
+          logout: true,
           onTap: () {
             showCupertinoDialog(
               context: context,

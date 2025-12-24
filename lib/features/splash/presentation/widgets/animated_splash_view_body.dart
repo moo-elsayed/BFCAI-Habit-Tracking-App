@@ -3,42 +3,27 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:habit_tracking_app/features/app_section/presentation/views/app_section.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
+import 'package:habit_tracking_app/core/routing/routes.dart';
 import 'package:habit_tracking_app/generated/assets.dart';
-import '../../../auth/presentation/views/login_view.dart';
-import '../../../onboarding/presentation/views/onboarding_view.dart';
 import '../managers/splash_cubit.dart';
 
-class AnimatedSplashViewBody extends StatefulWidget {
+class AnimatedSplashViewBody extends StatelessWidget {
   const AnimatedSplashViewBody({super.key});
-
-  @override
-  State<AnimatedSplashViewBody> createState() => _AnimatedSplashViewBodyState();
-}
-
-class _AnimatedSplashViewBodyState extends State<AnimatedSplashViewBody> {
-  void navigate(Widget view) => Navigator.of(context).pushReplacement(
-    PageRouteBuilder(
-      pageBuilder: (_, __, ___) => view,
-      transitionsBuilder: (_, animation, __, child) {
-        return FadeTransition(
-          opacity: CurvedAnimation(parent: animation, curve: Curves.easeInOut),
-          child: child,
-        );
-      },
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<SplashCubit, SplashState>(
       listener: (context, state) {
-        if (state is SplashNavigateToHome) {
-          navigate(const AppSection());
-        } else if (state is SplashNavigateToLogin) {
-          navigate(const LoginView());
-        } else if (state is SplashNavigateToOnboarding) {
-          navigate(const OnboardingView());
+        if (state is SplashSuccess) {
+          switch (state.process) {
+            case .navigateToOnboarding:
+              context.pushReplacementNamed(Routes.onboardingView);
+            case .navigateToLogin:
+              context.pushReplacementNamed(Routes.loginView);
+            case .navigateToAppSection:
+              context.pushReplacementNamed(Routes.appSection);
+          }
         }
       },
       child: SizedBox(

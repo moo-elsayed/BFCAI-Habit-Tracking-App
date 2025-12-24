@@ -25,14 +25,14 @@ class SettingsTile extends StatelessWidget {
             Container(
               padding: .all(10.r),
               decoration: BoxDecoration(
-                color: settingsTileEntity.isDestructive
+                color: settingsTileEntity.logout
                     ? Colors.red.withValues(alpha: 0.1)
                     : AppColors.primary(context).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 settingsTileEntity.icon,
-                color: settingsTileEntity.isDestructive
+                color: settingsTileEntity.logout
                     ? Colors.red
                     : AppColors.primary(context),
                 size: 24.r,
@@ -43,7 +43,7 @@ class SettingsTile extends StatelessWidget {
               child: Text(
                 settingsTileEntity.title,
                 style: AppTextStyles.font16PrimarySemiBold(context).copyWith(
-                  color: settingsTileEntity.isDestructive
+                  color: settingsTileEntity.logout
                       ? Colors.red
                       : AppColors.textPrimary(context),
                   fontWeight: FontWeight.w500,

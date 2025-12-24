@@ -5,8 +5,8 @@ import 'package:habit_tracking_app/features/auth/presentation/view_utils/args/lo
 class LoginFormHelper {
   LoginFormHelper()
     : formKey = GlobalKey<FormState>(),
-      emailController = TextEditingController(),
-      passwordController = TextEditingController();
+      emailController = .new(),
+      passwordController = .new();
 
   GlobalKey<FormState> formKey;
   final TextEditingController emailController;

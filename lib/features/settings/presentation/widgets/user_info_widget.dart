@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_text_styles.dart';
 import '../../domain/entities/user_info_entity.dart';
@@ -27,7 +28,7 @@ class UserInfoWidget extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 24.sp),
             ),
           ),
-          SizedBox(width: 16.w),
+          Gap(16.w),
           Column(
             crossAxisAlignment: .start,
             spacing: 4.h,

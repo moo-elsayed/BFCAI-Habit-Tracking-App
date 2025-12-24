@@ -24,4 +24,10 @@ abstract class AppPreferencesService {
   Future<void> setThemeMode(String themeMode);
 
   String? getThemeMode();
+
+  Future<void> setHabitsScheduled(bool habitsScheduled);
+
+  bool getHabitsScheduled();
+
+  Future<void> deleteHabitsScheduled();
 }

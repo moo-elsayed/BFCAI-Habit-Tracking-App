@@ -6,9 +6,15 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'habit_item.dart';
 
 class HabitsListView extends StatelessWidget {
-  const HabitsListView({super.key, this.habits, this.isLoading = false});
+  const HabitsListView({
+    super.key,
+    this.habits,
+    this.isLoading = false,
+    required this.selectedDateNotifier,
+  });
 
   final List<HabitTrackingEntity>? habits;
+  final ValueNotifier<DateTime> selectedDateNotifier;
   final bool isLoading;
 
   @override
@@ -21,8 +27,8 @@ class HabitsListView extends StatelessWidget {
         return Skeletonizer(
           enabled: isLoading,
           child: HabitItem(
+            selectedDateNotifier: selectedDateNotifier,
             habitTrackingEntity: habits?[index] ?? const HabitTrackingEntity(),
-            onIncrement: () {},
           ),
         );
       },

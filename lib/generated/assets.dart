@@ -3,12 +3,16 @@ class Assets {
   Assets._();
 
   static const String iconsArrowBack = 'assets/svgs/icons/arrow_back.svg';
+  static const String iconsEditIcon = 'assets/images/icons/edit-icon.png';
   static const String iconsIconCancel = 'assets/svgs/icons/icon-cancel.svg';
+  static const String iconsMenuIcon = 'assets/images/icons/menu-icon.png';
+  static const String iconsTrash = 'assets/svgs/icons/trash.svg';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesBranding = 'assets/images/branding.png';
   static const String imagesBrandingImage = 'assets/images/branding-image.png';
   static const String imagesSplashIosAndroid11 = 'assets/images/splash_ios_android_11.png';
   static const String imagesSplashIosAndroid12 = 'assets/images/splash_ios_android_12.png';
+  static const String svgsNoResultsFound = 'assets/svgs/no-results-found.svg';
   static const String svgsOnboardingImage1 = 'assets/svgs/onboarding_image1.svg';
   static const String svgsOnboardingImage2 = 'assets/svgs/onboarding_image2.svg';
   static const String svgsOnboardingImage3 = 'assets/svgs/onboarding_image3.svg';

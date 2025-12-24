@@ -49,7 +49,7 @@ class ChangeHabitCountRow extends StatelessWidget {
                             alignment: .center,
                             decoration: BoxDecoration(
                               color: color,
-                              borderRadius: .circular(8.r),
+                              borderRadius: .circular(24.r),
                               border: .all(color: color),
                             ),
                             child: ValueListenableBuilder(
@@ -82,7 +82,7 @@ class ChangeHabitCountRow extends StatelessWidget {
                             alignment: .center,
                             decoration: BoxDecoration(
                               color: AppColors.habitCardColor(context),
-                              borderRadius: BorderRadius.circular(8.r),
+                              borderRadius: .circular(24.r),
                             ),
                             child: Text(
                               "change".tr(),

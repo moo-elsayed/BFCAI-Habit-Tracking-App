@@ -21,7 +21,6 @@ class OnboardingPageView extends StatelessWidget {
     onPageChanged: onPageChanged,
     itemBuilder: (context, index) => PageViewItem(
       slide: slides[index],
-      showSkip: index != slides.length - 1,
     ),
   );
 }

@@ -17,7 +17,7 @@ class HabitModel {
 
   final int? id;
   final String name;
-  final int type;
+  final HabitType type;
   final int targetValue;
   final String icon;
   final String color;
@@ -28,7 +28,7 @@ class HabitModel {
   factory HabitModel.fromEntity(HabitEntity entity) => HabitModel(
     id: entity.id,
     name: entity.name,
-    type: entity.type.value,
+    type: entity.type,
     targetValue: entity.targetValue,
     icon: entity.icon,
     color: entity.color,
@@ -43,9 +43,7 @@ class HabitModel {
   factory HabitModel.fromJson(Map<String, dynamic> json) => HabitModel(
     id: json["id"],
     name: json["name"],
-    type: json["type"] is int
-        ? json["type"]
-        : (json["type"] == "UnCountableHabit" ? 1 : 2),
+    type: json["type"] == "UnCountableHabit" ? .task : .count,
     targetValue: json["targetValue"],
     icon: json["icon"],
     color: json["color"],
@@ -59,7 +57,7 @@ class HabitModel {
   HabitEntity toEntity() => HabitEntity(
     id: id,
     name: name,
-    type: HabitType.values.firstWhere((e) => e.value == type),
+    type: type,
     targetValue: targetValue,
     icon: icon,
     color: color,
@@ -71,7 +69,7 @@ class HabitModel {
   Map<String, dynamic> toJson() => {
     "id": ?id,
     "name": name,
-    "type": type,
+    "type": type == .task ? 1 : 2,
     "targetValue": targetValue,
     "icon": icon,
     "color": color,

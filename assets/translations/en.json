@@ -99,10 +99,17 @@
   "habit_deleted_successfully": "Habit deleted successfully",
   "home": "Home",
   "session_expired": "Session expired. Please login again.",
-  "completed":"Completed",
+  "completed": "Completed",
   "tap_to_complete": "Tap to complete the habit",
   "theme": "Theme",
   "system": "System",
   "light": "Light",
-  "dark": "Dark"
+  "dark": "Dark",
+  "actions": "Actions",
+  "edit": "Edit",
+  "delete": "Delete",
+  "in_progress": "In Progress",
+  "no_habits_found": "No habits found",
+  "confirm_habit_deletion": "Are you sure you want to delete this habit?",
+  "today": "Today"
 }

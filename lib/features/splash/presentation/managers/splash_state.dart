@@ -1,12 +1,18 @@
 part of 'splash_cubit.dart';
 
+enum SplashProcess {
+  navigateToOnboarding,
+  navigateToLogin,
+  navigateToAppSection,
+}
+
 @immutable
 abstract class SplashState {}
 
 class SplashInitial extends SplashState {}
 
-class SplashNavigateToOnboarding extends SplashState {}
+class SplashSuccess extends SplashState {
+  SplashSuccess(this.process);
 
-class SplashNavigateToLogin extends SplashState {}
-
-class SplashNavigateToHome extends SplashState {}
+  final SplashProcess process;
+}

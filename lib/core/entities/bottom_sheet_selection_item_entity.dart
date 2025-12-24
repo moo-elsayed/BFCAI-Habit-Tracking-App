@@ -2,19 +2,26 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:habit_tracking_app/core/entities/habit_entity.dart';
+import 'package:habit_tracking_app/core/theming/app_colors.dart';
+import 'package:habit_tracking_app/generated/assets.dart';
 import 'package:restart_app/restart_app.dart';
-import '../../../../core/helpers/extensions.dart';
-import '../../../../core/helpers/functions.dart';
-import '../../../../core/theming/managers/theme_cubit/theme_cubit.dart';
-import '../../../../core/widgets/custom_confirmation_dialog.dart';
+import '../helpers/extensions.dart';
+import '../helpers/functions.dart';
+import '../theming/managers/theme_cubit/theme_cubit.dart';
+import '../widgets/custom_confirmation_dialog.dart';
 
 class BottomSheetSelectionItemEntity {
   const BottomSheetSelectionItemEntity({
+    this.icon,
     required this.title,
-    required this.isSelected,
+    this.isSelected = false,
     required this.onTap,
   });
 
+  final Widget? icon;
   final String title;
   final bool isSelected;
   final VoidCallback onTap;
@@ -61,6 +68,37 @@ List<BottomSheetSelectionItemEntity> getLanguageItems(BuildContext context) => [
     onTap: () async {
       _showDialog(context: context, langCode: "en");
     },
+  ),
+];
+
+List<BottomSheetSelectionItemEntity> getActionItems({
+  required BuildContext context,
+  required HabitEntity habitEntity,
+  required VoidCallback onEdit,
+  required VoidCallback onDelete,
+}) => [
+  BottomSheetSelectionItemEntity(
+    title: "edit".tr(),
+    onTap: () {
+      context.pop();
+      onEdit();
+    },
+    icon: Image.asset(
+      Assets.iconsEditIcon,
+      height: 24.sp,
+      color: Theme.of(context).colorScheme.inverseSurface,
+    ),
+  ),
+  BottomSheetSelectionItemEntity(
+    title: "delete".tr(),
+    onTap: () {
+      context.pop();
+      onDelete();
+    },
+    icon: SvgPicture.asset(
+      Assets.iconsTrash,
+      colorFilter: ColorFilter.mode(AppColors.error(context), .srcIn),
+    ),
   ),
 ];
 

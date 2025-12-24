@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/services/local_storage/app_preferences_service.dart';
@@ -18,30 +16,21 @@ class SplashCubit extends Cubit<SplashState> {
     await Future.delayed(const Duration(seconds: 2));
 
     if (_firstTime) {
-      emit(SplashNavigateToOnboarding());
+      emit(SplashSuccess(.navigateToOnboarding));
       return;
     }
 
-    var list = await Future.wait([_token, _refreshToken]);
+    String? myAccessToken = await _token;
 
-    var myToken = list[0];
-    var myRefreshToken = list[1];
-
-    log(myToken.toString());
-    log(myRefreshToken.toString());
-
-    if (myToken != null && myToken.isNotEmpty && _isLoggedIn) {
-      emit(SplashNavigateToHome());
+    if (myAccessToken != null && myAccessToken.isNotEmpty && _isLoggedIn) {
+      emit(SplashSuccess(.navigateToAppSection));
     } else {
-      emit(SplashNavigateToLogin());
+      emit(SplashSuccess(.navigateToLogin));
     }
   }
 
   Future<String?> get _token async =>
       await _authStorageService.getAccessToken();
-
-  Future<String?> get _refreshToken async =>
-      await _authStorageService.getRefreshToken();
 
   bool get _firstTime => _appPreferencesService.getFirstTime();
 
