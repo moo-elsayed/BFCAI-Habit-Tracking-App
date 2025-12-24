@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:habit_tracking_app/core/services/auth_service/auth_service.dart';
 import 'package:habit_tracking_app/core/services/database_service/database_service.dart';
@@ -36,7 +37,7 @@ import 'api_constants.dart';
 
 final getIt = GetIt.instance;
 
-void setupServiceLocator() {
+Future<void> setupServiceLocator() async {
   /// App Preferences Service
   getIt.registerSingletonAsync<AppPreferencesService>(() async {
     final service = SharedPreferencesManager();
@@ -45,7 +46,14 @@ void setupServiceLocator() {
   });
 
   /// App Storage Service
-  getIt.registerLazySingleton<AuthStorageService>(() => SecureStorageManager());
+  getIt.registerLazySingleton<AuthStorageService>(
+    () => SecureStorageManager(const FlutterSecureStorage()),
+  );
+
+  /// Auth Interceptor
+  getIt.registerLazySingleton<AuthInterceptor>(
+    () => AuthInterceptor(getIt.get<AuthStorageService>()),
+  );
 
   /// dio
   final dio = Dio(
@@ -57,11 +65,6 @@ void setupServiceLocator() {
       },
       receiveDataWhenStatusError: true,
     ),
-  );
-
-  /// Auth Interceptor
-  getIt.registerLazySingleton<AuthInterceptor>(
-    () => AuthInterceptor(dio, getIt.get<AuthStorageService>()),
   );
 
   dio.interceptors.add(getIt<AuthInterceptor>());

@@ -4,104 +4,129 @@ import 'package:habit_tracking_app/core/helpers/api_constants.dart';
 import '../local_storage/auth_storage_service.dart';
 
 class AuthInterceptor extends QueuedInterceptor {
-  AuthInterceptor(this._dio, this._storage);
+  AuthInterceptor(this._storage);
 
-  final Dio _dio;
   final AuthStorageService _storage;
 
   @override
   void onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
-    final token = await _storage.getAccessToken();
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) async {
+    final accessToken = await _storage.getAccessToken();
+    if (accessToken != null) {
+      options.headers['Authorization'] = 'Bearer $accessToken';
     }
-    return handler.next(options);
+    handler.next(options);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401) {
-      log("⚠️ 401 Detected - Attempting Refresh...");
+    // ❌ لو الريكوست نفسه refresh → logout
+    if (err.requestOptions.path == ApiConstants.refreshToken) {
+      log('❌ Refresh endpoint failed → clearing tokens');
+      await _storage.clearTokens();
+      return handler.next(err);
+    }
 
-      try {
-        final currentTokenInStorage = await _storage.getAccessToken();
-        final tokenInRequest = err.requestOptions.headers['Authorization']
-            ?.toString()
-            .replaceAll('Bearer ', '');
+    if (err.response?.statusCode != 401) {
+      return handler.next(err);
+    }
 
-        if (currentTokenInStorage != null &&
-            tokenInRequest != null &&
-            currentTokenInStorage != tokenInRequest) {
-          log("🔁 Token already refreshed by another request. Retrying...");
-          return _retry(err.requestOptions, currentTokenInStorage, handler);
-        }
+    log('⚠️ 401 Detected → Trying refresh');
 
-        final refreshToken = await _storage.getRefreshToken();
+    try {
+      final storedAccessToken = await _storage.getAccessToken();
+      final requestToken = err.requestOptions.headers['Authorization']
+          ?.toString()
+          .replaceFirst('Bearer ', '');
 
-        if (refreshToken == null) {
-          log("❌ No Refresh Token found in storage.");
-          return handler.next(err);
-        }
+      // 🔁 token اتجدّد قبل كده
+      if (storedAccessToken != null &&
+          requestToken != null &&
+          storedAccessToken != requestToken) {
+        log('🔁 Token already refreshed → retrying');
+        return _retry(err.requestOptions, storedAccessToken, handler);
+      }
 
-        final tokenDio = Dio(
-          BaseOptions(
-            baseUrl: ApiConstants.baseUrl,
-            headers: {'Content-Type': 'application/json'},
-          ),
-        );
-
-        final response = await tokenDio.post(
-          ApiConstants.refreshToken,
-          data: {"token": refreshToken},
-        );
-
-        if (response.statusCode == 200) {
-          log("✅ Refresh Successful!");
-          final newAccessToken = response.data['data']['token'];
-          final newRefreshToken = response.data['data']['refreshToken'];
-
-          await _storage.saveTokens(
-            accessToken: newAccessToken,
-            refreshToken: newRefreshToken,
-          );
-
-          return _retry(err.requestOptions, newAccessToken, handler);
-        }
-      } on DioException catch (e) {
-        log("❌ Refresh Failed with DioError: ${e.response?.statusCode}");
-
-        if (e.response?.statusCode == 401 || e.response?.statusCode == 400) {
-          await _storage.clearTokens();
-        }
-        return handler.next(err);
-      } catch (e) {
-        log("❌ Refresh Failed with Exception: $e");
+      final refreshToken = await _storage.getRefreshToken();
+      if (refreshToken == null) {
+        log('❌ No refresh token → logout');
+        await _storage.clearTokens();
         return handler.next(err);
       }
+
+      // 🔐 Dio خاص بالـ refresh (بدون interceptors)
+      final refreshDio = Dio(
+        BaseOptions(
+          baseUrl: ApiConstants.baseUrl,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          receiveDataWhenStatusError: true,
+        ),
+      );
+
+      final response = await refreshDio.post(
+        ApiConstants.refreshToken,
+        data: {
+          "token": refreshToken, // 👈 حسب backend بتاعك
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final newAccessToken = response.data['data']['token'];
+        final newRefreshToken = response.data['data']['refreshToken'];
+
+        await _storage.saveTokens(
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+        );
+
+        log('✅ Refresh success → retrying request');
+        return _retry(err.requestOptions, newAccessToken, handler);
+      }
+    } catch (e) {
+      log('❌ Refresh failed → $e');
+      await _storage.clearTokens();
     }
-    return handler.next(err);
+
+    handler.next(err);
   }
 
   Future<void> _retry(
-    RequestOptions requestOptions,
-    String newToken,
-    ErrorInterceptorHandler handler,
-  ) async {
-    final options = Options(
-      method: requestOptions.method,
-      headers: {...requestOptions.headers, 'Authorization': 'Bearer $newToken'},
+      RequestOptions requestOptions,
+      String newToken,
+      ErrorInterceptorHandler handler,
+      ) async {
+    final retryDio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      ),
     );
 
+    final headers = Map<String, dynamic>.from(requestOptions.headers);
+    headers['Authorization'] = 'Bearer $newToken';
+
     try {
-      final response = await _dio.fetch(
-        requestOptions.copyWith(headers: options.headers),
+      final response = await retryDio.request(
+        requestOptions.path,
+        data: requestOptions.data,
+        queryParameters: requestOptions.queryParameters,
+        options: Options(
+          method: requestOptions.method,
+          headers: headers,
+        ),
       );
-      return handler.resolve(response);
+
+      handler.resolve(response);
     } on DioException catch (e) {
-      return handler.next(e);
+      handler.next(e);
     }
   }
 }

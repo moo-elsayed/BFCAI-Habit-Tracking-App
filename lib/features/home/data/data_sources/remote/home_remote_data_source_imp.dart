@@ -74,9 +74,8 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
     DateTime date,
   ) async {
     try {
-      var response = await _databaseService.queryData(
-        path:
-            "${ApiConstants.getTrackedHabits}/${date.toIso8601String().split('T').first}",
+      var response = await _databaseService.getAllData(
+        "${ApiConstants.getTrackedHabits}/${date.toIso8601String().split('T').first}",
       );
       var habits = response
           .map((json) => HabitTrackingModel.fromJson(json).toEntity())

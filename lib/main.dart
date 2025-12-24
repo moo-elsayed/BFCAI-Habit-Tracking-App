@@ -17,10 +17,10 @@ import 'features/home/presentation/managers/home_cubit/home_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
-  setupServiceLocator();
   await Future.wait([
     EasyLocalization.ensureInitialized(),
     LocalNotificationService.init(),
+    setupServiceLocator(),
     getIt.allReady(),
   ]);
 
