@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 abstract class Failure {
   final String errorMessage;
@@ -13,16 +12,16 @@ class ServerFailure extends Failure {
   factory ServerFailure.fromDioException(DioException dioException) {
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
-        return ServerFailure(errorMessage: 'connection_timeout'.tr());
+        return const ServerFailure(errorMessage: 'connection_timeout');
 
       case DioExceptionType.sendTimeout:
-        return ServerFailure(errorMessage: 'send_timeout'.tr());
+        return const ServerFailure(errorMessage: 'send_timeout');
 
       case DioExceptionType.receiveTimeout:
-        return ServerFailure(errorMessage: 'receive_timeout'.tr());
+        return const ServerFailure(errorMessage: 'receive_timeout');
 
       case DioExceptionType.badCertificate:
-        return ServerFailure(errorMessage: 'bad_certificate'.tr());
+        return const ServerFailure(errorMessage: 'bad_certificate');
 
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
@@ -31,22 +30,22 @@ class ServerFailure extends Failure {
         );
 
       case DioExceptionType.cancel:
-        return ServerFailure(errorMessage: 'request_canceled'.tr());
+        return const ServerFailure(errorMessage: 'request_canceled');
 
       case DioExceptionType.connectionError:
-        return ServerFailure(errorMessage: 'no_internet_connection'.tr());
+        return const ServerFailure(errorMessage: 'no_internet_connection');
 
       case DioExceptionType.unknown:
         if (dioException.message?.contains('SocketException') ?? false) {
-          return ServerFailure(errorMessage: 'no_internet_connection'.tr());
+          return const ServerFailure(errorMessage: 'no_internet_connection');
         }
-        return ServerFailure(errorMessage: 'unexpected_error'.tr());
+        return const ServerFailure(errorMessage: 'unexpected_error');
     }
   }
 
   factory ServerFailure.fromResponse(int? statusCode, dynamic response) {
     if (response == null) {
-      return ServerFailure(errorMessage: 'unknown_error'.tr());
+      return const ServerFailure(errorMessage: 'unknown_error');
     }
     if (response is Map<String, dynamic>) {
       if (response['message'] != null &&
@@ -60,13 +59,13 @@ class ServerFailure extends Failure {
       if (response.isNotEmpty) return ServerFailure(errorMessage: response);
     }
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      return ServerFailure(errorMessage: 'unauthorized_error'.tr());
+      return const ServerFailure(errorMessage: 'unauthorized_error');
     } else if (statusCode == 404) {
-      return ServerFailure(errorMessage: 'not_found_error'.tr());
+      return const ServerFailure(errorMessage: 'not_found_error');
     } else if (statusCode == 500) {
-      return ServerFailure(errorMessage: 'server_error'.tr());
+      return const ServerFailure(errorMessage: 'server_error');
     } else {
-      return ServerFailure(errorMessage: 'something_went_wrong'.tr());
+      return const ServerFailure(errorMessage: 'something_went_wrong');
     }
   }
 }

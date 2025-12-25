@@ -1,19 +1,20 @@
+import 'package:habit_tracking_app/core/services/notification_service/notification_service.dart';
 import 'package:habit_tracking_app/features/habit/domain/repo/habit_repo.dart';
 import '../../../../core/helpers/functions.dart';
 import '../../../../core/helpers/network_response.dart';
-import '../../../../core/services/local_notification_service/local_notification_service.dart';
 
 class DeleteHabitUseCase {
-  DeleteHabitUseCase(this._habitRepo);
+  DeleteHabitUseCase(this._habitRepo, this._notificationService);
 
   final HabitRepo _habitRepo;
+  final NotificationService _notificationService;
 
   Future<NetworkResponse<String>> call(int id) async {
     var networkResponse = await _habitRepo.deleteHabit(id);
     switch (networkResponse) {
       case NetworkSuccess<String>():
         try {
-          await LocalNotificationService.cancelHabitNotifications(id);
+          await _notificationService.cancelHabitNotifications(id);
           return NetworkSuccess(networkResponse.data);
         } catch (e) {
           return handleError(e, "DeleteHabitUseCase");
