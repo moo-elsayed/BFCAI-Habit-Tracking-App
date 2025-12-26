@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
 
 import '../../../features/habit/domain/entities/get_habit_history_input_entity.dart';
 
@@ -26,7 +27,7 @@ class QueryParameters extends Equatable {
 
   Map<String, dynamic> toJson() => {
     "HabitId": habitId,
-    "StartDate": startDate.toIso8601String().split('T').first,
-    "EndDate": endDate.toIso8601String().split('T').first,
+    "StartDate": startDate.toIsoDate,
+    "EndDate": endDate.toIsoDate,
   };
 }

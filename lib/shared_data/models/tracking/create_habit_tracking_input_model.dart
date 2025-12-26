@@ -1,4 +1,5 @@
 import 'package:habit_tracking_app/core/entities/tracking/create_habit_tracking_input_entity.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
 
 class CreateHabitTrackingInputModel {
   CreateHabitTrackingInputModel({
@@ -21,7 +22,7 @@ class CreateHabitTrackingInputModel {
 
   Map<String, dynamic> toJson() => {
     "habitId": id,
-    "date": date.toIso8601String().split('T').first,
+    "date": date.toIsoDate,
     "currentValue": currentValue,
   };
 }

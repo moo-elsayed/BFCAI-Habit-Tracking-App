@@ -34,10 +34,8 @@ class HabitItem extends StatelessWidget {
     var targetValue = habitTrackingEntity.targetValue;
     return GestureDetector(
       onTap: () async {
-        var habitEntity = context.read<HomeCubit>().getEquivalentHabit(
-          habitTrackingEntity,
-        );
-
+        var homeCubit = context.read<HomeCubit>();
+        var habitEntity = homeCubit.getEquivalentHabit(habitTrackingEntity);
         bool? myBool = await context.pushNamed(
           Routes.habitDetailsView,
           arguments: HabitDetailsArgs(
@@ -47,8 +45,7 @@ class HabitItem extends StatelessWidget {
           ),
         );
         if (myBool != null && myBool) {
-          context.read<HomeCubit>().getAllHabits();
-          context.read<HomeCubit>().getHabitsByDate(selectedDateNotifier.value);
+          homeCubit.getAllHabits(selectedDateNotifier.value);
         }
       },
       child: Container(

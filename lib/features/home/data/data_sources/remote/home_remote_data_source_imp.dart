@@ -4,6 +4,7 @@ import 'package:habit_tracking_app/core/entities/tracking/create_habit_tracking_
 import 'package:habit_tracking_app/core/entities/tracking/edit_habit_tracking_input_entity.dart';
 import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.dart';
 import 'package:habit_tracking_app/core/helpers/api_constants.dart';
+import 'package:habit_tracking_app/core/helpers/extensions.dart';
 import 'package:habit_tracking_app/core/helpers/network_response.dart';
 import 'package:habit_tracking_app/core/services/database_service/database_service.dart';
 import 'package:habit_tracking_app/shared_data/models/habit_model.dart';
@@ -21,7 +22,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
   @override
   Future<NetworkResponse<List<HabitEntity>>> getAllHabits() async {
     try {
-      var response = await _databaseService.getAllData(ApiConstants.getHabits);
+      var response = await _databaseService.getAllData(ApiConstants.getAllHabits);
       var habits = response
           .map((json) => HabitModel.fromJson(json).toEntity())
           .toList();
@@ -75,7 +76,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource {
   ) async {
     try {
       var response = await _databaseService.getAllData(
-        "${ApiConstants.getTrackedHabits}/${date.toIso8601String().split('T').first}",
+        "${ApiConstants.getHabitsByDate}/${date.toIsoDate}",
       );
       var habits = response
           .map((json) => HabitTrackingModel.fromJson(json).toEntity())

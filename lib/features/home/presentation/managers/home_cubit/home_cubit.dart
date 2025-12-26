@@ -39,19 +39,26 @@ class HomeCubit extends Cubit<HomeState> {
   List<HabitTrackingEntity> _habitsByDate = [];
   List<HabitTrackingEntity> uiHabitsList = [];
 
-  Future<void> getAllHabits() async {
+  Future<void> getAllHabits(DateTime date) async {
+    emit(HomeLoading(.getAllHabits));
     var result = await _allHabitsUseCase.call();
     switch (result) {
       case NetworkSuccess<List<HabitEntity>>():
         await _checkAndScheduleNotifications(result.data!);
         _allHabits = result.data!;
+        getHabitsByDate(date: date, needLoading: false);
       case NetworkFailure<List<HabitEntity>>():
         AppLogger.error(getErrorMessage(result).tr());
     }
   }
 
-  Future<void> getHabitsByDate(DateTime date) async {
-    emit(HomeLoading(.getHabitsByDate));
+  Future<void> getHabitsByDate({
+    required DateTime date,
+    bool needLoading = true,
+  }) async {
+    if (needLoading) {
+      emit(HomeLoading(.getHabitsByDate));
+    }
     var result = await _getTrackedHabitsByDateUseCase.call(date);
     switch (result) {
       case NetworkSuccess<List<HabitTrackingEntity>>():

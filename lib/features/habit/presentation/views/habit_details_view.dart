@@ -166,6 +166,7 @@ class _HabitDetailsViewState extends State<HabitDetailsView> {
                         HabitDetailsTopActions(
                           habitEntity: widget.habitDetailsArgs.habitEntity,
                           onDelete: () async {
+                            final habitCubit = context.read<HabitCubit>();
                             bool confirmation = false;
                             await showCupertinoDialog(
                               context: context,
@@ -180,7 +181,7 @@ class _HabitDetailsViewState extends State<HabitDetailsView> {
                               ),
                             );
                             if (confirmation) {
-                              context.read<HabitCubit>().deleteHabit(
+                              habitCubit.deleteHabit(
                                 widget.habitDetailsArgs.habitEntity.id!,
                               );
                             }

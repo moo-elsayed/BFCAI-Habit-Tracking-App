@@ -38,8 +38,7 @@ class _HomeState extends State<Home> {
     super.initState();
     _selectedDateNotifier = ValueNotifier(DateTime.now());
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeCubit>().getAllHabits();
-      context.read<HomeCubit>().getHabitsByDate(_selectedDateNotifier.value);
+      context.read<HomeCubit>().getAllHabits(_selectedDateNotifier.value);
     });
   }
 
@@ -105,7 +104,9 @@ class _HomeState extends State<Home> {
               if (state is HomeInitial) {
                 return const SizedBox.shrink();
               }
-              if (state is HomeLoading && state.process == .getHabitsByDate) {
+              if (state is HomeLoading &&
+                  (state.process == .getHabitsByDate ||
+                      state.process == .getAllHabits)) {
                 return HabitsListView(
                   isLoading: true,
                   selectedDateNotifier: _selectedDateNotifier,

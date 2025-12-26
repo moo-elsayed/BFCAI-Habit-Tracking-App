@@ -1,8 +1,7 @@
 part of 'home_cubit.dart';
 
 enum HomeProcess {
-  getHomeHabits,
-  getAll,
+  getAllHabits,
   getHabitsByDate,
   create,
   edit,

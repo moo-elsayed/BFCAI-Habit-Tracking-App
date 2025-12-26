@@ -7,7 +7,6 @@ import 'package:habit_tracking_app/core/helpers/di.dart';
 import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import 'package:habit_tracking_app/features/auth/domain/use_cases/logout_use_case.dart';
 import 'package:habit_tracking_app/features/auth/presentation/managers/logout_cubit/logout_cubit.dart';
-import 'package:habit_tracking_app/features/settings/presentation/managers/settings_cubit/settings_cubit.dart';
 import 'package:habit_tracking_app/features/settings/presentation/widgets/user_info_widget.dart';
 import '../../../../core/helpers/functions.dart';
 import '../../domain/entities/settings_tile_entity.dart';
@@ -19,14 +18,13 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var settingsCubit = context.read<SettingsCubit>();
     return Padding(
       padding: .symmetric(horizontal: 16.w),
       child: Column(
         spacing: 12.h,
         children: [
           CustomAppBar(title: "settings".tr()),
-          UserInfoWidget(userInfoEntity: settingsCubit.userInfoEntity),
+          const UserInfoWidget(),
           SettingsTile(
             settingsTileEntity: getThemeTile(
               context: context,

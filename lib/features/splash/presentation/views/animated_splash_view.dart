@@ -18,10 +18,18 @@ class AnimatedSplashView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: BlocProvider(
-        create: (context) => SplashCubit(
-          getIt.get<AppPreferencesService>(),
-          getIt.get<AuthStorageService>(),
-        )..checkAppStatus(),
+        create: (context) {
+          final cubit = SplashCubit(
+            getIt.get<AppPreferencesService>(),
+            getIt.get<AuthStorageService>(),
+          );
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Future.delayed(const Duration(seconds: 2), () {
+              cubit.checkAppStatus();
+            });
+          });
+          return cubit;
+        },
         child: const AnimatedSplashViewBody(),
       ),
       bottomNavigationBar: FadeInUp(

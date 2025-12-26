@@ -31,3 +31,7 @@ extension TimeFormatter on DateTime {
   String formattedTime(BuildContext context) =>
       DateFormat.jm(context.locale.toString()).format(this);
 }
+
+extension DateOnlyX on DateTime {
+  String get toIsoDate => toIso8601String().split('T').first;
+}

@@ -13,8 +13,6 @@ class SplashCubit extends Cubit<SplashState> {
   final AuthStorageService _authStorageService;
 
   Future<void> checkAppStatus() async {
-    await Future.delayed(const Duration(seconds: 2));
-
     if (_firstTime) {
       emit(SplashSuccess(.navigateToOnboarding));
       return;

@@ -9,12 +9,10 @@ class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit(this._appPreferencesService) : super(SettingsInitial());
   final AppPreferencesService _appPreferencesService;
 
-  late UserInfoEntity userInfoEntity;
-
   void getUserInfo() {
-    userInfoEntity = UserInfoEntity(
-      userName: userName,
-      email: email
+    var userInfoEntity = UserInfoEntity(userName: userName, email: email);
+    emit(
+      SettingsSuccess(process: .getUserInfo, userInfoEntity: userInfoEntity),
     );
   }
 

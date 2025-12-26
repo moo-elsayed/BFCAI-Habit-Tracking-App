@@ -11,31 +11,31 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromDioException(DioException dioException) {
     switch (dioException.type) {
-      case DioExceptionType.connectionTimeout:
+      case .connectionTimeout:
         return const ServerFailure(errorMessage: 'connection_timeout');
 
-      case DioExceptionType.sendTimeout:
+      case .sendTimeout:
         return const ServerFailure(errorMessage: 'send_timeout');
 
-      case DioExceptionType.receiveTimeout:
+      case .receiveTimeout:
         return const ServerFailure(errorMessage: 'receive_timeout');
 
-      case DioExceptionType.badCertificate:
+      case .badCertificate:
         return const ServerFailure(errorMessage: 'bad_certificate');
 
-      case DioExceptionType.badResponse:
+      case .badResponse:
         return ServerFailure.fromResponse(
           dioException.response?.statusCode,
           dioException.response?.data,
         );
 
-      case DioExceptionType.cancel:
+      case .cancel:
         return const ServerFailure(errorMessage: 'request_canceled');
 
-      case DioExceptionType.connectionError:
+      case .connectionError:
         return const ServerFailure(errorMessage: 'no_internet_connection');
 
-      case DioExceptionType.unknown:
+      case .unknown:
         if (dioException.message?.contains('SocketException') ?? false) {
           return const ServerFailure(errorMessage: 'no_internet_connection');
         }

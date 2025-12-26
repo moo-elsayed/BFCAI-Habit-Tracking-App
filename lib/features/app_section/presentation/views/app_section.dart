@@ -30,12 +30,10 @@ class _AppSectionState extends State<AppSection> {
 
   void _onItemTapped(int index) async {
     if (index == 1) {
+      var homeCubit = context.read<HomeCubit>();
       bool? myBool = await context.pushNamed(Routes.habitEditorView);
       if (myBool != null && myBool) {
-        if (mounted) {
-          context.read<HomeCubit>().getAllHabits();
-          context.read<HomeCubit>().getHabitsByDate(DateTime.now());
-        }
+        homeCubit.getAllHabits(DateTime.now());
       }
     } else {
       _selectedIndex.value = index == 2 ? 1 : 0;

@@ -18,7 +18,7 @@ class ApiConstants {
 
   // Endpoints
   static const String createHabit = "$_habitRoute/Create";
-  static const String getHabits = "$_habitRoute/List";
+  static const String getAllHabits = "$_habitRoute/List";
   static const String editHabit = "$_habitRoute/Edit";
   static const String deleteHabit = "$_habitRoute/Delete";
   static const String getHabit = "$_habitRoute/GetById";
@@ -27,7 +27,7 @@ class ApiConstants {
   static const String _habitTrackingRoute = "$_version/Tracking";
 
   // Endpoints
-  static const String getTrackedHabits = "$_habitTrackingRoute/List/ByDate";
+  static const String getHabitsByDate = "$_habitTrackingRoute/List/ByDate";
   static const String createHabitTracking = "$_habitTrackingRoute/Create";
   static const String editHabitTracking = "$_habitTrackingRoute/Edit";
 
