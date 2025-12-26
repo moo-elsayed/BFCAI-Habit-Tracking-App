@@ -66,7 +66,7 @@ void main() {
       verifyNoMoreInteractions(mockAppPreferencesService);
       verifyNoMoreInteractions(mockAuthStorageService);
     });
-    test("should throw exception when save tokens fails", () async {
+    test("should throw exception when save tokens fails", () {
       // Arrange
       when(
         () => mockAppPreferencesService.setLoggedIn(true),
@@ -92,7 +92,7 @@ void main() {
           isA<Exception>().having(
             (e) => e.toString(),
             "error",
-            "Exception: Failed to save user session",
+            "Exception: failed_to_save_user_session",
           ),
         ),
       );

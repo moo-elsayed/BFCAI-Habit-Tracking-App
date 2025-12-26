@@ -16,7 +16,7 @@ class LogoutUseCase {
           await _clearUserSessionUseCase.call();
           return NetworkSuccess(networkResponse.data);
         } catch (e) {
-          return NetworkFailure(Exception("error_occurred_please_try_again"));
+          return NetworkFailure(e as Exception);
         }
       case NetworkFailure<String>():
         return NetworkFailure(networkResponse.exception);
