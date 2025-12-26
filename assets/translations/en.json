@@ -111,5 +111,7 @@
   "in_progress": "In Progress",
   "no_habits_found": "No habits found",
   "confirm_habit_deletion": "Are you sure you want to delete this habit?",
-  "today": "Today"
+  "today": "Today",
+  "failed_to_save_user_session": "Failed to save user session",
+  "failed_to_clear_user_session": "Failed to clear user session"
 }

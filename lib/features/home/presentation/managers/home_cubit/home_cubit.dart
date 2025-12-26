@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_tracking_app/core/entities/tracking/create_habit_tracking_input_entity.dart';
@@ -8,12 +9,12 @@ import 'package:habit_tracking_app/core/entities/tracking/habit_tracking_entity.
 import 'package:habit_tracking_app/core/helpers/app_logger.dart';
 import 'package:habit_tracking_app/core/helpers/functions.dart';
 import 'package:habit_tracking_app/core/services/local_storage/app_preferences_service.dart';
+import 'package:habit_tracking_app/core/services/notification_service/notification_service.dart';
 import 'package:habit_tracking_app/features/home/domain/use_cases/create_habit_tracking_use_case.dart';
 import 'package:habit_tracking_app/features/home/domain/use_cases/edit_habit_tracking_use_case.dart';
 import 'package:habit_tracking_app/features/home/domain/use_cases/get_all_habits_use_case.dart';
 import '../../../../../core/entities/habit_entity.dart';
 import '../../../../../core/helpers/network_response.dart';
-import '../../../../../core/services/local_notification_service/local_notification_service.dart';
 import '../../../domain/use_cases/get_habits_by_date_use_case.dart';
 
 part 'home_state.dart';
@@ -25,12 +26,14 @@ class HomeCubit extends Cubit<HomeState> {
     this._createHabitTrackingUseCase,
     this._editHabitTrackingUseCase,
     this._appPreferencesService,
+    this._notificationService,
   ) : super(HomeInitial());
   final GetAllHabitsUseCase _allHabitsUseCase;
   final GetHabitsByDateUseCase _getTrackedHabitsByDateUseCase;
   final CreateHabitTrackingUseCase _createHabitTrackingUseCase;
   final EditHabitTrackingUseCase _editHabitTrackingUseCase;
   final AppPreferencesService _appPreferencesService;
+  final NotificationService _notificationService;
 
   List<HabitEntity> _allHabits = [];
   List<HabitTrackingEntity> _habitsByDate = [];
@@ -43,7 +46,7 @@ class HomeCubit extends Cubit<HomeState> {
         await _checkAndScheduleNotifications(result.data!);
         _allHabits = result.data!;
       case NetworkFailure<List<HabitEntity>>():
-        AppLogger.error(getErrorMessage(result));
+        AppLogger.error(getErrorMessage(result).tr());
     }
   }
 
@@ -55,7 +58,7 @@ class HomeCubit extends Cubit<HomeState> {
         _habitsByDate = result.data!;
         emit(HomeSuccess(process: .getHabitsByDate, habits: _habitsByDate));
       case NetworkFailure<List<HabitTrackingEntity>>():
-        emit(HomeFailure(getErrorMessage(result), .getHabitsByDate));
+        emit(HomeFailure(getErrorMessage(result).tr(), .getHabitsByDate));
     }
   }
 
@@ -82,7 +85,7 @@ class HomeCubit extends Cubit<HomeState> {
           emit(HomeSuccess(process: .create, habits: List.from(_habitsByDate)));
         }
       case NetworkFailure<int>():
-        emit(HomeFailure(getErrorMessage(result), .create));
+        emit(HomeFailure(getErrorMessage(result).tr(), .create));
     }
   }
 
@@ -116,7 +119,7 @@ class HomeCubit extends Cubit<HomeState> {
                 progressPercentage: oldQuantity / currentItem.targetValue * 100,
               ),
         );
-        emit(HomeFailure(getErrorMessage(result), .edit));
+        emit(HomeFailure(getErrorMessage(result).tr(), .edit));
     }
   }
 
@@ -139,10 +142,10 @@ class HomeCubit extends Cubit<HomeState> {
     final bool isScheduled = _appPreferencesService.getHabitsScheduled();
     if (!isScheduled) {
       log("Detected fresh state. Scheduling all habits...");
-      await LocalNotificationService.cancelAll();
+      await _notificationService.cancelAll();
       for (var habit in habits) {
         if (habit.isActive) {
-          await LocalNotificationService.scheduleHabit(habit);
+          await _notificationService.scheduleHabit(habit);
         }
       }
       _appPreferencesService.setHabitsScheduled(true);

@@ -2,7 +2,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/services/local_storage/auth_storage_service.dart';
 
 class SecureStorageManager implements AuthStorageService {
-  final _storage = const FlutterSecureStorage();
+  SecureStorageManager(this._storage);
+
+  final FlutterSecureStorage _storage;
 
   @override
   Future<void> saveTokens({

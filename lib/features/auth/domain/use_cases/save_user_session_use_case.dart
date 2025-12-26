@@ -22,7 +22,7 @@ class SaveUserSessionUseCase {
       ]);
     } catch (e) {
       AppLogger.error("error in save user session", error: e.toString());
-      throw Exception('Failed to save user session');
+      throw Exception("failed_to_save_user_session");
     }
   }
 }

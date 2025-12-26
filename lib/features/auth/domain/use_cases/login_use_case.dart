@@ -20,9 +20,7 @@ class LoginUseCase {
           await _saveUserSession.call(networkResponse.data!);
           return NetworkSuccess(networkResponse.data);
         } catch (e) {
-          return NetworkFailure<LoginResponseEntity>(
-            Exception("error_occurred_please_try_again"),
-          );
+          return NetworkFailure<LoginResponseEntity>(e as Exception);
         }
       case NetworkFailure<LoginResponseEntity>():
         return NetworkFailure<LoginResponseEntity>(networkResponse.exception);

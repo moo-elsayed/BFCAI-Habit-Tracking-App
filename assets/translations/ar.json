@@ -99,7 +99,7 @@
   "habit_deleted_successfully": "تم حذف العادة بنجاح",
   "home": "الرئيسية",
   "session_expired": "انتهت صلاحية الجلسة، يرجى تسجيل الدخول مرة أخرى.",
-  "completed":"مكتملة",
+  "completed": "مكتملة",
   "tap_to_complete": "اضغط لإكمال العادة",
   "theme": "السمة",
   "system": "النظام",
@@ -111,5 +111,7 @@
   "in_progress": "قيد التنفيذ",
   "no_habits_found": "لم يتم العثور على عادات",
   "confirm_habit_deletion": "هل أنت متأكد أنك تريد حذف هذه العادة؟",
-  "today": "اليوم"
+  "today": "اليوم",
+  "failed_to_save_user_session": "فشل في حفظ جلسة المستخدم",
+  "failed_to_clear_user_session": "فشل في مسح جلسة المستخدم"
 }
