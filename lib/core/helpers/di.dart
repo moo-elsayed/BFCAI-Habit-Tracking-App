@@ -29,10 +29,12 @@ import '../../features/habit/domain/repo/habit_repo.dart';
 import '../../features/habit/domain/use_cases/delete_habit_use_case.dart';
 import '../../features/habit/domain/use_cases/edit_habit_use_case.dart';
 import '../../features/home/domain/use_cases/get_all_habits_use_case.dart';
+import '../../shared_data/services/auth_service/token_service_imp.dart';
 import '../../shared_data/services/local_storage_service/secure_storage_manager.dart';
 import '../../shared_data/services/local_storage_service/shared_preferences_manager.dart';
 import '../../shared_data/services/notification_service/notification_service_imp.dart';
 import '../services/auth_service/auth_interceptor.dart';
+import '../services/auth_service/token_service.dart';
 import '../services/local_storage/app_preferences_service.dart';
 import '../services/local_storage/auth_storage_service.dart';
 import 'api_constants.dart';
@@ -62,6 +64,11 @@ Future<void> setupServiceLocator() async {
   /// Auth Interceptor
   getIt.registerLazySingleton<AuthInterceptor>(
     () => AuthInterceptor(getIt.get<AuthStorageService>()),
+  );
+
+  /// Token Service
+  getIt.registerLazySingleton<TokenService>(
+    () => TokenServiceImpl(getIt<AuthStorageService>()),
   );
 
   /// dio

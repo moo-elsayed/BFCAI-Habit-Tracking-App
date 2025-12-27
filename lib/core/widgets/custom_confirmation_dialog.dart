@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,16 +14,18 @@ class CustomConfirmationDialog extends StatelessWidget {
     super.key,
     this.subtitle,
     required this.textConfirmButton,
-    required this.textCancelButton,
+    this.textCancelButton,
     required this.title,
     required this.onConfirm,
     this.onCancel,
+    this.showCancelButton = true,
   });
 
   final String title;
-  final String? subtitle;
   final String textConfirmButton;
-  final String textCancelButton;
+  final bool showCancelButton;
+  final String? subtitle;
+  final String? textCancelButton;
   final void Function()? onCancel;
   final void Function() onConfirm;
 
@@ -62,27 +65,35 @@ class CustomConfirmationDialog extends StatelessWidget {
                 style: AppTextStyles.font14Regular(context),
               ),
             Gap(8.h),
-            Row(
-              spacing: 8.w,
-              children: [
-                Expanded(
-                  child: CustomMaterialButton(
-                    onPressed: onCancel ?? () => context.pop(),
-                    text: textCancelButton,
-                    textStyle: AppTextStyles.font16PrimarySemiBold(context),
-                    color: Colors.white,
-                    side: BorderSide(color: AppColors.primary(context)),
-                  ),
-                ),
-                Expanded(
-                  child: CustomMaterialButton(
+            showCancelButton
+                ? Row(
+                    spacing: 8.w,
+                    children: [
+                      Expanded(
+                        child: CustomMaterialButton(
+                          onPressed: onCancel ?? () => context.pop(),
+                          text: textCancelButton ?? "cancel".tr(),
+                          textStyle: AppTextStyles.font16PrimarySemiBold(
+                            context,
+                          ),
+                          color: Colors.white,
+                          side: BorderSide(color: AppColors.primary(context)),
+                        ),
+                      ),
+                      Expanded(
+                        child: CustomMaterialButton(
+                          onPressed: onConfirm,
+                          text: textConfirmButton,
+                          textStyle: AppTextStyles.font16WhiteSemiBold(context),
+                        ),
+                      ),
+                    ],
+                  )
+                : CustomMaterialButton(
                     onPressed: onConfirm,
                     text: textConfirmButton,
                     textStyle: AppTextStyles.font16WhiteSemiBold(context),
                   ),
-                ),
-              ],
-            ),
           ],
         ),
       ),

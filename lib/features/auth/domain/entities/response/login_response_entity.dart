@@ -5,6 +5,7 @@ class LoginResponseEntity {
     this.username = '',
     this.email = '',
     this.roles = const <String>[],
+    required this.refreshTokenExpiration,
   });
 
   final String token;
@@ -12,4 +13,5 @@ class LoginResponseEntity {
   final String username;
   final String email;
   final List<String> roles;
+  final DateTime refreshTokenExpiration;
 }

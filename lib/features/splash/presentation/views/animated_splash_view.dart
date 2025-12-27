@@ -8,6 +8,7 @@ import 'package:habit_tracking_app/core/services/local_storage/app_preferences_s
 import 'package:habit_tracking_app/features/splash/presentation/managers/splash_cubit.dart';
 import 'package:habit_tracking_app/features/splash/presentation/widgets/animated_splash_view_body.dart';
 import 'package:habit_tracking_app/generated/assets.dart';
+import '../../../../core/services/auth_service/token_service.dart';
 import '../../../../core/services/local_storage/auth_storage_service.dart';
 
 class AnimatedSplashView extends StatelessWidget {
@@ -22,6 +23,7 @@ class AnimatedSplashView extends StatelessWidget {
           final cubit = SplashCubit(
             getIt.get<AppPreferencesService>(),
             getIt.get<AuthStorageService>(),
+            getIt.get<TokenService>(),
           );
           WidgetsBinding.instance.addPostFrameCallback((_) {
             Future.delayed(const Duration(seconds: 2), () {

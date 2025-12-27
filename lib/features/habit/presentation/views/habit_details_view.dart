@@ -17,6 +17,7 @@ import '../../../../core/theming/app_colors.dart';
 import '../../../../core/theming/app_text_styles.dart';
 import '../../../../core/widgets/app_toasts.dart';
 import '../../../../core/widgets/custom_confirmation_dialog.dart';
+import '../../../../core/widgets/session_expired_helper.dart';
 import '../managers/habit_cubit/habit_cubit.dart';
 import '../view_utils/args/habit_details_args.dart';
 import '../widgets/habit_details_top_actions.dart';
@@ -110,16 +111,7 @@ class _HabitDetailsViewState extends State<HabitDetailsView> {
               }
               if (state is HabitFailure) {
                 if (state.message == "unauthorized_error".tr()) {
-                  AppToast.showToast(
-                    context: context,
-                    title: "session_expired".tr(),
-                    type: .error,
-                  );
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.loginView,
-                    (route) => false,
-                  );
+                  SessionExpiredHandler.handle(context);
                 } else {
                   if (state.process == .delete) {
                     AppToast.showToast(

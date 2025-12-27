@@ -10,8 +10,8 @@ import 'package:habit_tracking_app/core/widgets/custom_app_bar.dart';
 import 'package:habit_tracking_app/features/home/presentation/managers/home_cubit/home_cubit.dart';
 import 'package:habit_tracking_app/features/home/presentation/widgets/habits_list_view.dart';
 import '../../../../core/entities/tracking/habit_tracking_entity.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/no_results_found_widget.dart';
+import '../../../../core/widgets/session_expired_helper.dart';
 import '../widgets/horizontal_calendar_strip.dart';
 
 class Home extends StatefulWidget {
@@ -81,16 +81,7 @@ class _HomeState extends State<Home> {
                   context.pop();
                 }
                 if (state.message == "unauthorized_error".tr()) {
-                  AppToast.showToast(
-                    context: context,
-                    title: "session_expired".tr(),
-                    type: .error,
-                  );
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routes.loginView,
-                    (route) => false,
-                  );
+                  SessionExpiredHandler.handle(context);
                 } else {
                   AppToast.showToast(
                     context: context,

@@ -18,6 +18,7 @@ import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_rem
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_repeat_days.dart';
 import 'package:habit_tracking_app/features/habit/presentation/widgets/habit_type_switch.dart';
 import '../../../../core/entities/habit_entity.dart';
+import '../../../../core/widgets/session_expired_helper.dart';
 
 class HabitEditorView extends StatefulWidget {
   const HabitEditorView({super.key, this.habit});
@@ -114,10 +115,16 @@ class _HabitEditorViewState extends State<HabitEditorView> {
                             : "habit_updated_successfully".tr(),
                         type: .success,
                       );
-                      context.pop(process == .add ? true : _habitFormHelper.entity);
+                      context.pop(
+                        process == .add ? true : _habitFormHelper.entity,
+                      );
                     }
                   }
                   if (state is HabitFailure) {
+                    if (state.message == "unauthorized_error".tr()) {
+                      SessionExpiredHandler.handle(context);
+                      return;
+                    }
                     HabitProcess process = state.process;
                     if (process == .add || process == .edit) {
                       AppToast.showToast(

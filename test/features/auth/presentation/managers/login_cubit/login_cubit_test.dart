@@ -27,6 +27,7 @@ void main() {
       token: 'access_token',
       refreshToken: 'refresh_token',
       roles: const ['user'],
+      refreshTokenExpiration: DateTime.now(),
     );
   });
 

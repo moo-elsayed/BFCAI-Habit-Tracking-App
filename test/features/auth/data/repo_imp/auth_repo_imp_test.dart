@@ -92,6 +92,7 @@ void main() {
               token: "access_token",
               refreshToken: "refresh_token",
               roles: ["user"],
+              refreshTokenExpiration: DateTime.now(),
             ),
           ),
         );

@@ -10,11 +10,11 @@ class AuthInterceptor extends QueuedInterceptor {
 
   @override
   void onRequest(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final accessToken = await _storage.getAccessToken();
-    if (accessToken != null) {
+    if (accessToken != null && accessToken.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
     handler.next(options);
@@ -78,10 +78,15 @@ class AuthInterceptor extends QueuedInterceptor {
       if (response.statusCode == 200) {
         final newAccessToken = response.data['data']['token'];
         final newRefreshToken = response.data['data']['refreshToken'];
+        final newRefreshTokenExpiry =
+            response.data['data']['refreshTokenExpiration'];
+
 
         await _storage.saveTokens(
           accessToken: newAccessToken,
           refreshToken: newRefreshToken,
+          accessTokenExpiry: DateTime.now().add(const Duration(minutes: 15)),
+          refreshTokenExpiry: DateTime.parse(newRefreshTokenExpiry),
         );
 
         log('✅ Refresh success → retrying request');
@@ -96,10 +101,10 @@ class AuthInterceptor extends QueuedInterceptor {
   }
 
   Future<void> _retry(
-      RequestOptions requestOptions,
-      String newToken,
-      ErrorInterceptorHandler handler,
-      ) async {
+    RequestOptions requestOptions,
+    String newToken,
+    ErrorInterceptorHandler handler,
+  ) async {
     final retryDio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
@@ -118,10 +123,7 @@ class AuthInterceptor extends QueuedInterceptor {
         requestOptions.path,
         data: requestOptions.data,
         queryParameters: requestOptions.queryParameters,
-        options: Options(
-          method: requestOptions.method,
-          headers: headers,
-        ),
+        options: Options(method: requestOptions.method, headers: headers),
       );
 
       handler.resolve(response);

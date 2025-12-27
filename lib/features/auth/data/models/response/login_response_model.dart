@@ -47,6 +47,7 @@ class LoginResponseModel {
       username: userName ?? '',
       email: email ?? '',
       roles: roles ?? [],
+      refreshTokenExpiration: refreshTokenExpiration ?? DateTime.now(),
     );
   }
 }

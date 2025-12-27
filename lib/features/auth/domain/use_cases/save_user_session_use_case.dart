@@ -18,6 +18,8 @@ class SaveUserSessionUseCase {
         _authStorageService.saveTokens(
           accessToken: loginResponseEntity.token,
           refreshToken: loginResponseEntity.refreshToken,
+          accessTokenExpiry: DateTime.now().add(const Duration(minutes: 15)),
+          refreshTokenExpiry: loginResponseEntity.refreshTokenExpiration,
         ),
       ]);
     } catch (e) {
